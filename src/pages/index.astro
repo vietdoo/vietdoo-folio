@@ -7,7 +7,6 @@ import TimeZone from "../components/TimeZoneCard.astro";
 import AboutMe from "../components/AboutMe.astro";
 import Now from "../components/Now.astro";
 import EngineeringShowcaseCard from "../components/EngineeringShowcaseCard.astro";
-import PixelHeart from "../components/PixelHeart.astro";
 import PlaygroundCard from "../components/PlaygroundCard.astro";
 import GuestbookCard from "../components/GuestbookCard.astro";
 import BlogCard from "../components/BlogCard.astro";
@@ -59,16 +58,5 @@ import { SITE } from "../site-config";
     </Card>
     */}
     <VisitCard />
-    <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
-      <div class="flex h-full items-center justify-center">
-        <p class="text-[10px] whitespace-nowrap text-center">
-          © {new Date().getFullYear()} · Crafted with <PixelHeart /> using <a
-            class="text-primary-500"
-            href="https://astro.build/"
-            target="_blank">Astro</a
-          > by Me.
-        </p>
-      </div>
-    </Card>
   </main>
 </Layout>
