@@ -8,21 +8,12 @@ const posts = await getPublishedPosts();
 const uniquePostsMap = new Map();
 for (const post of posts) {
   const key = post.data.translationKey || post.id;
-  if (!uniquePostsMap.has(key)) {
+  if (!uniquePostsMap.has(key) && post.data.image) {
     uniquePostsMap.set(key, post);
   }
 }
-const allPosts = Array.from(uniquePostsMap.values());
-const latestPost = allPosts[0];
-const postCount = allPosts.length;
-
-const formattedDate = latestPost?.data.pubDate
-  ? new Date(latestPost.data.pubDate).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    })
-  : "";
+const allPosts = Array.from(uniquePostsMap.values()).slice(0, 5);
+const postCount = uniquePostsMap.size;
 ---
 
 <Card
@@ -32,7 +23,7 @@ const formattedDate = latestPost?.data.pubDate
   padding="p-3.5 sm:p-4"
   arrowCorner={true}
 >
-  <div class="h-full flex flex-col justify-between gap-2 overflow-hidden">
+  <div class="h-full flex flex-col justify-between gap-2 select-none">
     {/* Top Header Bar */}
     <div class="flex items-center gap-2 pr-6 flex-shrink-0">
       <h2 class="text-base font-bold m-0 text-white tracking-tight">
@@ -43,40 +34,130 @@ const formattedDate = latestPost?.data.pubDate
       </span>
     </div>
 
-    {/* Crisp Featured Thumbnail Image Frame */}
-    {latestPost?.data.image && (
-      <div class="relative w-full h-20 sm:h-24 rounded-lg overflow-hidden border border-white/10 bg-darkslate-600 shadow-md group-hover:border-primary-500/40 transition-colors flex-shrink-0">
-        <img
-          src={latestPost.data.image}
-          alt={latestPost.data.title}
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-          loading="lazy"
-        />
-        {/* Category Tag Badge */}
-        <span class="absolute top-1.5 left-1.5 text-[9px] font-mono font-bold uppercase tracking-wider text-white bg-black/80 backdrop-blur-md px-2 py-0.5 rounded border border-white/20">
-          {latestPost.data.category || "FEATURED"}
-        </span>
-      </div>
-    )}
+    {/* Digital Magazine Billboard Showcase */}
+    <div
+      class="blog-billboard-container relative flex-1 w-full rounded-xl overflow-hidden border border-white/10 bg-darkslate-600 shadow-lg group-hover:border-primary-500/40 transition-colors"
+      data-count={allPosts.length}
+    >
+      {allPosts.map((post, idx) => {
+        const formattedDate = post.data.pubDate
+          ? new Date(post.data.pubDate).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })
+          : "";
 
-    {/* Article Info */}
-    {latestPost && (
-      <div class="flex-1 flex flex-col justify-between min-h-0 pt-0.5">
-        <div>
-          <span class="text-[10px] font-mono text-white/50 block mb-0.5 font-medium">
-            {formattedDate}
-          </span>
-          <h3 class="text-xs sm:text-sm font-semibold text-white/95 group-hover:text-primary-400 transition-colors line-clamp-2 leading-snug">
-            {latestPost.data.title}
-          </h3>
-        </div>
+        return (
+          <div
+            class:list={[
+              "blog-slide absolute inset-0 transition-all duration-700 ease-in-out flex flex-col justify-between p-3.5",
+              idx === 0 ? "opacity-100 z-10 scale-100" : "opacity-0 z-0 scale-95 pointer-events-none"
+            ]}
+            data-slide={idx}
+          >
+            {/* Cover Image Background */}
+            <img
+              src={post.data.image}
+              alt={post.data.title}
+              class="absolute inset-0 w-full h-full object-cover filter brightness-[0.75] contrast-[1.05] group-hover:scale-105 transition-transform duration-700 ease-out"
+              loading={idx === 0 ? "eager" : "lazy"}
+            />
 
-        <div class="pt-1 flex items-center justify-between text-[11px] font-mono text-white/60 group-hover:text-white transition-colors border-t border-white/10 mt-1">
-          <span>Latest article</span>
-          <span class="text-primary-400 group-hover:translate-x-1 transition-transform font-bold">&rarr;</span>
-        </div>
-      </div>
-    )}
+            {/* Dark Vignette Overlay for Text Readability */}
+            <div class="absolute inset-0 bg-gradient-to-t from-darkslate-900 via-darkslate-900/60 to-darkslate-900/20"></div>
+
+            {/* Category Tag & Slide Dots */}
+            <div class="relative z-10 flex items-center justify-between gap-1">
+              <span class="text-[9px] font-mono font-bold uppercase tracking-wider text-white bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/20">
+                {post.data.category || "FEATURED"}
+              </span>
+              {/* Slide Indicators */}
+              <div class="flex items-center gap-1 bg-black/50 backdrop-blur-md px-1.5 py-1 rounded-full border border-white/10">
+                {allPosts.map((_, dotIdx) => (
+                  <span
+                    class:list={[
+                      "blog-dot w-1.5 h-1.5 rounded-full transition-all duration-300",
+                      dotIdx === idx ? "bg-primary-400 w-3" : "bg-white/40"
+                    ]}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Article Date & 2-Line Full Title */}
+            <div class="relative z-10 pt-2">
+              <span class="text-[10px] font-mono text-white/70 block mb-0.5 font-medium drop-shadow">
+                {formattedDate}
+              </span>
+              <h3 class="text-xs sm:text-sm font-bold text-white group-hover:text-primary-400 transition-colors line-clamp-2 leading-snug drop-shadow-md">
+                {post.data.title}
+              </h3>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   </div>
 </Card>
+
+<script is:inline>
+  (function setupBlogBillboard() {
+    function initBillboard() {
+      const container = document.querySelector('.blog-billboard-container');
+      if (!container) return;
+
+      const slides = container.querySelectorAll('.blog-slide');
+      if (slides.length <= 1) return;
+
+      if (container.dataset.initialized === 'true') return;
+      container.dataset.initialized = 'true';
+
+      let currentIndex = 0;
+      let timer = null;
+
+      function goToSlide(nextIndex) {
+        slides.forEach((slide, idx) => {
+          const dots = slide.querySelectorAll('.blog-dot');
+          if (idx === nextIndex) {
+            slide.classList.remove('opacity-0', 'z-0', 'scale-95', 'pointer-events-none');
+            slide.classList.add('opacity-100', 'z-10', 'scale-100');
+          } else {
+            slide.classList.remove('opacity-100', 'z-10', 'scale-100');
+            slide.classList.add('opacity-0', 'z-0', 'scale-95', 'pointer-events-none');
+          }
+        });
+        currentIndex = nextIndex;
+      }
+
+      function startTimer() {
+        stopTimer();
+        timer = setInterval(() => {
+          const next = (currentIndex + 1) % slides.length;
+          goToSlide(next);
+        }, 4000);
+      }
+
+      function stopTimer() {
+        if (timer) clearInterval(timer);
+      }
+
+      container.addEventListener('mouseenter', stopTimer);
+      container.addEventListener('mouseleave', startTimer);
+
+      startTimer();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initBillboard);
+    } else {
+      initBillboard();
+    }
+    document.addEventListener('astro:page-load', () => {
+      const container = document.querySelector('.blog-billboard-container');
+      if (container) container.dataset.initialized = 'false';
+      initBillboard();
+    });
+  })();
+</script>
 
