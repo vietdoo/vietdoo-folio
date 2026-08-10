@@ -60,12 +60,12 @@ const postCount = uniquePostsMap.size;
             <img
               src={post.data.image}
               alt={post.data.title}
-              class="absolute inset-0 w-full h-full object-cover filter brightness-[0.75] contrast-[1.05] group-hover:scale-105 transition-transform duration-700 ease-out"
+              class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               loading={idx === 0 ? "eager" : "lazy"}
             />
 
-            {/* Dark Vignette Overlay for Text Readability */}
-            <div class="absolute inset-0 bg-gradient-to-t from-darkslate-900 via-darkslate-900/60 to-darkslate-900/20"></div>
+            {/* Gradient Overlay for Text Readability at Bottom */}
+            <div class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none"></div>
 
             {/* Category Tag & Slide Dots */}
             <div class="relative z-10 flex items-center justify-between gap-1">
