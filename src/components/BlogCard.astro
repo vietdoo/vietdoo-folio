@@ -19,6 +19,7 @@ const postCount = allPosts.length;
 const formattedDate = latestPost?.data.pubDate
   ? new Date(latestPost.data.pubDate).toLocaleDateString("en-US", {
       month: "short",
+      day: "numeric",
       year: "numeric",
     })
   : "";
@@ -30,53 +31,56 @@ const formattedDate = latestPost?.data.pubDate
   rowSpan="md:row-span-2"
   padding="p-4 sm:p-5"
 >
-  {/* Background Image with Dark Slate Gradient Vignette */}
-  <div slot="background" class="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
-    {latestPost?.data.image && (
-      <img
-        src={latestPost.data.image}
-        alt={latestPost.data.title}
-        class="w-full h-full object-cover filter brightness-[0.65] contrast-[1.05] group-hover:scale-105 group-hover:brightness-[0.75] transition-all duration-500 ease-out"
-        loading="lazy"
-      />
-    )}
-    <div class="absolute inset-0 bg-gradient-to-t from-darkslate-500 via-darkslate-500/80 to-darkslate-500/40"></div>
-  </div>
-
-  {/* Content Layout */}
-  <div class="relative z-10 h-full flex flex-col justify-between">
-    {/* Top Label */}
+  <div class="h-full flex flex-col justify-between gap-2.5">
+    {/* Top Header Bar */}
     <div class="flex items-center justify-between">
-      <span class="text-[11px] font-mono tracking-wider uppercase text-primary-400 font-medium">
-        Latest Post
-      </span>
-      <span class="text-[10px] font-mono text-white/50">
-        {postCount} posts
-      </span>
+      <div class="flex items-center gap-2">
+        <h2 class="text-base sm:text-lg font-bold m-0 text-white tracking-tight">
+          Blog
+        </h2>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-primary-500/15 text-primary-400 border border-primary-500/25 font-medium">
+          {postCount} POSTS
+        </span>
+      </div>
     </div>
 
-    {/* Center: Featured Article Preview */}
-    {latestPost && (
-      <div class="my-auto py-2">
-        <span class="text-[10px] font-mono text-white/60 uppercase tracking-widest block mb-1">
-          {latestPost.data.category || "ARTICLE"} • {formattedDate}
+    {/* Crisp Featured Thumbnail Image Frame */}
+    {latestPost?.data.image && (
+      <div class="relative w-full aspect-[16/9] rounded-lg overflow-hidden border border-white/10 bg-darkslate-600 shadow-md group-hover:border-primary-500/40 transition-colors">
+        <img
+          src={latestPost.data.image}
+          alt={latestPost.data.title}
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+          loading="lazy"
+        />
+        {/* Category Tag Badge */}
+        <span class="absolute top-2 left-2 text-[9px] font-mono font-medium uppercase tracking-wider text-white bg-black/65 backdrop-blur-md px-2 py-0.5 rounded border border-white/15">
+          {latestPost.data.category || "FEATURED"}
         </span>
-        <h3 class="text-sm sm:text-base font-semibold text-white/90 group-hover:text-primary-400 transition-colors line-clamp-3 leading-snug">
-          {latestPost.data.title}
-        </h3>
       </div>
     )}
 
-    {/* Bottom Section Header */}
-    <div class="pt-2 border-t border-white/10 flex items-center justify-between">
-      <h2 class="text-lg sm:text-xl font-bold m-0 text-white">
-        Blog
-      </h2>
-      <span class="text-xs text-white/60 group-hover:text-white transition-colors">
-        Read all &rarr;
-      </span>
-    </div>
+    {/* Article Info */}
+    {latestPost && (
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <span class="text-[10px] font-mono text-white/50 block mb-0.5">
+            {formattedDate}
+          </span>
+          <h3 class="text-xs sm:text-sm font-semibold text-white/90 group-hover:text-primary-400 transition-colors line-clamp-2 leading-snug">
+            {latestPost.data.title}
+          </h3>
+        </div>
+
+        {/* Read action link */}
+        <div class="pt-2 flex items-center justify-between text-xs text-white/60 group-hover:text-white transition-colors border-t border-white/10">
+          <span class="text-[11px] font-mono text-white/70">Latest article</span>
+          <span class="text-primary-400 group-hover:translate-x-1 transition-transform font-bold">&rarr;</span>
+        </div>
+      </div>
+    )}
   </div>
 </Card>
+
 
 

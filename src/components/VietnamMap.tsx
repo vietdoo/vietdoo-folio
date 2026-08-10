@@ -15,11 +15,36 @@ type ProvinceInfo = {
 };
 
 const PROVINCE_MAP: Record<string, ProvinceInfo> = {
-  "An Giang": { vi: "An Giang", region: "Tây Nam Bộ" },
-  "Bac Ninh": { vi: "Bắc Ninh", region: "Đồng bằng sông Hồng" },
-  "Ca Mau": { vi: "Cà Mau", region: "Tây Nam Bộ" },
-  "Can Tho": { vi: "Cần Thơ", region: "Tây Nam Bộ" },
-  "Cao Bang": { vi: "Cao Bằng", region: "Đông Bắc Bộ" },
+  "An Giang": {
+    vi: "An Giang",
+    region: "Tây Nam Bộ",
+    coverImage: "/travel/an_giang.jpg",
+    highlights: ["Rừng tràm Trà Sư", "Miếu Bà Chúa Xứ", "Hồ Tà Pạ", "Chợ Châu Đốc"],
+  },
+  "Bac Ninh": {
+    vi: "Bắc Ninh",
+    region: "Đồng bằng sông Hồng",
+    coverImage: "/travel/bac_ninh.jpg",
+    highlights: ["Chùa Dâu", "Đền Đô", "Chùa Bút Tháp", "Làng tranh Đông Hồ"],
+  },
+  "Ca Mau": {
+    vi: "Cà Mau",
+    region: "Tây Nam Bộ",
+    coverImage: "/travel/ca_mau.jpg",
+    highlights: ["Mũi Cà Mau", "Rừng U Minh Hạ", "Hòn Đá Bạc", "Chợ nổi Cà Mau"],
+  },
+  "Can Tho": {
+    vi: "Cần Thơ",
+    region: "Tây Nam Bộ",
+    coverImage: "/travel/can_tho.jpg",
+    highlights: ["Bến Ninh Kiều", "Chợ nổi Cái Răng", "Nhà cổ Bình Thủy", "Cầu Cần Thơ"],
+  },
+  "Cao Bang": {
+    vi: "Cao Bằng",
+    region: "Đông Bắc Bộ",
+    coverImage: "/travel/cao_bang.jpg",
+    highlights: ["Thác Bản Giốc", "Động Ngườm Ngao", "Pác Bó - Suối Lê Nin", "Thác Cò Cùng"],
+  },
   "Da Nang": {
     vi: "Đà Nẵng",
     region: "Nam Trung Bộ",
@@ -29,11 +54,37 @@ const PROVINCE_MAP: Record<string, ProvinceInfo> = {
     highlights: ["Cầu Vàng", "Bà Nà Hills", "Cầu Rồng", "Biển Mỹ Khê"],
     travelDate: "Đã ghé thăm • Mùa hè 2024",
   },
-  "Dak Lak": { vi: "Đắk Lắk", region: "Tây Nguyên" },
-  "Dien Bien": { vi: "Điện Biên", region: "Tây Bắc Bộ" },
-  "Dong Nai": { vi: "Đồng Nai", region: "Đông Nam Bộ" },
-  "Dong Thap": { vi: "Đồng Tháp", region: "Tây Nam Bộ" },
-  "Gia Lai": { vi: "Gia Lai", region: "Tây Nguyên" },
+  "Dak Lak": {
+    vi: "Đắk Lắk",
+    region: "Tây Nguyên",
+    coverImage: "/travel/dak_lak.jpg",
+    highlights: ["Bảo tàng Cà phê", "Hồ Lắk", "Thác Dray Nur", "Buôn Đôn"],
+  },
+  "Dien Bien": {
+    vi: "Điện Biên",
+    region: "Tây Bắc Bộ",
+    coverImage: "/travel/dien_bien.jpg",
+    highlights: ["Đồi A1", "Chiến thắng Điện Biên Phủ", "Hầm De Castries", "Cánh đồng Mường Thanh"],
+  },
+  "Dong Nai": {
+    vi: "Đồng Nai",
+    region: "Đông Nam Bộ",
+    coverImage: "/travel/dong_nai.jpg",
+    highlights: ["Vườn quốc gia Cát Tiên", "Thác Giang Điền", "Hồ Trị An", "KDL Bửu Long"],
+    travelDate: "Đã ghé thăm • 2024",
+  },
+  "Dong Thap": {
+    vi: "Đồng Tháp",
+    region: "Tây Nam Bộ",
+    coverImage: "/travel/dong_thap.jpg",
+    highlights: ["Làng hoa Sa Đéc", "VQG Tràm Chim", "Khu di tích Xẻo Quýt", "Đồng sen Tháp Mười"],
+  },
+  "Gia Lai": {
+    vi: "Gia Lai",
+    region: "Tây Nguyên",
+    coverImage: "/travel/gia_lai.jpg",
+    highlights: ["Biển Hồ T'Nưng", "Chư Đăng Ya", "Thác Phú Cường", "Quảng trường Đại Đoàn Kết"],
+  },
   "Ha Noi": {
     vi: "Hà Nội",
     region: "Đồng bằng sông Hồng",
@@ -43,8 +94,21 @@ const PROVINCE_MAP: Record<string, ProvinceInfo> = {
     highlights: ["Hồ Hoàn Kiếm", "Phố Cổ", "Văn Miếu", "Ẩm thực Hà Nội"],
     travelDate: "Đã ghé thăm • Mùa thu 2024",
   },
-  "Ha Tinh": { vi: "Hà Tĩnh", region: "Bắc Trung Bộ" },
-  "Hai Phong": { vi: "Hải Phòng", region: "Đồng bằng sông Hồng" },
+  "Ha Tinh": {
+    vi: "Hà Tĩnh",
+    region: "Bắc Trung Bộ",
+    coverImage: "/travel/ha_tinh.jpg",
+    highlights: ["Hồ Kẻ Gỗ", "Ngã ba Đồng Lộc", "Biển Thiên Cầm", "Chùa Hương Tích"],
+  },
+  "Hai Phong": {
+    vi: "Hải Phòng",
+    region: "Đồng bằng sông Hồng",
+    labelDx: 16,
+    labelDy: -4,
+    coverImage: "/travel/hai_phong.jpg",
+    highlights: ["Đảo Cát Bà", "Vịnh Lan Hạ", "Biển Đồ Sơn", "Tuyệt Tình Cốc"],
+    travelDate: "Đã ghé thăm • Mùa thu 2024",
+  },
   "Ho Chi Minh": {
     vi: "TP. Hồ Chí Minh",
     region: "Đông Nam Bộ",
@@ -54,32 +118,125 @@ const PROVINCE_MAP: Record<string, ProvinceInfo> = {
     highlights: ["Nhà thờ Đức Bà", "Landmark 81", "Bưu điện TP", "Phố Nguyễn Huệ"],
     travelDate: "Đã ghé thăm • 2025",
   },
-  "Hue": { vi: "Thừa Thiên Huế", region: "Bắc Trung Bộ" },
-  "Hung Yen": { vi: "Hưng Yên", region: "Đồng bằng sông Hồng" },
-  "Khanh Hoa": { vi: "Khánh Hòa", region: "Nam Trung Bộ" },
-  "Lai Chau": { vi: "Lai Châu", region: "Tây Bắc Bộ" },
-  "Lam Dong": { vi: "Lâm Đồng", region: "Tây Nguyên" },
-  "Lang Son": { vi: "Lạng Sơn", region: "Đông Bắc Bộ" },
-  "Lao Cai": { vi: "Lào Cai", region: "Tây Bắc Bộ" },
-  "Nghe An": { vi: "Nghệ An", region: "Bắc Trung Bộ" },
-  "Ninh Binh": { vi: "Ninh Bình", region: "Đồng bằng sông Hồng" },
-  "Phu Tho": { vi: "Phú Thọ", region: "Đông Bắc Bộ" },
-  "Quang Ngai": { vi: "Quảng Ngãi", region: "Nam Trung Bộ" },
+  "Hue": {
+    vi: "Thừa Thiên Huế",
+    region: "Bắc Trung Bộ",
+    coverImage: "/travel/hue.jpg",
+    highlights: ["Đại Nội Huế", "Chùa Thiên Mụ", "Lăng Khải Định", "Sông Hương"],
+  },
+  "Hung Yen": {
+    vi: "Hưng Yên",
+    region: "Đồng bằng sông Hồng",
+    coverImage: "/travel/hung_yen.jpg",
+    highlights: ["Phố Hiến", "Đền Đồng Tử Vương", "Chùa Nôm", "Làng Nôm cổ"],
+  },
+  "Khanh Hoa": {
+    vi: "Khánh Hòa",
+    region: "Nam Trung Bộ",
+    coverImage: "/travel/khanh_hoa.jpg",
+    highlights: ["Vịnh Nha Trang", "Đảo Điệp Sơn", "Tháp Bà Ponagar", "VinWonders"],
+    travelDate: "Đã ghé thăm • 2024",
+  },
+  "Lai Chau": {
+    vi: "Lai Châu",
+    region: "Tây Bắc Bộ",
+    coverImage: "/travel/lai_chau.jpg",
+    highlights: ["Đèo Ô Quy Hồ", "Đỉnh Putaleng", "Cao nguyên Sìn Hồ", "Bản Sin Suối Hồ"],
+  },
+  "Lam Dong": {
+    vi: "Lâm Đồng",
+    region: "Tây Nguyên",
+    coverImage: "/travel/lam_dong.jpg",
+    highlights: ["Hồ Xuân Hương", "Thung Lũng Tình Yêu", "Dinh Bảo Đại", "Đồi chè Cầu Đất"],
+    travelDate: "Đã ghé thăm • Mùa đông 2024",
+  },
+  "Lang Son": {
+    vi: "Lạng Sơn",
+    region: "Đông Bắc Bộ",
+    coverImage: "/travel/lang_son.jpg",
+    highlights: ["Đỉnh Mẫu Sơn", "Động Tam Thanh", "Ải Chi Lăng", "Chợ Tân Thanh"],
+  },
+  "Lao Cai": {
+    vi: "Lào Cai",
+    region: "Tây Bắc Bộ",
+    coverImage: "/travel/lao_cai.jpg",
+    highlights: ["Sapa", "Đỉnh Fansipan", "Bản Cát Cát", "Y Tý"],
+  },
+  "Nghe An": {
+    vi: "Nghệ An",
+    region: "Bắc Trung Bộ",
+    coverImage: "/travel/nghe_an.jpg",
+    highlights: ["Biển Cửa Lò", "Khu di tích Kim Liên", "Đồi chè Thanh Chương", "VQG Pù Mát"],
+  },
+  "Ninh Binh": {
+    vi: "Ninh Bình",
+    region: "Đồng bằng sông Hồng",
+    coverImage: "/travel/ninh_binh.jpg",
+    highlights: ["Quần thể Tràng An", "Chùa Bái Đính", "Hang Múa", "Tam Cốc - Bích Động"],
+    travelDate: "Đã ghé thăm • Mùa xuân 2024",
+  },
+  "Phu Tho": {
+    vi: "Phú Thọ",
+    region: "Đông Bắc Bộ",
+    coverImage: "/travel/phu_tho.jpg",
+    highlights: ["Khu di tích Đền Hùng", "Đồi chè Long Cốc", "VQG Xuân Sơn", "Đầm Long"],
+  },
+  "Quang Ngai": {
+    vi: "Quảng Ngãi",
+    region: "Nam Trung Bộ",
+    coverImage: "/travel/quang_ngai.jpg",
+    highlights: ["Đảo Lý Sơn", "Mũi Ba Làng An", "Biển Mỹ Khê", "Đèo Vi Ô Lắc"],
+  },
   "Quang Ninh": {
     vi: "Quảng Ninh",
     region: "Đông Bắc Bộ",
-    labelDx: 16,
-    labelDy: -4,
+    coverImage: "/travel/quang_ninh.jpg",
     highlights: ["Vịnh Hạ Long", "Đảo Cô Tô", "Yên Tử", "Vân Đồn"],
-    travelDate: "Đã ghé thăm • Mùa thu 2024",
   },
-  "Quang Tri": { vi: "Quảng Trị", region: "Bắc Trung Bộ" },
-  "Son La": { vi: "Sơn La", region: "Tây Bắc Bộ" },
-  "Tay Ninh": { vi: "Tây Ninh", region: "Đông Nam Bộ" },
-  "Thai Nguyen": { vi: "Thái Nguyên", region: "Đông Bắc Bộ" },
-  "Thanh Hoa": { vi: "Thanh Hóa", region: "Bắc Trung Bộ" },
-  "Tuyen Quang": { vi: "Tuyên Quang", region: "Đông Bắc Bộ" },
-  "Vinh Long": { vi: "Vĩnh Long", region: "Tây Nam Bộ" },
+  "Quang Tri": {
+    vi: "Quảng Trị",
+    region: "Bắc Trung Bộ",
+    coverImage: "/travel/quang_tri.jpg",
+    highlights: ["Thành cổ Quảng Trị", "Địa đạo Vịnh Mốc", "Cầu Hiền Lương", "Nghĩa trang Trường Sơn"],
+  },
+  "Son La": {
+    vi: "Sơn La",
+    region: "Tây Bắc Bộ",
+    coverImage: "/travel/son_la.jpg",
+    highlights: ["Mộc Châu", "Đèo Chín Dốc", "Rừng thông Bản Áng", "Thác Dải Yếm"],
+  },
+  "Tay Ninh": {
+    vi: "Tây Ninh",
+    region: "Đông Nam Bộ",
+    coverImage: "/travel/tay_ninh.jpg",
+    highlights: ["Núi Bà Đen", "Tòa Thánh Tây Ninh", "Hồ Dầu Tiếng", "Ma Thiên Lãnh"],
+    travelDate: "Đã ghé thăm • 2024",
+  },
+  "Thai Nguyen": {
+    vi: "Thái Nguyên",
+    region: "Đông Bắc Bộ",
+    coverImage: "/travel/thai_nguyen.jpg",
+    highlights: ["Hồ Núi Cốc", "Đồi chè Tân Cương", "Hang Phượng Hoàng", "ATK Định Hóa"],
+  },
+  "Thanh Hoa": {
+    vi: "Thanh Hóa",
+    region: "Bắc Trung Bộ",
+    coverImage: "/travel/thanh_hoa.jpg",
+    highlights: ["Bãi biển Sầm Sơn", "Thành Nhà Hồ", "Pù Luông", "Suối cá thần Cẩm Lương"],
+    travelDate: "Đã ghé thăm • Mùa hè 2024",
+  },
+  "Tuyen Quang": {
+    vi: "Tuyên Quang",
+    region: "Đông Bắc Bộ",
+    coverImage: "/travel/tuyen_quang.jpg",
+    highlights: ["Khu di tích Tân Trào", "Hồ Na Hang", "Thác Mơ", "Suối khoáng Mỹ Lâm"],
+  },
+  "Vinh Long": {
+    vi: "Vĩnh Long",
+    region: "Tây Nam Bộ",
+    coverImage: "/travel/vinh_long.jpg",
+    highlights: ["Cù lao An Bình", "Chợ nổi Trà Ô", "Văn Thánh Miếu", "Làng gạch Mang Thít"],
+  },
 };
 
 const COUNTRY_NAME_VN: Record<string, string> = {
@@ -499,23 +656,30 @@ export default function VietnamMap() {
             .style("stroke-width", 2.2)
             .style("opacity", 1);
 
-          if (isVisited && info.coverImage) {
+          if (info.coverImage) {
             tooltip.html(`
               <div style="width: 260px; overflow: hidden; border-radius: 12px; background: #0c131d;">
                 <div style="position: relative; width: 100%; height: 130px; overflow: hidden;">
                   <img src="${info.coverImage}" alt="${info.vi}" style="width: 100%; height: 100%; object-fit: cover;" />
                   <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(12, 19, 29, 0.95) 0%, rgba(12, 19, 29, 0.3) 60%, transparent 100%);"></div>
-                  <span style="position: absolute; top: 10px; right: 10px; display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 9999px; background: rgba(16, 185, 129, 0.9); color: #ffffff; backdrop-filter: blur(4px);">
-                    <span style="width: 6px; height: 6px; border-radius: 50%; background: #ffffff;"></span>
-                    Đã ghé thăm
-                  </span>
+                  ${
+                    isVisited
+                      ? `<span style="position: absolute; top: 10px; right: 10px; display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 9999px; background: rgba(16, 185, 129, 0.9); color: #ffffff; backdrop-filter: blur(4px);">
+                          <span style="width: 6px; height: 6px; border-radius: 50%; background: #ffffff;"></span>
+                          Đã ghé thăm
+                        </span>`
+                      : `<span style="position: absolute; top: 10px; right: 10px; display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 9999px; background: rgba(51, 65, 85, 0.85); color: #cbd5e1; backdrop-filter: blur(4px); border: 1px solid rgba(148, 163, 184, 0.2);">
+                          <span style="width: 6px; height: 6px; border-radius: 50%; background: #94a3b8;"></span>
+                          Chưa ghé thăm
+                        </span>`
+                  }
                   <div style="position: absolute; bottom: 8px; left: 12px; right: 12px;">
                     <div style="font-weight: 800; font-size: 15px; color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.6);">${info.vi}</div>
                     <div style="font-size: 11px; color: #cbd5e1; font-weight: 500;">${info.region}</div>
                   </div>
                 </div>
                 <div style="padding: 10px 12px 12px 12px;">
-                  <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary-400); margin-bottom: 6px;">Bộ sưu tập hành trình</div>
+                  <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary-400); margin-bottom: 6px;">${isVisited ? "Bộ sưu tập hành trình" : "Điểm nổi bật"}</div>
                   <div style="display: flex; flex-wrap: wrap; gap: 4px;">
                     ${(info.highlights || [])
                       .map(
@@ -525,7 +689,7 @@ export default function VietnamMap() {
                       .join("")}
                   </div>
                   ${
-                    info.travelDate
+                    isVisited && info.travelDate
                       ? `<div style="font-size: 10px; color: #94a3b8; margin-top: 8px; font-style: italic;">${info.travelDate}</div>`
                       : ""
                   }

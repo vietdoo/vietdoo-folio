@@ -134,7 +134,7 @@ export const SITE = {
     "Ha Noi",
     "Ho Chi Minh",
     "Da Nang",
-    "Quang Ninh",
+    "Hai Phong",
     "Lam Dong",
     "Dong Nai",
     "Tay Ninh",
