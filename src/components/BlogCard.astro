@@ -29,13 +29,13 @@ const formattedDate = latestPost?.data.pubDate
   href="/blog"
   colSpan="md:col-span-1"
   rowSpan="md:row-span-2"
-  padding="p-4 sm:p-5"
+  padding="p-3.5 sm:p-4"
   arrowCorner={true}
 >
-  <div class="h-full flex flex-col justify-between gap-3">
+  <div class="h-full flex flex-col justify-between gap-2 overflow-hidden">
     {/* Top Header Bar */}
-    <div class="flex items-center gap-2 pr-6">
-      <h2 class="text-base sm:text-lg font-bold m-0 text-white tracking-tight">
+    <div class="flex items-center gap-2 pr-6 flex-shrink-0">
+      <h2 class="text-base font-bold m-0 text-white tracking-tight">
         Blog
       </h2>
       <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-darkslate-600 text-white/80 border border-white/10 font-semibold">
@@ -45,7 +45,7 @@ const formattedDate = latestPost?.data.pubDate
 
     {/* Crisp Featured Thumbnail Image Frame */}
     {latestPost?.data.image && (
-      <div class="relative w-full h-28 sm:h-32 rounded-lg overflow-hidden border border-white/10 bg-darkslate-600 shadow-md group-hover:border-primary-500/40 transition-colors flex-shrink-0">
+      <div class="relative w-full h-20 sm:h-24 rounded-lg overflow-hidden border border-white/10 bg-darkslate-600 shadow-md group-hover:border-primary-500/40 transition-colors flex-shrink-0">
         <img
           src={latestPost.data.image}
           alt={latestPost.data.title}
@@ -53,7 +53,7 @@ const formattedDate = latestPost?.data.pubDate
           loading="lazy"
         />
         {/* Category Tag Badge */}
-        <span class="absolute top-2 left-2 text-[9px] font-mono font-bold uppercase tracking-wider text-white bg-black/80 backdrop-blur-md px-2 py-0.5 rounded border border-white/20">
+        <span class="absolute top-1.5 left-1.5 text-[9px] font-mono font-bold uppercase tracking-wider text-white bg-black/80 backdrop-blur-md px-2 py-0.5 rounded border border-white/20">
           {latestPost.data.category || "FEATURED"}
         </span>
       </div>
@@ -61,24 +61,22 @@ const formattedDate = latestPost?.data.pubDate
 
     {/* Article Info */}
     {latestPost && (
-      <div class="flex-1 flex flex-col justify-between min-h-0">
+      <div class="flex-1 flex flex-col justify-between min-h-0 pt-0.5">
         <div>
-          <span class="text-[11px] font-mono text-white/50 block mb-1 font-medium">
+          <span class="text-[10px] font-mono text-white/50 block mb-0.5 font-medium">
             {formattedDate}
           </span>
-          <h3 class="text-xs sm:text-sm font-semibold text-white group-hover:text-primary-400 transition-colors line-clamp-2 leading-snug">
+          <h3 class="text-xs sm:text-sm font-semibold text-white/95 group-hover:text-primary-400 transition-colors line-clamp-2 leading-snug">
             {latestPost.data.title}
           </h3>
         </div>
 
-        {/* Read action link */}
-        <div class="pt-2 flex items-center justify-between text-xs text-white/70 group-hover:text-white transition-colors border-t border-white/10 mt-2">
-          <span class="text-[11px] font-mono text-white/70">Read article</span>
-          <span class="text-primary-400 group-hover:translate-x-1 transition-transform font-bold text-sm">&rarr;</span>
+        <div class="pt-1 flex items-center justify-between text-[11px] font-mono text-white/60 group-hover:text-white transition-colors border-t border-white/10 mt-1">
+          <span>Latest article</span>
+          <span class="text-primary-400 group-hover:translate-x-1 transition-transform font-bold">&rarr;</span>
         </div>
       </div>
     )}
   </div>
 </Card>
-
 

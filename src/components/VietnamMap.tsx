@@ -664,13 +664,13 @@ export default function VietnamMap() {
                   <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(12, 19, 29, 0.95) 0%, rgba(12, 19, 29, 0.3) 60%, transparent 100%);"></div>
                   ${
                     isVisited
-                      ? `<span style="position: absolute; top: 10px; right: 10px; display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 9999px; background: rgba(16, 185, 129, 0.9); color: #ffffff; backdrop-filter: blur(4px);">
-                          <span style="width: 6px; height: 6px; border-radius: 50%; background: #ffffff;"></span>
-                          Đã ghé thăm
+                      ? `<span style="position: absolute; top: 10px; right: 10px; display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-family: var(--font-mono), monospace; font-weight: 600; letter-spacing: 0.05em; padding: 3px 9px; border-radius: 6px; background: rgba(12, 19, 29, 0.85); color: #6ee7b7; border: 1px solid rgba(52, 211, 153, 0.35); backdrop-filter: blur(8px);">
+                          <span style="width: 5px; height: 5px; border-radius: 50%; background: #34d399;"></span>
+                          ĐÃ GHÉ THĂM
                         </span>`
-                      : `<span style="position: absolute; top: 10px; right: 10px; display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 9999px; background: rgba(51, 65, 85, 0.85); color: #cbd5e1; backdrop-filter: blur(4px); border: 1px solid rgba(148, 163, 184, 0.2);">
-                          <span style="width: 6px; height: 6px; border-radius: 50%; background: #94a3b8;"></span>
-                          Chưa ghé thăm
+                      : `<span style="position: absolute; top: 10px; right: 10px; display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-family: var(--font-mono), monospace; font-weight: 500; letter-spacing: 0.05em; padding: 3px 9px; border-radius: 6px; background: rgba(12, 19, 29, 0.85); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.2); backdrop-filter: blur(8px);">
+                          <span style="width: 5px; height: 5px; border-radius: 50%; background: #64748b;"></span>
+                          CHƯA GHÉ THĂM
                         </span>`
                   }
                   <div style="position: absolute; bottom: 8px; left: 12px; right: 12px;">
@@ -897,16 +897,16 @@ export default function VietnamMap() {
 
             {/* Title & Status */}
             <div class={`px-4 ${selectedProvince()!.info.coverImage ? "-mt-8 relative z-10" : "pt-1"}`}>
-              <div class="flex items-center gap-2 mb-1">
+              <div class="flex items-center gap-2 mb-1.5">
                 {selectedProvince()!.isVisited ? (
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/90 text-white shadow-sm">
-                    <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                    Đã ghé thăm
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] font-mono font-semibold tracking-wider bg-darkslate-900/85 text-emerald-300 border border-emerald-500/35 backdrop-blur-md">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    ĐÃ GHÉ THĂM
                   </span>
                 ) : (
-                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-darkslate-600/80 text-slate-300 border border-darkslate-500/60">
-                    <span class="w-1.5 h-1.5 rounded-full bg-slate-400" />
-                    Chưa ghé thăm
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[10px] font-mono font-medium tracking-wider bg-darkslate-900/85 text-slate-400 border border-white/10 backdrop-blur-md">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-500" />
+                    CHƯA GHÉ THĂM
                   </span>
                 )}
               </div>
