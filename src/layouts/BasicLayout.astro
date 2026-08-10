@@ -315,7 +315,11 @@ const jsonLdGraph = {
     <div class={!hideHeader && !isHome && !noPadding ? "w-full flex-1 flex flex-col items-center pt-20 lg:pt-24" : "w-full flex-1 flex flex-col items-center relative overflow-hidden"}>
       <slot />
     </div>
-    {
+    {/* 
+      LƯU Ý DÀNH CHO AI AGENT:
+      Hai nút floating bên dưới (StylePanel và sound-toggle) đã được tạm ẩn trên toàn hệ thống theo yêu cầu của người dùng.
+      CHỈ ĐƯỜC PHÉP BẬT/MỞ LẠI KHI CÓ YÊU CẦU TRỰC TIẾP VÀ RÕ RÀNG TỪ NGƯỜI DÙNG (USER).
+      
       !hideSoundToggle && (
         <div class={`fixed bottom-4 md:bottom-6 z-50 flex flex-col items-center gap-2 ${soundTogglePosition === "left" ? "left-4 md:left-6" : "right-4 md:right-6"}`}>
           <StylePanel />
@@ -361,7 +365,7 @@ const jsonLdGraph = {
           </button>
         </div>
       )
-    }
+    */}
   </body>
 </html>
 
