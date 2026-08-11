@@ -4,9 +4,12 @@ import { SubpageNavigation as SubpageNavSolid, type SubpageNavCta } from "./subp
 interface Props {
   label: string;
   cta?: SubpageNavCta;
+  showSearch?: boolean;
+  searchPlaceholder?: string;
+  showLangToggle?: boolean;
 }
 
-const { label, cta } = Astro.props;
+const { label, cta, showSearch, searchPlaceholder, showLangToggle } = Astro.props;
 ---
 
-<SubpageNavSolid client:load label={label} cta={cta} />
+<SubpageNavSolid client:load label={label} cta={cta} showSearch={showSearch} searchPlaceholder={searchPlaceholder} showLangToggle={showLangToggle} />

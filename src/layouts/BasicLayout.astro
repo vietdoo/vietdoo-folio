@@ -22,6 +22,8 @@ interface Props {
   navLabel?: string;
   navCta?: SubpageNavCta;
   hideHeader?: boolean;
+  showSearch?: boolean;
+  searchPlaceholder?: string;
 }
 
 const {
@@ -37,6 +39,8 @@ const {
   navLabel,
   navCta,
   hideHeader,
+  showSearch,
+  searchPlaceholder,
 } = Astro.props;
 
 const siteBaseUrl = SITE.site.url.endsWith("/") ? SITE.site.url.slice(0, -1) : SITE.site.url;
@@ -68,6 +72,15 @@ const autoLabel = defaultLabelMap[currentPath] ||
     : "Subpage");
 
 const resolvedNavLabel = navLabel || autoLabel;
+
+const searchRoutes = ["/playground", "/blog", "/books", "/engineering-showcase"];
+const resolvedShowSearch =
+  showSearch !== undefined
+    ? showSearch
+    : searchRoutes.some((r) => currentPath === r || currentPath.startsWith(`${r}/`));
+
+const resolvedSearchPlaceholder =
+  searchPlaceholder || `Search ${resolvedNavLabel.toLowerCase()}...`;
 
 const breadcrumbItems = [
   {
@@ -338,7 +351,14 @@ const jsonLdGraph = {
     <slot name="loader" />
     {
       !hideHeader && !isHome && (
-        <SubpageNavigation client:load label={resolvedNavLabel} cta={navCta} />
+        <SubpageNavigation
+          client:load
+          label={resolvedNavLabel}
+          cta={navCta}
+          showSearch={resolvedShowSearch}
+          searchPlaceholder={resolvedSearchPlaceholder}
+          showLangToggle={page === "blog" || currentPath.startsWith("/blog")}
+        />
       )
     }
     <div class={!hideHeader && !isHome && !noPadding ? "w-full flex-1 flex flex-col items-center pt-20 lg:pt-24" : "w-full flex-1 flex flex-col items-center relative overflow-hidden"}>

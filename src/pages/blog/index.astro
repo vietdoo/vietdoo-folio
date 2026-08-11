@@ -21,9 +21,6 @@ const posts = await getPublishedPosts();
     class="w-full min-h-screen flex flex-col justify-start items-start max-w-3xl mx-auto px-3.5 sm:px-8 py-6 sm:py-8"
   >
     <div class="w-full mb-6">
-      <div class="flex items-center justify-end gap-4 mb-6">
-        <LangToggle current="en" />
-      </div>
       <h1 class="text-3xl sm:text-4xl font-bold text-neutral-100 tracking-tight">Posts</h1>
     </div>
 
@@ -52,11 +49,14 @@ const posts = await getPublishedPosts();
     try {
       var stored = localStorage.getItem("portfolio:blog-lang");
       var lang = stored === "vi" ? "vi" : "en";
+      var params = new URLSearchParams(window.location.search);
+      var q = (params.get("q") || "").toLowerCase().trim();
       var rows = document.querySelectorAll("[data-post-lang]");
       var visible = 0;
       rows.forEach(function (row) {
-        var matches = row.getAttribute("data-post-lang") === lang;
-        if (matches) {
+        var langMatches = row.getAttribute("data-post-lang") === lang;
+        var textMatches = !q || (row.getAttribute("data-search-text") || "").indexOf(q) !== -1;
+        if (langMatches && textMatches) {
           row.removeAttribute("hidden");
           visible++;
         } else {
@@ -69,6 +69,9 @@ const posts = await getPublishedPosts();
           empty.setAttribute("hidden", "");
         } else {
           empty.removeAttribute("hidden");
+          if (q) {
+            empty.textContent = "No posts matching your search query.";
+          }
         }
       }
       var options = document.querySelectorAll("[data-lang-toggle] [data-lang-option]");
@@ -89,22 +92,37 @@ const posts = await getPublishedPosts();
 <script>
   import { BLOG_LANG_KEY } from "../../lib/blog-lang";
 
-  function applyLanguage(lang: string) {
+  let currentLang = "en";
+  let currentQuery = "";
+
+  function applyFilters() {
     const rows = document.querySelectorAll<HTMLElement>("[data-post-lang]");
     let visible = 0;
+    const q = currentQuery.toLowerCase().trim();
+
     rows.forEach((row) => {
-      const matches = row.dataset.postLang === lang;
-      row.hidden = !matches;
-      if (matches) visible += 1;
+      const matchesLang = row.dataset.postLang === currentLang;
+      const matchesText = !q || (row.dataset.searchText || "").includes(q);
+      const isVisible = matchesLang && matchesText;
+
+      row.hidden = !isVisible;
+      if (isVisible) visible += 1;
     });
 
     const empty = document.querySelector<HTMLElement>("[data-empty-lang]");
-    if (empty) empty.hidden = visible > 0 || rows.length === 0;
+    if (empty) {
+      empty.hidden = visible > 0 || rows.length === 0;
+      if (q && visible === 0) {
+        empty.textContent = "No posts matching your search query.";
+      } else {
+        empty.textContent = "No posts in this language yet.";
+      }
+    }
 
     document
       .querySelectorAll<HTMLElement>("[data-lang-toggle] [data-lang-option]")
       .forEach((option) => {
-        const isCurrent = option.dataset.langOption === lang;
+        const isCurrent = option.dataset.langOption === currentLang;
         option.dataset.active = isCurrent ? "true" : "false";
         option.setAttribute("aria-pressed", String(isCurrent));
         if (isCurrent) {
@@ -115,21 +133,41 @@ const posts = await getPublishedPosts();
       });
   }
 
-  function setupLanguageFilter() {
+  function setupBlogFilters() {
     if (!document.querySelector("[data-post-list]")) return;
 
     const stored = localStorage.getItem(BLOG_LANG_KEY);
-    applyLanguage(stored === "vi" ? "vi" : "en");
+    currentLang = stored === "vi" ? "vi" : "en";
+
+    const params = new URLSearchParams(window.location.search);
+    currentQuery = params.get("q") || "";
+
+    applyFilters();
 
     document
       .querySelectorAll<HTMLElement>("[data-lang-toggle] [data-lang-option]")
       .forEach((option) => {
         option.addEventListener("click", () => {
           const lang = option.dataset.langOption;
-          if (lang) applyLanguage(lang);
+          if (lang) {
+            currentLang = lang;
+            applyFilters();
+          }
         });
       });
+
+    window.addEventListener("header-search", (e: any) => {
+      currentQuery = e.detail?.query || "";
+      applyFilters();
+    });
+
+    window.addEventListener("blog-lang-change", (e: any) => {
+      currentLang = e.detail?.lang || "en";
+      applyFilters();
+    });
   }
 
-  document.addEventListener("astro:page-load", setupLanguageFilter);
+  document.addEventListener("astro:page-load", setupBlogFilters);
+  setupBlogFilters();
 </script>
+

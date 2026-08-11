@@ -68,38 +68,85 @@ const projects = [
     class="w-full min-h-screen flex flex-col justify-start items-start max-w-3xl mx-auto px-3.5 sm:px-8 py-6 sm:py-8 text-white"
   >
     <h1 class="text-2xl sm:text-4xl font-bold mb-4 text-neutral-100">Playground</h1>
-    <div class="grid grid-cols-2 gap-4 w-full">
+    <div class="grid grid-cols-2 gap-4 w-full" id="playground-grid">
       {
         projects.map((project, i) => (
-          <Card
-            href={`/playground${project.slug}`}
-            height="h-auto"
-            colSpan="col-span-2 md:col-span-1"
-            arrowCorner={true}
+          <div
+            class="col-span-2 md:col-span-1 flex"
+            data-playground-card
+            data-search-text={`${project.title} ${project.description} ${project.tags.join(" ")}`.toLowerCase()}
           >
-            <div class="flex flex-col gap-3">
-              <span class="text-[10px] font-medium tabular-nums text-darkslate-400 tracking-widest">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <h2 class="font-semibold text-lg leading-snug text-darkslate-50">
-                  {project.title}
-                </h2>
-                <p class="text-darkslate-300 text-sm mt-1">
-                  {project.description}
-                </p>
+            <Card
+              href={`/playground${project.slug}`}
+              height="h-auto"
+              colSpan="w-full"
+              arrowCorner={true}
+            >
+              <div class="flex flex-col gap-3">
+                <span class="text-[10px] font-medium tabular-nums text-darkslate-400 tracking-widest">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h2 class="font-semibold text-lg leading-snug text-darkslate-50">
+                    {project.title}
+                  </h2>
+                  <p class="text-darkslate-300 text-sm mt-1">
+                    {project.description}
+                  </p>
+                </div>
+                <div class="flex flex-wrap gap-1.5 mt-1">
+                  {project.tags.map((tag) => (
+                    <span class="text-[10px] font-medium px-2 py-0.5 rounded-full border border-darkslate-400 text-darkslate-300">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div class="flex flex-wrap gap-1.5 mt-1">
-                {project.tags.map((tag) => (
-                  <span class="text-[10px] font-medium px-2 py-0.5 rounded-full border border-darkslate-400 text-darkslate-300">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </Card>
+            </Card>
+          </div>
         ))
       }
     </div>
+    <div id="playground-empty" class="hidden text-neutral-400 text-sm py-12 w-full text-center font-mono">
+      No playground tools match your search query.
+    </div>
   </main>
 </Layout>
+
+<script>
+  function setupPlaygroundSearch() {
+    const grid = document.getElementById("playground-grid");
+    const emptyMsg = document.getElementById("playground-empty");
+    if (!grid) return;
+
+    const cards = grid.querySelectorAll<HTMLElement>("[data-playground-card]");
+
+    function filterCards(query: string) {
+      const q = query.toLowerCase().trim();
+      let matchCount = 0;
+
+      cards.forEach((card) => {
+        const searchText = card.dataset.searchText || "";
+        const matches = !q || searchText.includes(q);
+        card.style.display = matches ? "" : "none";
+        if (matches) matchCount++;
+      });
+
+      if (emptyMsg) {
+        emptyMsg.classList.toggle("hidden", matchCount > 0 || cards.length === 0);
+      }
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const initialQuery = params.get("q") || "";
+    filterCards(initialQuery);
+
+    window.addEventListener("header-search", (e: any) => {
+      filterCards(e.detail?.query || "");
+    });
+  }
+
+  document.addEventListener("astro:page-load", setupPlaygroundSearch);
+  setupPlaygroundSearch();
+</script>
+
