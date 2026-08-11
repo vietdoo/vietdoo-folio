@@ -6,18 +6,20 @@
 - **Primary Name (Vietnamese)**: Đỗ Quốc Việt
 - **Primary Name (English)**: Do Quoc Viet
 - **Handle / Username**: vietdoo
-- **Entity Aliases**: Đỗ Quốc Việt, Do Quoc Viet, vietdoo, Đỗ Quốc Việt VNPT, Do Quoc Viet VNPT, vietdoo-folio, Quoc Viet Do
-- **Official Website**: https://vndo.vn
+- **Entity Aliases**: Đỗ Quốc Việt, Do Quoc Viet, vietdoo, Đỗ Quốc Việt VNPT, Do Quoc Viet VNPT, Do Quoc Viet (vietdoo), vietdoo software engineer, vietdoo-folio, Quoc Viet Do
+- **Official Website**: https://vietdoo.vndo.vn
+- **VNDO SaaS Platform**: https://vndo.vn
 - **GitHub**: https://github.com/vietdoo
 - **LinkedIn**: https://www.linkedin.com/in/vietdoo/
+- **Twitter / X**: https://x.com/vietdoo
 - **Email**: vietdoo@outlook.com
 
 ## Current Role & Organization
 - **Job Title**: Software Engineer
-- **Full Role**: Software Engineer @ VNPT Group
+- **Full Role**: Software Engineer @ VNPT Group & Founder @ VNDO
 - **Organization**: VNPT Group (Tập đoàn Bưu chính Viễn thông Việt Nam / Vietnam Posts and Telecommunications Group)
 - **Organization Aliases**: VNPT Group, VNPT, Tập đoàn Bưu chính Viễn thông Việt Nam, Vietnam Posts and Telecommunications Group
-- **Location**: Hanoi, Vietnam
+- **Location**: Ho Chi Minh City, Vietnam
 
 ## Flagship Project
 - **Primary Project**: Vietnam National Public Service Portal (Cổng Dịch vụ công Quốc gia)

@@ -14,6 +14,7 @@ interface Props {
   page?: "travel" | "blog";
   slug?: string | undefined;
   pubDate?: string;
+  keywords?: string[];
   hideSoundToggle?: boolean;
   soundTogglePosition?: "left" | "right";
   noPadding?: boolean;
@@ -28,6 +29,7 @@ const {
   description,
   page,
   pubDate,
+  keywords: propKeywords,
   hideSoundToggle,
   soundTogglePosition = "right",
   noPadding = false,
@@ -36,11 +38,17 @@ const {
   navCta,
   hideHeader,
 } = Astro.props;
-const canonicalUrl = Astro.url.href.split("?")[0];
-const image = `${Astro.url.origin}/og.webp`;
+
+const siteBaseUrl = SITE.site.url.endsWith("/") ? SITE.site.url.slice(0, -1) : SITE.site.url;
+const canonicalUrl = new URL(Astro.url.pathname, siteBaseUrl).href;
+const image = `${siteBaseUrl}/og.webp`;
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 const isHome = currentPath === "/";
+
+const combinedKeywords = propKeywords
+  ? Array.from(new Set([...propKeywords, ...(SITE.author.keywords || [])]))
+  : (SITE.author.keywords || []);
 
 const defaultLabelMap: Record<string, string> = {
   "/blog": "Blog",
@@ -66,7 +74,7 @@ const breadcrumbItems = [
     "@type": "ListItem",
     position: 1,
     name: "Home",
-    item: Astro.url.origin,
+    item: siteBaseUrl,
   },
 ];
 
@@ -81,14 +89,21 @@ if (!isHome) {
 
 const personEntity = {
   "@type": "Person",
-  "@id": `${Astro.url.origin}/#person`,
+  "@id": `${siteBaseUrl}/#person`,
   name: SITE.author.fullNameVi,
   alternateName: SITE.author.alternateNames,
   givenName: "Quốc Việt",
   familyName: "Đỗ",
   additionalName: SITE.author.shortName,
-  url: Astro.url.origin,
-  sameAs: [LINKS.linkedin, LINKS.github, LINKS.medium, LINKS.goodreads],
+  url: siteBaseUrl,
+  sameAs: [
+    LINKS.linkedin,
+    LINKS.github,
+    LINKS.twitter,
+    LINKS.medium,
+    LINKS.goodreads,
+    "https://cal.com/vietdoo",
+  ],
   image: "https://github.com/vietdoo.png",
   jobTitle: SITE.author.jobTitleFull || SITE.author.jobTitle,
   description: SITE.site.description || description,
@@ -132,25 +147,36 @@ const personEntity = {
 
 const webSiteEntity = {
   "@type": "WebSite",
-  "@id": `${Astro.url.origin}/#website`,
-  url: Astro.url.origin,
+  "@id": `${siteBaseUrl}/#website`,
+  url: siteBaseUrl,
   name: SITE.site.title,
   description: SITE.site.description,
-  publisher: { "@id": `${Astro.url.origin}/#person` },
+  publisher: { "@id": `${siteBaseUrl}/#person` },
   inLanguage: ["en-US", "vi-VN"],
 };
 
-const webPageEntity = {
-  "@type": page === "blog" ? "ItemPage" : "WebPage",
-  "@id": canonicalUrl,
-  url: canonicalUrl,
-  name: title,
-  description: description,
-  isPartOf: { "@id": `${Astro.url.origin}/#website` },
-  about: { "@id": `${Astro.url.origin}/#person` },
-  author: { "@id": `${Astro.url.origin}/#person` },
-  inLanguage: "en-US",
-};
+const webPageEntity = isHome
+  ? {
+      "@type": "ProfilePage",
+      "@id": `${siteBaseUrl}/#webpage`,
+      url: siteBaseUrl,
+      name: title,
+      description: description,
+      mainEntity: { "@id": `${siteBaseUrl}/#person` },
+      isPartOf: { "@id": `${siteBaseUrl}/#website` },
+      inLanguage: ["en-US", "vi-VN"],
+    }
+  : {
+      "@type": page === "blog" ? "ItemPage" : "WebPage",
+      "@id": canonicalUrl,
+      url: canonicalUrl,
+      name: title,
+      description: description,
+      isPartOf: { "@id": `${siteBaseUrl}/#website` },
+      about: { "@id": `${siteBaseUrl}/#person` },
+      author: { "@id": `${siteBaseUrl}/#person` },
+      inLanguage: "en-US",
+    };
 
 const breadcrumbEntity = {
   "@type": "BreadcrumbList",
@@ -168,11 +194,11 @@ if (page === "blog") {
     headline: title,
     description: description,
     image: image,
-    author: { "@id": `${Astro.url.origin}/#person` },
-    publisher: { "@id": `${Astro.url.origin}/#person` },
+    author: { "@id": `${siteBaseUrl}/#person` },
+    publisher: { "@id": `${siteBaseUrl}/#person` },
     datePublished: pubDate || new Date().toISOString(),
     dateModified: pubDate || new Date().toISOString(),
-    isPartOf: { "@id": `${Astro.url.origin}/#website` },
+    isPartOf: { "@id": `${siteBaseUrl}/#website` },
     inLanguage: "en-US",
   });
 }
@@ -194,6 +220,9 @@ const jsonLdGraph = {
     <ClientRouter />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={canonicalUrl} />
+    <link rel="alternate" hreflang="vi" href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
     <link rel="icon" type="image/png" href="/icon-dark-32x32.png" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/png" href="/icon-light-32x32.png" media="(prefers-color-scheme: light)" />
     <link rel="icon" type="image/png" href="/vndo.png" />
@@ -209,7 +238,7 @@ const jsonLdGraph = {
     <meta name="author" content={`${SITE.author.fullNameVi} (${SITE.author.shortName})`} />
     <meta
       name="keywords"
-      content={SITE.author.keywords ? SITE.author.keywords.join(", ") : ""}
+      content={combinedKeywords.join(", ")}
     />
     <meta
       content={page === "blog" ? "article" : "website"}
@@ -222,7 +251,7 @@ const jsonLdGraph = {
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="vi_VN" />
     <meta
-      content={`${Astro.url.origin}/og.webp`}
+      content={image}
       property="og:image"
     />
     <meta property="og:image:alt" content={description} />
@@ -235,7 +264,7 @@ const jsonLdGraph = {
     <meta name="twitter:site" content={`@${SITE.author.twitterHandle}`} />
     <meta name="twitter:creator" content={`@${SITE.author.twitterHandle}`} />
     <meta
-      content={`${Astro.url.origin}/og.webp`}
+      content={image}
       name="twitter:image"
     />
 
