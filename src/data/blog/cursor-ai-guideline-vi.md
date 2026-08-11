@@ -1,5 +1,5 @@
 ---
-title: "Cursor AI: Dùng Đúng Thành Thần, Dùng Sai Thành Thảm"
+title: "Làm Chủ Cursor AI: Quy Trình 3 Lớp, UI Pipeline & Zero Trust Security"
 description: "Bóc tách quy chuẩn kỹ thuật nội bộ VNPT: Cách 'thu phục' Cursor AI bằng mô hình 3 lớp, pipeline UI 3 bước và Zero Trust Security để không bao giờ phải đi dọn rác code AI."
 pubDate: 2026-08-11
 category: "engineering"

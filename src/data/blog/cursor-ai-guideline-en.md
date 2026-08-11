@@ -1,5 +1,5 @@
 ---
-title: "Cursor AI: Master It or Get Wrecked by It"
+title: "Mastering Cursor AI: 3-Layer Model, UI Pipeline & Zero Trust Security"
 description: "Dissecting internal technical guidelines from VNPT: How to tame Cursor AI using a 3-layer model, 3-step UI pipeline, and Zero Trust Security to never clean up AI code garbage again."
 pubDate: 2026-08-11
 category: "engineering"
