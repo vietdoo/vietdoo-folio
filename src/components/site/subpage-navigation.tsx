@@ -79,20 +79,18 @@ export function SubpageNavigation(props: SubpageNavigationProps) {
 
   return (
     <header
-      class={`fixed z-50 transition-all duration-500 ${
-        isScrolled() ? "top-4 left-4 right-4" : "top-0 left-0 right-0"
-      }`}
+      class={`fixed z-50 transition-all duration-500 top-2 sm:top-4 left-3 sm:left-4 right-3 sm:right-4`}
     >
       <nav
-        class={`mx-auto transition-all duration-500 ${
+        class={`mx-auto transition-all duration-500 bg-darkslate-800/90 backdrop-blur-2xl border border-darkslate-500/80 rounded-2xl shadow-xl shadow-black/40 ${
           isScrolled()
-            ? "bg-darkslate-800/80 backdrop-blur-xl border border-darkslate-500 rounded-2xl shadow-lg max-w-[1200px]"
-            : "bg-transparent max-w-[1400px]"
+            ? "max-w-[1200px] border-darkslate-400/80"
+            : "max-w-[1400px]"
         }`}
       >
         <div
-          class={`flex items-center justify-between transition-all duration-500 px-4 sm:px-6 lg:px-8 ${
-            isScrolled() ? "h-14" : "h-20"
+          class={`flex items-center justify-between transition-all duration-500 px-3 sm:px-6 lg:px-8 ${
+            isScrolled() ? "h-13 sm:h-14" : "h-16 sm:h-18"
           }`}
         >
           {/* Logo Icon & Back Button */}
@@ -136,8 +134,8 @@ export function SubpageNavigation(props: SubpageNavigationProps) {
           {/* Center Area: Search Input (if enabled) OR Page Indicator */}
           {props.showSearch ? (
             <div class="flex-1 max-w-xs sm:max-w-md mx-2 sm:mx-4 relative flex items-center">
-              <div class="relative w-full group">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-darkslate-300 group-focus-within:text-primary-400 transition-colors">
+              <div class="relative w-full group flex items-center">
+                <div class="absolute left-3 flex items-center pointer-events-none text-darkslate-300 group-focus-within:text-primary-400 transition-colors">
                   <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
@@ -148,13 +146,13 @@ export function SubpageNavigation(props: SubpageNavigationProps) {
                   value={searchQuery()}
                   onInput={(e) => handleQueryChange(e.currentTarget.value)}
                   placeholder={props.searchPlaceholder || `Search ${props.label.toLowerCase()}...`}
-                  class="w-full pl-8 sm:pl-9 pr-7 sm:pr-8 py-1.5 text-xs sm:text-sm bg-darkslate-700/80 hover:bg-darkslate-600/80 focus:bg-darkslate-900/90 border border-darkslate-500/60 focus:border-primary-500/80 rounded-full text-white placeholder-darkslate-400 focus:outline-none focus:ring-1 focus:ring-primary-500/50 shadow-inner transition-all duration-200"
+                  class="w-full pl-9 sm:pl-10 pr-9 sm:pr-11 py-1.5 text-xs sm:text-sm bg-darkslate-900/90 hover:bg-darkslate-900 focus:bg-darkslate-950 border border-darkslate-500/80 focus:border-primary-500 rounded-full text-white placeholder:text-darkslate-200/80 focus:outline-none focus:ring-1 focus:ring-primary-500/50 shadow-inner transition-all duration-200"
                 />
                 {searchQuery() ? (
                   <button
                     type="button"
                     onClick={() => handleQueryChange("")}
-                    class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-darkslate-400 hover:text-white transition-colors cursor-pointer"
+                    class="absolute right-3 flex items-center text-darkslate-300 hover:text-white transition-colors cursor-pointer p-0.5"
                     aria-label="Clear search"
                   >
                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -162,7 +160,7 @@ export function SubpageNavigation(props: SubpageNavigationProps) {
                     </svg>
                   </button>
                 ) : (
-                  <kbd class="hidden sm:inline-flex absolute inset-y-0 right-0 pr-2.5 items-center pointer-events-none my-auto h-4 px-1.5 text-[10px] font-mono text-darkslate-400 bg-darkslate-800/80 border border-darkslate-600 rounded">
+                  <kbd class="hidden sm:inline-flex absolute right-3.5 pointer-events-none items-center justify-center h-4 min-w-[16px] px-1 text-[10px] font-mono font-medium text-darkslate-200 bg-darkslate-800 border border-darkslate-500/80 rounded shadow-sm">
                     /
                   </kbd>
                 )}
