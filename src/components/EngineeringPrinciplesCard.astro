@@ -31,7 +31,7 @@ const principles = [
 ];
 ---
 
-<Card colSpan="md:col-span-1" rowSpan="md:row-span-2" padding="p-3.5 sm:p-4">
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-1" padding="p-3.5 sm:p-4">
   {/* Subtle dotted matrix decorative background */}
   <div
     slot="background"
@@ -54,7 +54,7 @@ const principles = [
     {/* Principles List */}
     <ul class="space-y-1 sm:space-y-1.5 m-0 p-0 list-none flex-1 flex flex-col justify-around">
       {
-        principles.map((item) => (
+        principles.slice(0, 3).map((item) => (
           <li class="flex items-center gap-2 group/item">
             <Icon
               name={item.icon}
