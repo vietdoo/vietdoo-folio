@@ -552,3 +552,26 @@ body::before {
 .switchboard .star[data-state="high"]::after {
   opacity: 1;
 }
+
+/* ── Language Toggle Buttons ── */
+[data-lang-toggle] [data-lang-option] {
+  transition: background-color 0.15s ease, color 0.15s ease;
+  background-color: transparent !important;
+  color: var(--darkslate-200, #c9c9c9) !important;
+}
+
+[data-lang-toggle] [data-lang-option]:hover {
+  color: #ffffff !important;
+}
+
+[data-lang-toggle] [data-lang-option][data-active="true"] {
+  background-color: var(--primary-500) !important;
+  color: #0b0b0b !important;
+  font-weight: 700 !important;
+}
+
+[data-lang-toggle] [data-lang-option][data-active="false"] {
+  background-color: transparent !important;
+  color: var(--darkslate-300, #9a9a9a) !important;
+  font-weight: 500 !important;
+}
