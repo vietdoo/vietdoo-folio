@@ -43,7 +43,7 @@ export function SubpageNavigation(props: SubpageNavigationProps) {
   };
 
   onMount(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 
@@ -79,18 +79,20 @@ export function SubpageNavigation(props: SubpageNavigationProps) {
 
   return (
     <header
-      class={`fixed z-50 transition-all duration-500 top-2 sm:top-4 left-3 sm:left-4 right-3 sm:right-4`}
+      class={`fixed z-50 transition-all duration-500 ${
+        isScrolled() ? "top-4 left-4 right-4" : "top-0 left-0 right-0"
+      }`}
     >
       <nav
-        class={`mx-auto transition-all duration-500 bg-darkslate-800/90 backdrop-blur-2xl border border-darkslate-500/80 rounded-2xl shadow-xl shadow-black/40 ${
+        class={`mx-auto transition-all duration-500 ${
           isScrolled()
-            ? "max-w-[1200px] border-darkslate-400/80"
-            : "max-w-[1400px]"
+            ? "bg-darkslate-800/95 backdrop-blur-2xl border border-darkslate-500/80 rounded-2xl shadow-xl shadow-black/40 max-w-[1200px]"
+            : "bg-transparent max-w-[1400px]"
         }`}
       >
         <div
-          class={`flex items-center justify-between transition-all duration-500 px-3 sm:px-6 lg:px-8 ${
-            isScrolled() ? "h-13 sm:h-14" : "h-16 sm:h-18"
+          class={`flex items-center justify-between transition-all duration-500 px-4 sm:px-6 lg:px-8 ${
+            isScrolled() ? "h-14" : "h-20"
           }`}
         >
           {/* Logo Icon & Back Button */}
