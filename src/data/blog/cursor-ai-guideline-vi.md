@@ -1,6 +1,6 @@
 ---
-title: "Cursor AI Editor trong Doanh nghiệp: Mô hình 3 lớp, Zero Trust Security và cách team không bị 'ngáo' Code AI"
-description: "Bóc tách quy chuẩn kỹ thuật nội bộ về cách đưa Cursor AI vào quy trình sản xuất phần mềm thực tế: từ phân lớp công cụ, pipeline chuyển đổi UI, cấu hình Zero Trust đến quản trị Rules & Skills 2 cấp."
+title: "Cursor AI: Dùng Đúng Thành Thần, Dùng Sai Thành Thảm"
+description: "Bóc tách quy chuẩn kỹ thuật nội bộ VNPT: Cách 'thu phục' Cursor AI bằng mô hình 3 lớp, pipeline UI 3 bước và Zero Trust Security để không bao giờ phải đi dọn rác code AI."
 pubDate: 2026-08-11
 category: "engineering"
 image: "/blog/cursor-ai-guideline/hero.jpg"
@@ -9,19 +9,26 @@ translationKey: "cursor-ai-guideline"
 draft: false
 ---
 
-![Cursor AI Code Editor trong môi trường Doanh nghiệp](/blog/cursor-ai-guideline/hero.jpg)
+![Meme Cursor AI: Khi AI sinh rác code và dev phải đi dọn](/blog/cursor-ai-guideline/hero.jpg)
 
-> **TL;DR** — Đưa AI Code Editor vào doanh nghiệp không chỉ đơn giản là cấp tài khoản Cursor rồi bảo anh em "dùng đi cho nhanh". Nếu không có quy chuẩn, AI sẽ tạo ra một núi code "mỳ ăn liền" rác rưởi, hallucination logic nghiệp vụ, và nguy cơ leak API key nội bộ là cực kỳ cao. Bài viết này bóc tách toàn bộ tài liệu hướng dẫn kỹ thuật nội bộ của chúng tôi: từ chiến lược công cụ 3 lớp, quy trình Backend/Frontend song song, cơ chế bảo mật Zero Trust cho đến hệ thống phân cấp Rules & Skills giúp AI sinh mã đúng convention ngay lần đầu.
+> **TL;DR** — Cấp tài khoản Cursor AI cho dev mà không kèm "luật chơi" cũng giống như đưa một chiếc Ferrari cho người chưa có bằng lái: sướng được 5 phút đầu, sau đó là nát bét. Mã AI sinh ra trông có vẻ chạy được, nhưng bên dưới là một bãi rác kiến trúc, logic nghiệp vụ "ảo tưởng" (hallucination), và rủi ro rò rỉ API key nội bộ cực kỳ cao. Bài viết này bóc tách toàn bộ tài liệu hướng dẫn kỹ thuật nội bộ của chúng tôi tại VNPT TP.HCM: từ chiến lược phân lớp công cụ, quy trình Backend/Frontend song song, cơ chế Zero Trust cho đến hệ thống phân cấp Rules & Skills giúp AI sinh mã chuẩn đét ngay từ cú gõ đầu tiên.
 
 ---
 
-## 1. Cạm bẫy lớn nhất: Nhầm lẫn giữa "Công cụ gõ code" và "Tư duy lập trình"
+## 1. Cạm bẫy "Bánh xèo Code": Khi AI biến Dev thành Kẻ dọn rác
 
-Nhiều người nghĩ trang bị Cursor AI sẽ giúp lập trình viên rảnh tay chỉ ngồi duyệt code. Thực tế hoàn toàn ngược lại: **Cursor không thay thế tư duy của lập trình viên.**
+Đã bao giờ bạn rơi vào cảnh này chưa? 
 
-Khi bạn cấp cho AI một prompt mơ hồ, nó sẽ đưa ra một giải pháp generic (chung chung) dựa trên xác suất từ vựng phổ biến trên GitHub, chứ không phải giải pháp tối ưu cho hệ thống microservices đang chạy của bạn. Mã do AI sinh ra bắt buộc phải trải qua 3 bước: **Review ➔ Tinh chỉnh ➔ Tích hợp logic nghiệp vụ** trước khi bước vào lệnh `git commit`.
+Bạn gõ một prompt dài ngoẵng vào Cursor: *"Hãy viết cho tôi một service quản lý hóa đơn thanh toán hỗ trợ Kafka và Redis cache"*. Cursor nháy mắt vài giây, nhả ra 500 dòng code hoành tráng. Bạn sướng tê người bấm **Accept**. Nhưng 10 phút sau, khi ấn `run`, server nổ tung với 40 lỗi syntax, class import bậy bạ, và luồng trừ tiền trong DB bị bypass sạch sẽ!
 
-Để ngăn chặn tình trạng dev lạm dụng hoặc bị AI "dắt mũi", chúng tôi chia vai trò của các công cụ trong hệ thống phát triển thành **Mô hình 3 lớp (Layered Tooling Strategy)** rõ ràng:
+![Quy trình song song Cursor vs IDE](/blog/cursor-ai-guideline/dual-window-loop.jpg)
+
+### Bản chất vấn đề nằm ở đâu?
+Cursor **KHÔNG PHẢI** là một Senior Engineer ngồi trong máy tính của bạn. Bản chất của LLM là một cỗ máy dự đoán từ vựng tiếp theo dựa trên xác suất trên GitHub. Khi bạn hỏi một câu mơ hồ, nó sẽ "chém gió" ra một giải pháp generic nhất — thứ chắc chắn vỡ vụn khi đụng vào hệ thống Microservices phức tạp thực tế.
+
+Mã do AI sinh ra bắt buộc phải trải qua 3 bước sinh tồn: **Review ➔ Tinh chỉnh ➔ Tích hợp logic nghiệp vụ** trước khi dám bấm lệnh `git commit`.
+
+Để định hình lại tư duy cho toàn bộ đội ngũ, chúng tôi thiết lập **Mô hình 3 lớp công cụ (Layered Tooling Strategy)**:
 
 | Lớp công cụ | Công cụ chính | Vai trò | Trách nhiệm chính |
 |---|---|---|---|
@@ -29,71 +36,80 @@ Khi bạn cấp cho AI một prompt mơ hồ, nó sẽ đưa ra một giải ph�
 | **Lớp 2 — UI Prototyping** | Lovable, v0.dev, Stitch | Nguồn mẫu thiết kế frontend | Tạo prototype UI nhanh, layout dựng sẵn, component mẫu bằng ngôn ngữ tự nhiên |
 | **Lớp 3 — Execution** | IntelliJ, VS, Rider | Thực thi & Xác thực | Chạy build, đính kèm Debugger, theo dõi heap/thread, profiling trước khi deploy |
 
-> **Nguyên tắc cốt lõi**: Cursor là nơi *viết mã*, còn IDE truyền thống là nơi *chạy và debug*. Hai cửa sổ này luôn được mở song song trên màn hình làm việc của kỹ sư.
+> 📌 **Nguyên tắc nằm lòng**: Cursor là nơi *viết mã*, IDE truyền thống là nơi *chạy và debug*. Hai cửa sổ này phải luôn mở song song 50/50 trên màn hình của kỹ sư.
 
 ---
 
-## 2. Quy trình phát triển Backend: Vòng lặp song song 3 bước
+## 2. Quy trình Backend thực chiến: Vòng lặp song song 3 bước
 
-Đừng bắt Cursor phải tự build và run server nếu bạn không muốn tốn token vô ích cho những lỗi syntax cơ bản. Cách làm chuẩn là thiết lập môi trường làm việc song song (Dual-window workflow):
+Rất nhiều dev mới dùng Cursor mắc sai lầm là bắt AI tự mở terminal, tự gõ command build, rồi lại hỏi AI xem tại sao build thất bại. Việc này không chỉ tốn token vô ích mà còn vô cùng chậm.
+
+Cách chuẩn nhất là thiết lập môi trường song song (Dual-window Workflow):
 
 ```
 ┌──────────────────────────────────────┐        ┌──────────────────────────────────────┐
 │          CURSOR AI (Viết mã)         │        │    IDE: IntelliJ / VS / Rider        │
 ├──────────────────────────────────────┤        ├──────────────────────────────────────┤
-│ ➔ Soạn thảo toàn bộ mã nguồn         │        │ ➔ Khởi động server & Debugger        │
+│ ➔ Soạn thảo toàn bộ mã nguồn         │        │ ➔ Khởi động server & gắn Debugger    │
 │ ➔ Sinh Boilerplate (Controller/Repo) │        │ ➔ Theo dõi log runtime, heap/thread  │
 │ ➔ Refactor đa tệp qua Agent Mode    │        │ ➔ Chạy test suite, kiểm tra coverage │
 │ ➔ Phân tích Stack Trace export được  │ ◄────► │ ➔ Export Stack Trace khi gặp Crash   │
 └──────────────────────────────────────┘        └──────────────────────────────────────┘
 ```
 
-Vòng lặp thực tế diễn ra như sau:
+### Vòng lặp 3 bước "thần thánh":
 
-1. **Thiết lập môi trường song song**: Mở IDE truyền thống để chạy server ở chế độ Debug mode. Mở cùng lúc Cursor trên thư mục dự án đó. IDE giữ nguyên trạng thái ứng dụng.
-2. **Development Loop (Viết & Quan sát)**: Kỹ sư yêu cầu Cursor viết hoặc refactor code ➔ Lưu file ➔ IDE tự động Hot-reload / Rebuild ➔ Quan sát log và kết quả trên IDE. Nếu có lỗi nhỏ, quay lại Cursor sửa ngay mà không đóng mở công cụ.
-3. **Debug nâng cao**: Khi gặp lỗi runtime hoặc bug logic phức tạp, IDE đã sẵn sàng breakpoint để step-through xem giá trị biến. Copy Stack Trace từ IDE, dán trực tiếp vào Cursor để AI phân tích root cause và đề xuất patch.
-
----
-
-## 3. Quy trình Frontend: Pipeline 3 bước chuyển đổi từ Mockup sang Production
-
-Viết UI bằng AI hay bị hai thái cực: một là code CSS xập xệ, hai là dán nguyên xi code do Lovable/v0 sinh ra vào repo dự án làm vỡ sạch convention hiện tại.
-
-Để giải quyết, chúng tôi phân luồng Frontend thành 2 dạng tác vụ:
-
-* **Sửa nhỏ / Thêm component lẻ**: Làm việc trực tiếp trên Cursor (mô tả thay đổi, dán design spec hoặc mô tả triệu chứng bug UI).
-* **Giao diện mới hoàn toàn / Refactor lớn**: Bắt buộc tuân theo **Pipeline chuyển đổi 3 bước**:
-
-```
-[ BƯỚC 1: Lovable / v0 / Stitch ]
-   Prompt ngôn ngữ tự nhiên ──▶ Visual Artifact (Chỉ dùng làm bản vẽ tham chiếu)
-                                     │
-                                     ▼
-[ BƯỚC 2: Context Extraction ]
-   Rút gọn thông số kỹ thuật ──▶ Chiết xuất Token, Component re-use, State, Grid/Flex
-                                     │
-                                     ▼
-[ BƯỚC 3: Cursor Code Gen ]
-   Nạp Context vào Cursor   ──▶ Mã nguồn chuẩn Convention dự án (Angular/React/Vue)
-```
-
-### Chi tiết bước Context Extraction (Trích xuất ngữ cảnh):
-Trước khi bật Cursor để gen code UI, kỹ sư phải thực hiện bước "lọc thô" từ bản demo của v0/Lovable:
-* **Màu sắc, Font, Spacing**: Chuyển thành CSS custom properties hoặc Design Token (Tailwind config, SCSS variables).
-* **Phân rã Component**: Xác định rõ phần nào cần tạo mới, phần nào tái sử dụng từ thư viện UI nội bộ của dự án.
-* **Luồng dữ liệu (State)**: Xác định rõ State nào nằm local trong component, State nào phải đẩy lên Store chia sẻ.
-* **Bố cục (Layout)**: Ghi chú cách dựng Flexbox / Grid để tái tạo đúng layout trong framework thực tế.
-
-Nhờ bước chuẩn bị ngữ cảnh này, Cursor sẽ sinh mã chuẩn ngay từ lần đầu tiên mà không bắt bạn phải sửa đi sửa lại layout.
+1. **Setup môi trường song song**: Mở IntelliJ/VS/Rider lên, khởi động Server ở chế độ Debug mode. Sau đó mở Cursor đúng thư mục dự án đó. Trong suốt buổi làm việc, IDE truyền thống giữ nguyên trạng thái ứng dụng đang chạy.
+2. **Development Loop (Viết & Quan sát)**: 
+   - Trên Cursor: Yêu cầu AI sinh Controller, Service hoặc Refactor code.
+   - Bấm Save ➔ IDE truyền thống tự động Hot-reload / Rebuild lại app trong 1-2 giây.
+   - Quan sát log runtime ngay trên IDE. Nếu ngon lành ➔ Tiếp tục. Nếu lỗi ➔ Sửa tiếp trên Cursor.
+3. **Debug nâng cao (Khi gặp bug 3 giờ sáng)**:
+   - Khi dính lỗi runtime hoặc bug logic phức tạp: Đừng ngồi tự đoán prompt! Đặt ngay Breakpoint trên IDE, step-through từng dòng để xem giá trị thực tế của biến (`null`, `undefined` hay sai type).
+   - Copy nguyên văn đoạn **Stack Trace** bị sập từ Console của IDE, quăng vào cửa sổ chat của Cursor kèm câu lệnh: `"Phân tích root cause của stack trace này và đề xuất patch tối giản nhất"`. AI sẽ tìm ra ngay lập tức dòng code bị hỏng!
 
 ---
 
-## 4. Bảo mật Zero Trust: Không đánh đổi Data & Secrets lấy tiện ích AI
+## 3. Quy trình Frontend: Pipeline 3 bước biến UI Demo thành Code Production
 
-Sử dụng AI trong các dự án của doanh nghiệp (như viễn thông, tài chính, quản lý nhà nước) thì **Bảo mật là tiêu chí sống còn**. Một cú dán prompt vô tình chứa Database Password hay API Key nội bộ có thể dẫn đến hậu quả nghiêm trọng.
+Thảm họa Frontend bằng AI thường chia làm 2 kịch bản:
+1. Nâng cấp CSS bằng prompt khiến giao diện vỡ nát trên mobile.
+2. Thấy trang Lovable/v0 dựng UI đẹp quá, copy thẳng toàn bộ code HTML/React rác vào dự án, làm nhân bản 50 dòng CSS trùng lặp và vỡ sạch convention dự án.
 
-Chúng tôi áp dụng mô hình **Zero Trust** khắt khe khi cấu hình Cursor:
+![Pipeline 3 bước chuyển đổi UI](/blog/cursor-ai-guideline/ui-pipeline.jpg)
+
+Để giải quyết triệt để, chúng tôi áp dụng **Pipeline 3 bước chuyển đổi UI**:
+
+### Phần A — Tác vụ nhỏ / Fix bug UI
+Viết mã trực tiếp trên Cursor bằng cách đính kèm context (ví dụ: mô tả file component hiện tại + paste đoạn CSS spec hoặc screenshot bug).
+
+### Phần B — Giao diện mới hoàn toàn / Refactor lớn (Pipeline 3 bước)
+
+#### Bước 1: Tạo UI mẫu từ Lovable / v0.dev / Stitch
+Dùng ngôn ngữ tự nhiên tả giao diện mong muốn. Đầu ra của bước này chỉ là **Visual Artifact (bản vẽ tham chiếu)** — Tuyệt đối KHÔNG bê thẳng mã nguồn này vào codebase production!
+
+#### Bước 2: Context Extraction (Trích xuất ngữ cảnh kỹ thuật)
+Kỹ sư đọc bản mẫu visual và bóc tách thành các thông số chuẩn hóa:
+* **Màu sắc, Font, Spacing**: Chuyển thành CSS custom properties hoặc Design Tokens của dự án (Tailwind config, SCSS variables).
+* **Phân rã Component**: Thành phần nào tạo mới? Thành phần nào xài lại từ thư viện UI có sẵn (AntD, Shadcn, MUI)?
+* **Luồng dữ liệu (State)**: State nào là local trong component? State nào cần đẩy lên Store chung (Redux, Signals, Zustand)?
+* **Bố cục (Layout)**: Ghi chú cách dùng Flexbox / Grid để tái tạo đúng layout trong framework thực tế.
+
+#### Bước 3: Chuyển đổi qua Cursor
+Mang toàn bộ bộ context kỹ thuật vừa bóc tách ở Bước 2 nạp vào Cursor:
+> `"Xây dựng component BillingCard bằng Angular 17 Standalone dựa trên Tailwind config hiện tại. Sử dụng Signals cho local state và inject BillingService để gọi API."`
+
+Kết quả: AI sinh ra đoạn code đúng 100% style, đúng convention và sạch bóng technical debt!
+
+---
+
+## 4. Cấu hình Bảo mật Zero Trust: Đừng để mất cấy vì sướng tay gõ Prompt
+
+Trong môi trường doanh nghiệp (Viễn thông, Tài chính, Y tế, Chính phủ), bảo mật là sinh mệnh. Một kỹ sư vô tình paste đoạn code chứa `JWT_SECRET` hay `DB_PASSWORD` vào prompt AI có thể khiến toàn bộ hệ thống bị tuột quần trên internet.
+
+![Bảo mật Zero Trust trong Cursor AI](/blog/cursor-ai-guideline/zero-trust.jpg)
+
+Chúng tôi áp dụng mô hình **Zero Trust Security** khắt khe khi cấu hình Cursor cho toàn bộ máy tính kỹ sư:
 
 ```
                           ┌───────────────────────────┐
@@ -104,38 +120,43 @@ Chúng tôi áp dụng mô hình **Zero Trust** khắt khe khi cấu hình Curso
              ▼                          ▼                          ▼
    ┌───────────────────┐      ┌───────────────────┐      ┌───────────────────┐
    │   Privacy Mode    │      │    MCP Server     │      │ Secret Management │
-   │   BẬT (Bắt buộc)  │      │  Deny All Default │      │   Zero Hardcode   │
+   │  BẬT (Bắt buộc)   │      │  Deny All Default │      │   Zero Hardcode   │
    │ Ngăn gửi code cho │      │ Quản lý nghiêm ngặt│      │ Dùng env vars &   │
    │ LLM bên thứ 3     │      │  qua mcp.json     │      │ .cursorignore     │
    └───────────────────┘      └───────────────────┘      └───────────────────┘
 ```
 
-1. **Privacy Mode = BẬT (Bắt buộc)**: Đảm bảo mã nguồn của dự án không bị các nhà cung cấp LLM bên thứ ba lưu trữ hay sử dụng để huấn luyện mô hình (training data).
-2. **Codebase Indexing = BẬT**: Cho phép Cursor index cấu trúc dự án cục bộ (Local Indexing) giúp AI đưa ra gợi ý chuẩn xác mà không đẩy source code ra bên ngoài.
-3. **MCP (Model Context Protocol) Server**: Từ chối tất cả extension trái phép muốn truy cập tài nguyên nội bộ hoặc điều khiển IDE. Chỉ các MCP Server được phê duyệt qua file `mcp.json` bởi Tech Lead mới được vận hành.
-4. **Quản lý Secrets**: **Nghiêm cấm tuyệt đối** việc dán API Key, Password, Connection String vào prompt chat hoặc hardcode trong mã nguồn. Tất cả file chứa biến môi trường (`.env`, `credentials.json`) bắt buộc phải được khai báo trong `.cursorignore`.
+1. **Privacy Mode = BẬT (Bắt buộc 100%)**: Đảm bảo toàn bộ mã nguồn gửi lên LLM không bị lưu vết (zero-data retention) và không bị dùng để train các mô hình AI thế hệ tiếp theo.
+2. **Codebase Indexing = BẬT**: Cho phép Cursor tạo index dự án **cục bộ (Local Indexing)** trên máy tính dev. AI hiểu toàn bộ cấu trúc project nhưng dữ liệu không rời khỏi hạ tầng được kiểm soát.
+3. **MCP (Model Context Protocol) Server**: Mặc định **Từ chối tất cả**. Nghiêm cấm dev tự ý cài các MCP Server trôi nổi trên mạng có quyền đọc ghi file system. Chỉ danh sách MCP Server trong file `mcp.json` do Tech Lead review mới được phép hoạt động.
+4. **Quản lý Secrets**: **Nghiêm cấm tuyệt đối** việc hardcode API key, Password, Secret Key trong code hoặc prompt. Mọi file cấu hình nhạy cảm (`.env`, `credentials.json`, `keystore`) bắt buộc phải được đưa vào danh sách `.cursorignore`.
 
 ---
 
-## 5. Chuẩn hóa Kiến trúc với Tài liệu *.md
+## 5. Chuẩn hóa Tài liệu Kiến trúc Microservices (*.md)
 
-Trong hệ thống Microservices, tài liệu kỹ thuật rải rác hoặc "quên cập nhật" là nguyên nhân chính khiến các team tốn hàng tuần để tích hợp API với nhau. Với Cursor AI, chúng tôi chuẩn hóa việc sinh tài liệu dựa trên mã nguồn thực tế thông qua các prompt mẫu:
+Khi dự án phình to lên hàng chục microservices, việc thiếu tài liệu khiến các dev tốn hàng giờ đồng hồ chỉ để hỏi nhau: *"Endpoint này truyền cái gì?", "Service này chạy local kiểu gì?"*.
 
-* **`README.md`**: Tổng quan dịch vụ, cách khởi chạy môi trường local, biến môi trường.
-  * *Prompt gợi ý*: `"Đọc toàn bộ project và tạo README.md đầy đủ cho service này"`
-* **`API.md`**: Danh sách REST Endpoints, Schema Request/Response, cơ chế Auth, Error Code.
-  * *Prompt gợi ý*: `"Liệt kê toàn bộ REST endpoint với request body, response và HTTP status code"`
-* **`ARCHITECTURE.md`**: Sơ đồ luồng dữ liệu, các service phụ thuộc (dependencies), message queue.
-  * *Prompt gợi ý*: `"Mô tả kiến trúc nội bộ, dependency ngoài và luồng xử lý chính"`
+Chúng tôi biến Cursor thành một máy tự động viết docs chuẩn xác bằng các prompt chuẩn:
+
+```
+┌─────────────────┬──────────────────────────────────┬───────────────────────────────────────────┐
+│ File Tài Liệu   │ Nội dung bắt buộc                │ Prompt Cursor mẫu                         │
+├─────────────────┼──────────────────────────────────┼───────────────────────────────────────────┤
+│ README.md       │ Cách chạy local, envvars, stack  │ "Đọc toàn bộ project và tạo README.md"    │
+│ API.md          │ List REST endpoints, req/res     │ "Liệt kê REST endpoints kèm HTTP status"  │
+│ ARCHITECTURE.md │ Dataflow, Message Queue, DB      │ "Mô tả kiến trúc nội bộ & dependencies"   │
+└─────────────────┴──────────────────────────────────┴───────────────────────────────────────────┘
+```
 
 ---
 
 ## 6. Quản trị Tri thức qua Skills & Rules 2 Cấp
 
-Nếu không cung cấp "bản chỉ dẫn", AI sẽ code theo thói quen ngẫu nhiên. Chúng tôi quản trị tri thức AI thông qua 2 cơ chế chính: **Skills** và **Cursor Rules**.
+Để AI không "múa rìu qua mắt thợ" hay viết code lệch chuẩn dự án, bạn cần đưa cho nó một cuốn "Luật rừng". Chúng tôi quản trị tri thức AI bằng 2 vũ khí: **Skills** và **Cursor Rules**.
 
 ### 6.1. Quản lý Skills (`.cursor/skills/`)
-Skills là các file `*.md` chứa quy tắc chuyên biệt được nạp vào Cursor theo ngữ cảnh dự án.
+Skills là các file `*.md` chứa tri thức chuyên biệt theo domain hoặc tech stack.
 
 ```
 .cursor/
@@ -147,19 +168,18 @@ Skills là các file `*.md` chứa quy tắc chuyên biệt được nạp vào 
     │   ├── billing-rules.md
     │   ├── kafka-schema.md
     │   └── springboot-conventions.md
-    └── personal/               # [Từng kỹ sư — Không commit lên Git]
+    └── personal/               # [Từng kỹ sư — Không commit lên repo]
         └── my-shortcuts.md
 ```
 
-* **Cách dùng**: Kéo thả file `*.md` vào cửa sổ chat Cursor khi cần xử lý module tương ứng, hoặc đặt vào `.cursorrules` với lệnh `@file` để tự động nạp mỗi khi mở project.
+* **Cách dùng**: Kéo thả file `*.md` vào cửa sổ chat Cursor khi cần xử lý nghiệp vụ liên quan, hoặc gọi `@file` trực tiếp trong `.cursorrules` để nạp tự động khi mở project.
 
-### 6.2. Hệ thống Cursor Rules 2 Cấp
-File `.cursorrules` (hoặc các file `.mdc`) đóng vai trò như "Hiến pháp" ép AI phải tuân thủ nghiêm ngặt các convention của team.
+### 6.2. Hệ thống Cursor Rules 2 Cấp (`.cursorrules` & `.mdc`)
 
-* **Cấp 1: Enterprise Rules (`~/.cursor/rules/enterprise.mdc`)** — Do phòng quản lý chỉ định, áp dụng chung cho toàn bộ kỹ sư và mọi project. Không ai được phép ghi đè.
-* **Cấp 2: Team Rules (`.cursor/rules/*.mdc`)** — Do Tech Lead xây dựng dựa trên Tech Stack cụ thể (Java/Spring Boot hay Angular).
+File `.cursorrules` chính là **Hiến pháp** ép AI phải tuân thủ nghiêm ngặt mọi quy chuẩn lập trình của dự án.
 
-#### Mẫu Enterprise Rules (Bắt buộc):
+#### Cấp 1: Enterprise Rules (`~/.cursor/rules/enterprise.mdc`)
+Áp dụng cho toàn bộ kỹ sư trong công ty, không ai được phép ghi đè:
 
 ```markdown
 # TTKDGP Enterprise Rules – Phòng DLS
@@ -179,24 +199,26 @@ File `.cursorrules` (hoặc các file `.mdc`) đóng vai trò như "Hiến pháp
 - Không dùng magic number — khai báo constant có tên rõ nghĩa.
 ```
 
-#### Mẫu Team Rules (Ví dụ cho Angular & Spring Boot):
+#### Cấp 2: Team Rules (`.cursor/rules/*.mdc`)
+Được Tech Lead thiết lập riêng cho từng tech stack của dự án (Spring Boot, Angular, React...):
 
 ```markdown
 # Team Rules — Backend Java/Spring Boot
-- Dùng Repository Pattern. Không gọi DB trực tiếp từ Controller/Service.
+- Dùng Repository Pattern. Không gọi DB trực tiếp từ Controller hay Service.
 - Exception handling tập trung qua @ControllerAdvice — không try/catch lẻ tẻ.
 - Response luôn bọc trong ApiResponse<T> wrapper chuẩn của team.
 
 # Team Rules — Frontend Angular
 - KHÔNG dùng React, JSX, Vue. Chỉ Angular + TypeScript + HTML template.
 - State management: RxJS BehaviorSubject hoặc Angular Signals (Angular 17+).
-- Lazy loading bắt buộc cho mọi feature module. Standalone component convention.
+- Lazy loading bắt buộc cho mọi feature module.
+- Standalone component theo Angular 17+ convention.
 ```
 
 ---
 
-## Lời kết
+## Tóm lại
 
-Ứng dụng Cursor AI vào sản xuất không phải là việc mua một giấy phép phần mềm rồi kỳ vọng năng suất tăng gấp 10 lần. Năng suất chỉ thực sự đến khi bạn có **một quy trình chặt chẽ, một kiến trúc công cụ phân lớp rõ ràng và một hệ thống Rules đủ mạnh để giữ AI trong khuôn khổ.**
+Dùng Cursor AI cũng giống như việc bạn quản lý một người thực tập sinh cực kỳ thông minh nhưng thiếu kinh nghiệm thực tế. Nếu bạn thả rông, người đó sẽ quậy nát codebase của bạn. Nhưng nếu bạn đưa ra quy trình 3 lớp rõ ràng, xiết chặt bảo mật Zero Trust và thiết lập bộ Rules 2 cấp vững chắc — bạn sẽ sở hữu một "siêu trợ lý" giúp tăng tốc độ sản xuất phần mềm lên gấp nhiều lần.
 
-AI là một lập trình viên học việc cực kỳ nhanh nhưng thiếu kinh nghiệm thực tế. Hãy đóng vai trò là một Tech Lead nghiêm khắc với AI — kiểm soát bảo mật, đặt ra luật chơi rõ ràng, và bạn sẽ biến Cursor thành trợ lý đắc lực nhất trong hành trình phát triển phần mềm của mình.
+Hãy nhớ: **AI sinh code, nhưng lập trình viên mới là người chịu trách nhiệm cho từng dòng code được push lên Production!**

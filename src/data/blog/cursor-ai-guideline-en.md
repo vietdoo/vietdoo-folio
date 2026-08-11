@@ -1,6 +1,6 @@
 ---
-title: "Cursor AI Editor in Enterprise: 3-Layer Model, Zero Trust Security & Keeping AI Code Safe"
-description: "Dissecting our internal technical guidelines on bringing Cursor AI into production: from layered tooling strategies and UI conversion pipelines to Zero Trust security and 2-tier Rules & Skills management."
+title: "Cursor AI: Master It or Get Wrecked by It"
+description: "Dissecting internal technical guidelines from VNPT: How to tame Cursor AI using a 3-layer model, 3-step UI pipeline, and Zero Trust Security to never clean up AI code garbage again."
 pubDate: 2026-08-11
 category: "engineering"
 image: "/blog/cursor-ai-guideline/hero.jpg"
@@ -9,19 +9,26 @@ translationKey: "cursor-ai-guideline"
 draft: false
 ---
 
-![Cursor AI Code Editor in Enterprise Environment](/blog/cursor-ai-guideline/hero.jpg)
+![Cursor AI Meme: When AI generates spaghetti code and dev has to clean it up](/blog/cursor-ai-guideline/hero.jpg)
 
-> **TL;DR** — Deploying an AI Code Editor in an enterprise setting isn't as simple as handing out Cursor accounts and telling everyone to "go fast". Without proper guidelines, AI produces a mountain of low-quality "instant noodles" code, hallucinates business logic, and poses severe risks of leaking internal API keys. This post breaks down our entire internal technical handbook: from a 3-layer tooling strategy, dual-window Backend/Frontend workflows, Zero Trust security mechanics, to a 2-tier Rules & Skills management system that gets AI code right on the first try.
+> **TL;DR** — Handing Cursor AI accounts to developers without strict rules is like giving a Ferrari to someone without a driver's license: thrilling for 5 minutes, followed by a total wreck. AI-generated code looks functional on the surface, but underneath lies architectural spaghetti, hallucinatory business logic, and extreme risks of leaking internal API keys. This post breaks down our entire internal engineering handbook at VNPT: from layered tooling strategies and dual-window workflows to Zero Trust security and a 2-tier Rules & Skills framework that gets AI code right on the very first prompt.
 
 ---
 
-## 1. The Biggest Trap: Confusing a "Code Typing Tool" with "Software Engineering Mindset"
+## 1. The "Spaghetti Code Trap": When AI Turns Engineers into Trash Collectors
 
-Many assume Cursor AI allows developers to sit back and merely approve code. The reality is the exact opposite: **Cursor does not replace developer thinking.**
+Have you ever been caught in this nightmare?
 
-When given a vague prompt, AI outputs a generic solution based on public GitHub vocabulary probabilities, rather than an optimal solution tailored for your running microservices architecture. AI-generated code must undergo 3 mandatory steps: **Review ➔ Refine ➔ Business Logic Integration** before reaching `git commit`.
+You type a massive prompt into Cursor: *"Build me an invoice payment service with Kafka and Redis caching support"*. Cursor blinks for a few seconds and spits out 500 lines of impressive-looking code. You happily click **Accept**. But 10 minutes later, when you hit `run`, the server explodes with 40 syntax errors, bizarre class imports, and the database payment logic completely bypassed!
 
-To prevent developers from over-relying on AI or being led astray, we strictly classify tool roles into a **Layered Tooling Strategy**:
+![Dual Window Loop: Cursor vs IDE](/blog/cursor-ai-guideline/dual-window-loop.jpg)
+
+### What is the root cause?
+Cursor is **NOT** a Senior Engineer sitting inside your computer. At its core, an LLM is a next-token prediction engine based on GitHub probabilities. When given a vague question, it hallucinates the most generic solution possible — one that inevitably shatters when dropped into a complex real-world microservices architecture.
+
+AI-generated code must undergo 3 mandatory survival steps: **Review ➔ Refine ➔ Business Logic Integration** before anyone dares type `git commit`.
+
+To align our entire team's mindset, we established a **3-Layer Tooling Strategy**:
 
 | Tool Layer | Primary Tools | Role | Main Responsibilities |
 |---|---|---|---|
@@ -29,13 +36,15 @@ To prevent developers from over-relying on AI or being led astray, we strictly c
 | **Layer 2 — UI Prototyping** | Lovable, v0.dev, Stitch | Frontend Design Spec Source | Fast UI prototyping, pre-built layouts, component templates via natural language |
 | **Layer 3 — Execution** | IntelliJ, VS, Rider | Execution & Verification | Build execution, attached Debugger, heap/thread monitoring, profiling before deployment |
 
-> **Core Principle**: Cursor is where you *write code*, while traditional IDEs are where you *run and debug*. Kicking off development means keeping both windows side-by-side.
+> 📌 **Core Rule**: Cursor is where you *write code*, traditional IDEs are where you *run and debug*. Both windows must stay open side-by-side 50/50 on every engineer's screen.
 
 ---
 
 ## 2. Backend Workflow: 3-Step Dual-Window Loop
 
-Don't force Cursor to build and run servers independently unless you want to burn tokens needlessly on syntax errors. The optimal workflow is a dual-window setup:
+A common mistake among new Cursor users is forcing AI to open terminals, run build commands, and then asking AI why the build failed. This burns tokens needlessly and is painfully slow.
+
+The optimal approach is the **Dual-Window Workflow**:
 
 ```
 ┌──────────────────────────────────────┐        ┌──────────────────────────────────────┐
@@ -48,50 +57,59 @@ Don't force Cursor to build and run servers independently unless you want to bur
 └──────────────────────────────────────┘        └──────────────────────────────────────┘
 ```
 
-The practical loop operates as follows:
+### The 3-Step Practical Loop:
 
-1. **Dual-Environment Setup**: Open traditional IDE with server running in Debug mode. Open Cursor on the same project repository. Keep the IDE application state active.
-2. **Development Loop**: Engineer requests Cursor to write or refactor code ➔ Save file ➔ IDE automatically hot-reloads / rebuilds ➔ Observe logs and results in IDE. Fix minor issues immediately back in Cursor.
-3. **Advanced Debugging**: When hitting runtime exceptions or complex logic bugs, step through breakpoints in IDE. Copy the Stack Trace from IDE and paste into Cursor for AI to analyze root cause and suggest patches.
+1. **Dual-Environment Setup**: Open traditional IDE, boot the server in Debug mode. Open Cursor on the same project repository. Throughout the day, the traditional IDE maintains the running application state.
+2. **Development Loop**: 
+   - On Cursor: Prompt AI to generate Controllers, Services, or Refactor code.
+   - Save file ➔ Traditional IDE hot-reloads / rebuilds the app automatically in 1-2 seconds.
+   - Observe runtime logs directly in IDE. If smooth ➔ proceed. If errors arise ➔ fix immediately in Cursor.
+3. **Advanced Debugging (3 AM Crash Scenarios)**:
+   - Hitting complex runtime bugs? Don't guess prompts! Set Breakpoints in IDE, step-through line-by-line to inspect actual variable values (`null`, `undefined`, or incorrect types).
+   - Copy the exact **Stack Trace** from the IDE console, paste into Cursor chat with: `"Analyze root cause of this stack trace and propose a minimal patch"`. AI pinpoint the exact failing line instantly!
 
 ---
 
 ## 3. Frontend Workflow: 3-Step Pipeline from Mockup to Production
 
-AI UI generation usually swings between two extremes: sloppy CSS or copy-pasting raw v0/Lovable output directly into the repo, breaking project conventions.
+Frontend AI disasters usually fall into two categories:
+1. Prompting CSS tweaks until the responsive layout collapses on mobile.
+2. Seeing a beautiful v0/Lovable mockup and copy-pasting raw HTML/React garbage directly into the project repo, duplicating CSS and destroying project conventions.
 
-We categorize Frontend tasks into 2 streams:
+![3-Step UI Pipeline](/blog/cursor-ai-guideline/ui-pipeline.jpg)
 
-* **Minor fixes / Single component additions**: Work directly in Cursor (describe changes, paste design spec or UI bug symptoms).
-* **New UI features / Major refactoring**: Strictly follow the **3-Step Conversion Pipeline**:
+To solve this permanently, we enforce a **3-Step UI Conversion Pipeline**:
 
-```
-[ STEP 1: Lovable / v0 / Stitch ]
-   Natural Language Prompts ──▶ Visual Artifact (Reference design mockup only)
-                                     │
-                                     ▼
-[ STEP 2: Context Extraction ]
-   Technical Spec Extraction ──▶ Tokens, Component Reusability, State, Grid/Flex
-                                     │
-                                     ▼
-[ STEP 3: Cursor Code Gen ]
-   Feed Context into Cursor  ──▶ Production Code fitting Project Conventions (Angular/React/Vue)
-```
+### Stream A — Minor Fixes / Single Component Additions
+Work directly in Cursor by attaching context (e.g., current component file + CSS spec or screenshot of UI bug).
 
-### Context Extraction Details:
-Before prompting Cursor to generate UI code, engineers must extract key technical constraints from the v0/Lovable mockup:
-* **Color, Font, Spacing**: Convert to CSS custom properties or system Design Tokens (Tailwind config, SCSS variables).
-* **Component Breakdown**: Determine which components to create fresh versus which to reuse from existing design libraries.
-* **Data Flow (State)**: Classify local component state vs shared global store state.
+### Stream B — Brand New UI / Major Refactor (3-Step Pipeline)
+
+#### Step 1: Create UI Prototype from Lovable / v0.dev / Stitch
+Describe desired UI using natural language. The output is strictly a **Visual Artifact (reference design)** — Never paste this raw code straight into production!
+
+#### Step 2: Context Extraction
+Engineers inspect the visual mockup and extract technical specifications:
+* **Color, Font, Spacing**: Convert to project CSS custom properties or Design Tokens (Tailwind config, SCSS variables).
+* **Component Breakdown**: What needs to be built fresh? What can be reused from existing UI libraries (AntD, Shadcn, MUI)?
+* **Data Flow (State)**: What state is local? What state belongs in global store (Redux, Signals, Zustand)?
 * **Layout**: Annotate Flexbox / Grid usage to recreate exact layouts within the real framework.
+
+#### Step 3: Conversion via Cursor
+Feed the technical context extracted in Step 2 into Cursor:
+> `"Build BillingCard component using Angular 17 Standalone based on current Tailwind config. Use Signals for local state and inject BillingService for API calls."`
+
+Result: AI outputs code that is 100% styled correctly, follows project conventions, and is free of technical debt!
 
 ---
 
-## 4. Zero Trust Security: Never Trade Data & Secrets for AI Convenience
+## 4. Zero Trust Security: Don't Trade Secrets for AI Convenience
 
-When using AI in enterprise environments (telecom, finance, public sector), **Security is non-negotiable**. Accidental prompt pastes containing DB passwords or internal API keys can trigger severe security breaches.
+In enterprise environments (Telecom, Finance, Healthcare, Government), security is survival. An engineer accidentally pasting a code snippet containing `JWT_SECRET` or `DB_PASSWORD` into an AI prompt can expose an entire infrastructure on the internet.
 
-We enforce a strict **Zero Trust** security posture in Cursor configuration:
+![Zero Trust Security in Cursor AI](/blog/cursor-ai-guideline/zero-trust.jpg)
+
+We enforce a strict **Zero Trust Security** model across all developer workstations:
 
 ```
                           ┌───────────────────────────┐
@@ -108,32 +126,37 @@ We enforce a strict **Zero Trust** security posture in Cursor configuration:
    └───────────────────┘      └───────────────────┘      └───────────────────┘
 ```
 
-1. **Privacy Mode = ON (Mandatory)**: Guarantees project source code is never stored or used by third-party LLM providers for model training.
-2. **Codebase Indexing = ON**: Enables Cursor to index local project structure (Local Indexing) for contextually aware suggestions without exposing code externally.
-3. **MCP (Model Context Protocol) Server**: Deny all unauthorized extensions by default. Only MCP servers explicitly reviewed and approved via `mcp.json` by Tech Leads may be enabled.
-4. **Secret Management**: **Strictly prohibit** pasting API keys, passwords, or tokens into prompts. All environment files (`.env`, `credentials.json`) must be listed in `.cursorignore`.
+1. **Privacy Mode = ON (100% Mandatory)**: Ensures all source code sent to LLMs has zero-data retention and is never used to train future AI models.
+2. **Codebase Indexing = ON**: Enables Cursor to create **Local Indexing** on the developer's machine. AI understands full project structure without data leaving controlled infrastructure.
+3. **MCP (Model Context Protocol) Server**: **Deny All by Default**. Engineers are strictly forbidden from installing arbitrary MCP Servers with file system read/write access. Only MCP servers listed in `mcp.json` reviewed by Tech Leads are permitted.
+4. **Secret Management**: **Strictly prohibit** hardcoding API keys, passwords, or secrets in code or prompts. All sensitive configuration files (`.env`, `credentials.json`, `keystore`) must be added to `.cursorignore`.
 
 ---
 
 ## 5. Architectural Standardisation via *.md Docs
 
-In Microservices architectures, scattered or outdated documentation is the main driver of integration delays. With Cursor AI, we standardize doc generation directly from live codebase via curated prompts:
+As microservices expand, missing documentation causes developers to waste hours asking: *"What payload does this endpoint take?", "How do I run this service locally?"*.
 
-* **`README.md`**: Service overview, local setup guide, env variables.
-  * *Prompt*: `"Read entire project and generate full README.md for this service"`
-* **`API.md`**: REST endpoints list, Request/Response schemas, Auth mechanism, Error codes.
-  * *Prompt*: `"List all REST endpoints with request body, response schema, and HTTP status codes"`
-* **`ARCHITECTURE.md`**: Data flow diagram, external dependencies, message queue topology.
-  * *Prompt*: `"Describe internal architecture, external dependencies, and primary request lifecycle"`
+We turn Cursor into an automatic doc generator via standard prompts:
+
+```
+┌─────────────────┬──────────────────────────────────┬───────────────────────────────────────────┐
+│ Document File   │ Mandatory Contents               │ Sample Cursor Prompt                      │
+├─────────────────┼──────────────────────────────────┼───────────────────────────────────────────┤
+│ README.md       │ Local setup, envvars, stack      │ "Read entire project and generate README" │
+│ API.md          │ List REST endpoints, req/res     │ "List REST endpoints with HTTP statuses"  │
+│ ARCHITECTURE.md │ Dataflow, Message Queue, DB      │ "Describe internal architecture & deps"   │
+└─────────────────┴──────────────────────────────────┴───────────────────────────────────────────┘
+```
 
 ---
 
 ## 6. Knowledge Governance via 2-Tier Skills & Rules
 
-Without guidance, AI defaults to unpredictable coding patterns. We govern AI context through **Skills** and **Cursor Rules**.
+To prevent AI from going rogue or straying from project standards, you must provide a clear rulebook. We govern AI context using **Skills** and **Cursor Rules**.
 
 ### 6.1. Skills Management (`.cursor/skills/`)
-Skills are specialized `*.md` files loaded into Cursor according to domain context.
+Skills are specialized `*.md` files containing domain or tech stack knowledge.
 
 ```
 .cursor/
@@ -149,18 +172,52 @@ Skills are specialized `*.md` files loaded into Cursor according to domain conte
         └── my-shortcuts.md
 ```
 
-* **Usage**: Drag and drop `*.md` files into Cursor chat windows when working on specific modules, or reference via `@file` in `.cursorrules`.
+* **Usage**: Drag and drop `*.md` files into Cursor chat windows when working on related modules, or call `@file` directly in `.cursorrules` to auto-load upon project startup.
 
-### 6.2. 2-Tier Cursor Rules System
-`.cursorrules` files act as the "constitution" forcing AI to adhere to team conventions.
+### 6.2. 2-Tier Cursor Rules System (`.cursorrules` & `.mdc`)
 
-* **Tier 1: Enterprise Rules (`~/.cursor/rules/enterprise.mdc`)** — Mandated by management across all engineers and projects. Overriding is strictly forbidden.
-* **Tier 2: Team Rules (`.cursor/rules/*.mdc`)** — Crafted by Tech Leads per stack (Java/Spring Boot or Angular).
+The `.cursorrules` file acts as the **Constitution** forcing AI to adhere strictly to all engineering conventions.
+
+#### Tier 1: Enterprise Rules (`~/.cursor/rules/enterprise.mdc`)
+Enforced across all company engineers, overriding is strictly forbidden:
+
+```markdown
+# TTKDGP Enterprise Rules – DLS Dept
+## Language & Communication
+- Always respond in Vietnamese in comments and explanations.
+- Variable, function, and class names in English using camelCase / PascalCase.
+- Commit messages strictly follow Conventional Commits (feat/fix/refactor...).
+
+## Security — STRICTLY FORBIDDEN
+- NEVER hardcode API keys, passwords, tokens, or secrets in any file.
+- NEVER independently write auth, authorization, or encryption logic — notify Senior.
+- NEVER log sensitive information (phone numbers, IDs, customer PII).
+
+## Code Quality
+- Functions must not exceed 50 lines. Split if larger.
+- Always add Javadoc / Docstrings for public methods.
+- No magic numbers — declare named constants with clear semantic meaning.
+```
+
+#### Tier 2: Team Rules (`.cursor/rules/*.mdc`)
+Crafted by Tech Leads per project stack (Spring Boot, Angular, React...):
+
+```markdown
+# Team Rules — Backend Java/Spring Boot
+- Use Repository Pattern. Do not call DB directly from Controller or Service.
+- Centralized Exception handling via @ControllerAdvice — no isolated try/catch.
+- Response always wrapped in team standard ApiResponse<T> wrapper.
+
+# Team Rules — Frontend Angular
+- DO NOT use React, JSX, Vue. Angular + TypeScript + HTML template only.
+- State management: RxJS BehaviorSubject or Angular Signals (Angular 17+).
+- Lazy loading mandatory for all feature modules. Standalone component convention.
+```
 
 ---
 
 ## Conclusion
 
-Adopting Cursor AI in an enterprise is not about buying licenses and expecting 10x output overnight. Real velocity comes from **rigorous processes, layered tooling architectures, and strong governance rules that keep AI within bounds.**
+Using Cursor AI is like managing a brilliant intern who lacks practical production experience. If left unguided, they will break your codebase. But if you provide a clear 3-layer workflow, enforce Zero Trust security, and establish a robust 2-tier Rules framework — you gain a "super assistant" that dramatically accelerates software delivery.
 
-AI is a fast-learning apprentice lacking domain experience. Treat AI as a strict Tech Lead would — control security, set clear rules, and transform Cursor into your team's most effective engineering accelerator.
+Remember: **AI generates code, but engineers are responsible for every line pushed to Production!**
