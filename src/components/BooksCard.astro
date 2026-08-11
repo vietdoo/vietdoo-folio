@@ -7,19 +7,18 @@ const liveBooks = await getLiveGoodreadsBooks();
 const booksData = liveBooks.length > 0 ? liveBooks : fallbackBooks;
 
 const currentlyReading = booksData.find((b) => b.status === "reading");
+const shelfBooks = booksData.slice(0, 8);
 
-// Split books for 2 background shelf rows
-const row1Books = booksData.slice(0, 6);
-const row2Books = booksData.slice(6, 12);
-
-// Varied spine colors, heights, and styles for natural bookshelf feel
-const spineStyles = [
-  { color: "from-zinc-600 via-zinc-700 to-zinc-900", height: "h-11", width: "w-4" },
-  { color: "from-neutral-500 via-neutral-600 to-zinc-900", height: "h-13", width: "w-5" },
-  { color: "from-stone-600 via-stone-700 to-zinc-900", height: "h-10", width: "w-3.5" },
-  { color: "from-slate-600 via-slate-700 to-zinc-900", height: "h-12", width: "w-4" },
-  { color: "from-zinc-500 via-zinc-700 to-zinc-900", height: "h-14", width: "w-4.5" },
-  { color: "from-neutral-600 via-neutral-700 to-zinc-900", height: "h-10.5", width: "w-3.5" },
+// Varied spine colors, heights, and spine styles for authentic physical bookshelf feel
+const spineVariants = [
+  { bg: "bg-amber-950/80 border-amber-700/50 text-amber-200", height: "h-32", accent: "bg-amber-500/40" },
+  { bg: "bg-slate-800 border-slate-600/60 text-slate-200", height: "h-36", accent: "bg-primary-400/40" },
+  { bg: "bg-zinc-800 border-zinc-600/60 text-zinc-300", height: "h-28", accent: "bg-zinc-400/40" },
+  { bg: "bg-emerald-950/80 border-emerald-700/50 text-emerald-200", height: "h-34", accent: "bg-emerald-400/40" },
+  { bg: "bg-stone-800 border-stone-600/60 text-stone-300", height: "h-30", accent: "bg-amber-600/40" },
+  { bg: "bg-indigo-950/80 border-indigo-700/50 text-indigo-200", height: "h-36", accent: "bg-indigo-400/40" },
+  { bg: "bg-neutral-800 border-neutral-600/60 text-neutral-200", height: "h-31", accent: "bg-neutral-400/40" },
+  { bg: "bg-cyan-950/80 border-cyan-700/50 text-cyan-200", height: "h-33", accent: "bg-cyan-400/40" },
 ];
 ---
 
@@ -27,142 +26,71 @@ const spineStyles = [
   colSpan="md:col-span-1"
   rowSpan="md:row-span-2"
   href="/books"
-  title="Bookshelf"
   padding="p-4 sm:p-5"
 >
-  <div slot="background" class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <!-- Animated Bookshelf Background ("Kệ Sách") -->
-    <div class="bookshelf-grid-container w-full h-full relative flex flex-col justify-between p-3 pt-4 opacity-75 group-hover:opacity-100 transition-opacity duration-500 select-none">
-      
-      <!-- Shelf Row 1 -->
-      <div class="shelf-row flex items-end justify-between px-1 relative pb-0.5">
-        <!-- Metallic/Glass Shelf Bar -->
-        <div class="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-white/20 via-white/10 to-white/20 shadow-sm"></div>
-        
-        {row1Books.map((book, idx) => {
-          const style = spineStyles[idx % spineStyles.length];
-          const isFeatured = idx === 0 || idx === 3;
+  <div class="h-full flex flex-col justify-between relative z-10 select-none">
+    {/* Header */}
+    <div>
+      <div class="flex items-baseline justify-between mb-1">
+        <h2 class="text-base sm:text-lg font-bold text-white tracking-tight m-0">
+          Bookshelf
+        </h2>
+        <span class="text-xs text-white/50 font-mono">
+          {booksData.length} books
+        </span>
+      </div>
+
+      {/* Minimal Status */}
+      {currentlyReading ? (
+        <p class="text-xs text-white/70 m-0 truncate">
+          <span class="text-primary-400 font-medium">Reading:</span> {currentlyReading.title}
+        </p>
+      ) : (
+        <p class="text-xs text-white/50 m-0">
+          Technical notes & personal reading log
+        </p>
+      )}
+    </div>
+
+    {/* Physical Bookshelf Visual */}
+    <div class="flex-1 flex flex-col justify-end my-3 relative min-h-[150px]">
+      {/* Books Standing Upright on Shelf */}
+      <div class="flex items-end justify-center gap-1.5 px-1 pb-1 relative z-10">
+        {shelfBooks.map((book, idx) => {
+          const variant = spineVariants[idx % spineVariants.length];
+          const isLeaning = idx === 3; // Natural tilt for 1 book
           return (
             <div
-              class={`bs-spine relative rounded-t-[2px] border-t border-x border-white/20 transition-all duration-500 ease-out flex-shrink-0 ${
-                isFeatured ? "w-9 h-13 shadow-md overflow-hidden bg-zinc-800" : `${style.width} ${style.height} bg-gradient-to-b ${style.color}`
-              }`}
-              style={`animation: shelfFloat 3s ease-in-out infinite alternate ${idx * 0.25}s;`}
-              data-index={idx}
+              class={`bs-spine group relative flex flex-col items-center justify-between rounded-t-[3px] border-t border-x px-1 py-2.5 transition-all duration-300 ease-out cursor-pointer flex-1 max-w-[28px] sm:max-w-[32px] ${variant.bg} ${variant.height} ${
+                isLeaning ? "rotate-3 translate-x-0.5" : ""
+              } hover:-translate-y-2 hover:rotate-0 hover:shadow-lg hover:border-primary-400/80`}
+              title={`${book.title} — ${book.author}`}
             >
-              {isFeatured ? (
-                <img src={book.coverImage} alt={book.title} class="w-full h-full object-cover opacity-90" loading="lazy" />
-              ) : (
-                <div class="w-full h-full flex flex-col items-center justify-between py-1.5 opacity-50">
-                  <div class="w-1.5 h-1 rounded-full bg-white/40"></div>
-                  <div class="w-0.5 h-6 bg-white/20"></div>
-                </div>
-              )}
+              {/* Spine Top Accent Line */}
+              <div class={`w-full h-0.5 rounded-full ${variant.accent}`}></div>
+
+              {/* Vertical Title Text */}
+              <span class="text-[9.5px] font-medium tracking-tight text-white/80 group-hover:text-white truncate max-h-[75px] [writing-mode:vertical-rl] rotate-180">
+                {book.title}
+              </span>
+
+              {/* Spine Bottom Accent Line */}
+              <div class={`w-full h-0.5 rounded-full ${variant.accent}`}></div>
             </div>
           );
         })}
       </div>
 
-      <!-- Shelf Row 2 -->
-      <div class="shelf-row flex items-end justify-between px-1 relative pb-0.5">
-        <!-- Metallic/Glass Shelf Bar -->
-        <div class="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-white/20 via-white/10 to-white/20 shadow-sm"></div>
+      {/* Wooden / Slate Shelf Bar */}
+      <div class="w-full h-2.5 rounded-sm bg-gradient-to-r from-darkslate-600 via-darkslate-400/40 to-darkslate-600 border-t border-white/10 shadow-md"></div>
+    </div>
 
-        {row2Books.map((book, idx) => {
-          const style = spineStyles[(idx + 2) % spineStyles.length];
-          const isFeatured = idx === 1 || idx === 4;
-          return (
-            <div
-              class={`bs-spine relative rounded-t-[2px] border-t border-x border-white/20 transition-all duration-500 ease-out flex-shrink-0 ${
-                isFeatured ? "w-9 h-13 shadow-md overflow-hidden bg-zinc-800" : `${style.width} ${style.height} bg-gradient-to-b ${style.color}`
-              }`}
-              style={`animation: shelfFloat 3.5s ease-in-out infinite alternate ${(idx + 3) * 0.3}s;`}
-              data-index={idx + 6}
-            >
-              {isFeatured ? (
-                <img src={book.coverImage} alt={book.title} class="w-full h-full object-cover opacity-90" loading="lazy" />
-              ) : (
-                <div class="w-full h-full flex flex-col items-center justify-between py-1.5 opacity-50">
-                  <div class="w-1.5 h-1 rounded-full bg-white/40"></div>
-                  <div class="w-0.5 h-6 bg-white/20"></div>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      <!-- Overlay Dark Gradient for Contrast -->
-      <div class="absolute inset-0 bg-gradient-to-t from-darkslate-600 via-darkslate-600/75 to-darkslate-600/30 pointer-events-none"></div>
+    {/* Footer link */}
+    <div class="flex items-center justify-between text-xs text-white/60 pt-1.5 border-t border-white/5">
+      <span>Goodreads list</span>
+      <span class="text-primary-400 group-hover:translate-x-1 transition-transform inline-flex items-center gap-0.5 font-medium">
+        View bookshelf ↗
+      </span>
     </div>
   </div>
-
-  <!-- Subtitle Content Slot (Showing Currently Reading Book) -->
-  <span class="text-xs text-white/60 z-10 relative truncate block max-w-full leading-tight mt-0.5">
-    {currentlyReading ? `Reading: ${currentlyReading.title}` : `${booksData.length} books`}
-  </span>
 </Card>
-
-<style>
-  @keyframes shelfFloat {
-    0% {
-      transform: translateY(0px);
-    }
-    100% {
-      transform: translateY(-4px);
-    }
-  }
-
-  .bs-spine.active {
-    transform: translateY(-6px) scale(1.06) !important;
-    border-color: rgba(255, 255, 255, 0.5) !important;
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2) !important;
-  }
-</style>
-
-<script is:inline>
-  (function setupBookshelf() {
-    function startAnimation() {
-      const container = document.querySelector('.bookshelf-grid-container');
-      if (!container) return;
-      const spines = container.querySelectorAll('.bs-spine');
-      if (!spines.length) return;
-
-      const card = container.closest('.card') || container.parentElement;
-
-      if (container.dataset.animated === 'true') return;
-      container.dataset.animated = 'true';
-
-      if (card) {
-        card.addEventListener('mousemove', (e) => {
-          const rect = container.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-
-          spines.forEach((spine) => {
-            const sRect = spine.getBoundingClientRect();
-            const sX = sRect.left - rect.left + sRect.width / 2;
-            const dist = Math.abs(x - sX);
-
-            if (dist < 35) {
-              spine.classList.add('active');
-              setTimeout(() => {
-                spine.classList.remove('active');
-              }, 400);
-            }
-          });
-        });
-      }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', startAnimation);
-    } else {
-      startAnimation();
-    }
-    document.addEventListener('astro:page-load', () => {
-      const container = document.querySelector('.bookshelf-grid-container');
-      if (container) container.dataset.animated = 'false';
-      startAnimation();
-    });
-  })();
-</script>
