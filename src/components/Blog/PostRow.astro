@@ -26,7 +26,7 @@ const dateLocale = isVi ? "vi-VN" : "en-US";
 <li
   class="list-none w-full my-2.5"
   data-post-lang={post.data.lang}
-  data-search-text={`${post.data.title ?? post.id} ${post.data.description ?? ""} ${post.data.category ?? ""} ${(post.data.tags || []).join(" ")}`.toLowerCase()}
+  data-search-text={`${post.data.title ?? post.id} ${post.data.description ?? ""} ${post.data.category ?? ""}`.toLowerCase()}
   hidden={hidden}
 >
   <a
