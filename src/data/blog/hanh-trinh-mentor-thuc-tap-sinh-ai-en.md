@@ -1,6 +1,6 @@
 ---
 title: "Mentoring a RAG System: What Production Teaches That Tutorials Don't"
-description: "Architecture, production incidents, and key takeaways from guiding a senior intern to build a RAG chatbot + dashboard for VNPT — written for engineers, not to brag."
+description: "Architecture, production incidents, and key takeaways from guiding a senior intern to build a RAG chatbot + dashboard on Cloud — written for engineers, not to brag."
 pubDate: 2026-07-27
 category: "engineering"
 image: "/blog/hanh-trinh-mentor-thuc-tap-sinh-ai/hero.jpg"
@@ -11,11 +11,11 @@ draft: false
 
 ![Mentoring a RAG pipeline from zero to production](/blog/hanh-trinh-mentor-thuc-tap-sinh-ai/hero.jpg)
 
-> **TL;DR** — 8 weeks, 1 senior intern, 1 RAG + Dashboard system running live in production for VNPT HCMC. Results: 2,639 public administrative procedures indexed into 20,916+ vectors, 90.8% retrieval accuracy over 308 real chat sessions, query latency reduced by ~70% after one round of pipeline optimization. This article isn't an emotional retrospective — it's an engineering log of decisions made right and wrong, and how I mentored a newcomer through each decision.
+> **TL;DR** — 8 weeks, 1 senior intern, 1 RAG + Dashboard system running live in production on Cloud. Results: 2,639 public administrative procedures indexed into 20,916+ vectors, 90.8% retrieval accuracy over 308 real chat sessions, query latency reduced by ~70% after one round of pipeline optimization. This article isn't an emotional retrospective — it's an engineering log of decisions made right and wrong, and how I mentored a newcomer through each decision.
 
 ## The Problem
 
-Problem statement: Build an AI Virtual Assistant for querying public administrative procedures using RAG, accompanied by a Dashboard analyzing processing performance — assigned to a senior intern, over 8 weeks, deployed live on VNPT HCMC infrastructure rather than demoing on a local machine.
+Problem statement: Build an AI Virtual Assistant for querying public administrative procedures using RAG, accompanied by a Dashboard analyzing processing performance — assigned to a senior intern, over 8 weeks, deployed live on Cloud infrastructure rather than demoing on a local machine.
 
 Real-world constraints made this problem very different from a side-project: input data consisted of Vietnamese legal texts with mixed structures (prose, tables, clauses), the system had to run 24/7 on Cloud, and end-users were administrative staff — not developers, meaning everything from UI to data updating mechanisms had to be "zero-technical-debt for non-technical users".
 

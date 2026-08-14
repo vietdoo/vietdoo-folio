@@ -1,6 +1,6 @@
 ---
 title: "Làm Chủ Cursor AI: Quy Trình 3 Lớp, UI Pipeline & Zero Trust Security"
-description: "Bóc tách quy chuẩn kỹ thuật nội bộ VNPT: Cách 'thu phục' Cursor AI bằng mô hình 3 lớp, pipeline UI 3 bước và Zero Trust Security để không bao giờ phải đi dọn rác code AI."
+description: "Cẩm nang thực chiến để 'thu phục' Cursor AI bằng mô hình 3 lớp, pipeline UI 3 bước và Zero Trust Security, giúp dev không phải đi dọn rác code AI."
 pubDate: 2026-08-11
 category: "engineering"
 image: "/blog/cursor-ai-guideline/hero.jpg"
@@ -11,7 +11,7 @@ draft: false
 
 ![Meme Cursor AI: Khi AI sinh rác code và dev phải đi dọn](/blog/cursor-ai-guideline/hero.jpg)
 
-> **TL;DR** — Cấp tài khoản Cursor AI cho dev mà không kèm "luật chơi" cũng giống như đưa một chiếc Ferrari cho người chưa có bằng lái: sướng được 5 phút đầu, sau đó là nát bét. Mã AI sinh ra trông có vẻ chạy được, nhưng bên dưới là một bãi rác kiến trúc, logic nghiệp vụ "ảo tưởng" (hallucination), và rủi ro rò rỉ API key nội bộ cực kỳ cao. Bài viết này bóc tách toàn bộ tài liệu hướng dẫn kỹ thuật nội bộ của chúng tôi tại VNPT TP.HCM: từ chiến lược phân lớp công cụ, quy trình Backend/Frontend song song, cơ chế Zero Trust cho đến hệ thống phân cấp Rules & Skills giúp AI sinh mã chuẩn đét ngay từ cú gõ đầu tiên.
+> **TL;DR** — Cấp tài khoản Cursor AI cho dev mà không kèm "luật chơi" cũng giống như đưa một chiếc Ferrari cho người chưa có bằng lái: sướng được 5 phút đầu, sau đó là nát bét. Mã AI sinh ra trông có vẻ chạy được, nhưng bên dưới là một bãi rác kiến trúc, logic nghiệp vụ "ảo tưởng" (hallucination), và rủi ro rò rỉ API key nội bộ cực kỳ cao. Bài viết này trình bày một cẩm nang engineering thực chiến: từ chiến lược phân lớp công cụ, quy trình Backend/Frontend song song, cơ chế Zero Trust cho đến hệ thống phân cấp Rules & Skills giúp AI sinh mã chuẩn đét ngay từ cú gõ đầu tiên.
 
 ---
 

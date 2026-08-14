@@ -1,6 +1,6 @@
 ---
 title: "Mastering Cursor AI: 3-Layer Model, UI Pipeline & Zero Trust Security"
-description: "Dissecting internal technical guidelines from VNPT: How to tame Cursor AI using a 3-layer model, 3-step UI pipeline, and Zero Trust Security to never clean up AI code garbage again."
+description: "A practical engineering playbook for taming Cursor AI with a 3-layer model, 3-step UI pipeline, and Zero Trust Security so developers spend less time cleaning up AI-generated code."
 pubDate: 2026-08-11
 category: "engineering"
 image: "/blog/cursor-ai-guideline/hero.jpg"
@@ -11,7 +11,7 @@ draft: false
 
 ![Cursor AI Meme: When AI generates spaghetti code and dev has to clean it up](/blog/cursor-ai-guideline/hero.jpg)
 
-> **TL;DR** — Handing Cursor AI accounts to developers without strict rules is like giving a Ferrari to someone without a driver's license: thrilling for 5 minutes, followed by a total wreck. AI-generated code looks functional on the surface, but underneath lies architectural spaghetti, hallucinatory business logic, and extreme risks of leaking internal API keys. This post breaks down our entire internal engineering handbook at VNPT: from layered tooling strategies and dual-window workflows to Zero Trust security and a 2-tier Rules & Skills framework that gets AI code right on the very first prompt.
+> **TL;DR** — Handing Cursor AI accounts to developers without strict rules is like giving a Ferrari to someone without a driver's license: thrilling for 5 minutes, followed by a total wreck. AI-generated code looks functional on the surface, but underneath lies architectural spaghetti, hallucinatory business logic, and extreme risks of leaking internal API keys. This post breaks down a practical engineering playbook: from layered tooling strategies and dual-window workflows to Zero Trust security and a 2-tier Rules & Skills framework that gets AI code right on the very first prompt.
 
 ---
 

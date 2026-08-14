@@ -1,6 +1,6 @@
 ---
 title: "Mentor một RAG system: những gì production dạy mà tutorial không dạy"
-description: "Kiến trúc, sự cố production, và những gì tôi rút ra khi hướng dẫn một thực tập sinh xây chatbot RAG + dashboard cho VNPT — viết cho các kỹ sư khác đọc, không phải để kể lể."
+description: "Kiến trúc, sự cố production, và những gì tôi rút ra khi hướng dẫn một thực tập sinh xây chatbot RAG + dashboard trên Cloud — viết cho các kỹ sư khác đọc, không phải để kể lể."
 pubDate: 2026-07-27
 category: "engineering"
 image: "/blog/hanh-trinh-mentor-thuc-tap-sinh-ai/hero.jpg"
@@ -11,11 +11,11 @@ draft: false
 
 ![Mentor RAG pipeline từ zero đến production](/blog/hanh-trinh-mentor-thuc-tap-sinh-ai/hero.jpg)
 
-> **TL;DR** — 8 tuần, 1 thực tập sinh năm cuối, 1 hệ thống RAG + Dashboard chạy thật trên production cho VNPT TP.HCM. Kết quả: 2.639 thủ tục hành chính được index thành 20.916+ vector, độ chính xác retrieval 90,8% trên 308 phiên chat thực tế, latency truy vấn giảm ~70% sau một vòng tối ưu pipeline. Bài viết này không phải retrospective cảm tính — nó là log kỹ thuật của những quyết định đúng, sai, và cách tôi mentor một người mới vào nghề qua từng quyết định đó.
+> **TL;DR** — 8 tuần, 1 thực tập sinh năm cuối, 1 hệ thống RAG + Dashboard được triển khai và chạy thật trên Cloud. Kết quả: 2.639 thủ tục hành chính được index thành 20.916+ vector, độ chính xác retrieval 90,8% trên 308 phiên chat thực tế, latency truy vấn giảm ~70% sau một vòng tối ưu pipeline. Bài viết này không phải retrospective cảm tính — nó là log kỹ thuật của những quyết định đúng, sai, và cách tôi mentor một người mới vào nghề qua từng quyết định đó.
 
 ## Bài toán
 
-Đề bài: xây một Trợ lý ảo AI tra cứu thủ tục hành chính công bằng kỹ thuật RAG, đi kèm một Dashboard phân tích hiệu suất xử lý hồ sơ — giao cho một sinh viên năm cuối, trong 8 tuần, triển khai thật trên hạ tầng VNPT TP.HCM chứ không phải demo trên máy cá nhân.
+Đề bài: xây một Trợ lý ảo AI tra cứu thủ tục hành chính công bằng kỹ thuật RAG, đi kèm một Dashboard phân tích hiệu suất xử lý hồ sơ — giao cho một sinh viên năm cuối, trong 8 tuần, triển khai thật trên hạ tầng Cloud chứ không phải demo trên máy cá nhân.
 
 Ràng buộc thực tế khiến bài toán này khác hẳn một side-project: dữ liệu đầu vào là văn bản pháp lý tiếng Việt với cấu trúc hỗn hợp (văn xuôi, bảng biểu, điều khoản), hệ thống phải chạy 24/7 trên Cloud, và người dùng cuối là cán bộ nghiệp vụ — không phải dev, nghĩa là mọi thứ từ UI đến cơ chế cập nhật dữ liệu đều phải "zero-technical-debt cho non-technical user".
 
