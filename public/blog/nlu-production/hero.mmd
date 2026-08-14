@@ -1,0 +1,8 @@
+%%{init: {'theme':'base','themeVariables': {'background':'#f8f4ec','primaryColor':'#d9ede8','primaryTextColor':'#173f45','primaryBorderColor':'#2d7075','lineColor':'#477e80','secondaryColor':'#f2dfc6','tertiaryColor':'#eadfe0','fontFamily':'Georgia, serif','fontSize':'18px'}}}%%
+flowchart LR
+  U[User utterance] --> I[Intent]
+  U --> E[Entities]
+  I --> N[Normalized command]
+  E --> N
+  N --> P[Policy]
+  P --> X[Safe action]

@@ -1,0 +1,4 @@
+%%{init: {'theme':'base','themeVariables': {'background':'#f8f4ec','primaryColor':'#d9ede8','primaryTextColor':'#173f45','primaryBorderColor':'#2d7075','lineColor':'#477e80','secondaryColor':'#f2dfc6','tertiaryColor':'#eadfe0','fontFamily':'Georgia, serif','fontSize':'18px'}}}%%
+flowchart TB
+  B[Backward<br/>new consumer reads old event] --> F[Full<br/>old and new read both] --> W[Forward<br/>old consumer reads new event]
+  F --> T[Transitive history check]
