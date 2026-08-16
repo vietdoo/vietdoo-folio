@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1376 768" role="img" aria-labelledby="title desc">
+  <title id="title">Context engineering pipeline for long-running AI agents</title>
+  <desc id="desc">A hand-drawn editorial diagram showing retrieval, compression, memory and action around an AI agent.</desc>
+  <defs>
+    <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .08"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#2b7775"/></marker>
+    <style>
+      .ink{stroke:#173b50;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}.thin{stroke:#2b7775;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}.label{font-family:Arial,sans-serif;font-weight:700;fill:#173b50}.small{font-family:Arial,sans-serif;font-size:20px;font-weight:700;fill:#173b50}.muted{font-family:Arial,sans-serif;font-size:16px;fill:#49656b}.dash{stroke:#d5a544;stroke-width:4;stroke-dasharray:11 13;fill:none;stroke-linecap:round}
+    </style>
+  </defs>
+  <rect width="1376" height="768" fill="#f7f0df"/>
+  <rect x="15" y="15" width="1346" height="738" rx="28" fill="none" stroke="#d7c7a9" stroke-width="3"/>
+  <g opacity=".12" stroke="#78908d" stroke-width="2"><path d="M80 140H1296M80 270H1296M80 400H1296M80 530H1296M80 660H1296"/><path d="M180 70V700M390 70V700M600 70V700M810 70V700M1020 70V700M1230 70V700"/></g>
+  <path class="thin" marker-end="url(#arrow)" d="M188 388C253 285 307 241 368 240"/>
+  <path class="thin" marker-end="url(#arrow)" d="M501 240C565 240 585 291 625 337"/>
+  <path class="thin" marker-end="url(#arrow)" d="M753 337C805 276 840 240 883 240"/>
+  <path class="thin" marker-end="url(#arrow)" d="M1023 240C1091 256 1133 304 1177 377"/>
+  <path class="dash" d="M470 550C610 628 800 632 1014 519"/>
+  <g transform="translate(85 320)"><circle cx="76" cy="76" r="68" fill="#173b50" class="ink"/><circle cx="55" cy="72" r="12" fill="#7be0d4"/><circle cx="98" cy="72" r="12" fill="#7be0d4"/><path d="M45 103Q77 125 109 103" fill="none" stroke="#f1c85b" stroke-width="7" stroke-linecap="round"/><path d="M8 70H-18M170 70h25" class="thin"/><path d="M76 8V-18M76 170v25" class="thin"/></g>
+  <g transform="translate(320 163)"><rect width="184" height="151" rx="20" fill="#fffaf0" class="ink"/><circle cx="48" cy="48" r="22" fill="#7be0d4" class="ink"/><path d="M48 35v28M35 49h26" class="ink"/><path d="M85 46H160M85 76H145M85 106H158" class="thin"/></g>
+  <g transform="translate(600 300)"><rect width="164" height="144" rx="18" fill="#77d8cc" class="ink"/><rect x="22" y="25" width="120" height="86" rx="10" fill="#f7f0df" class="ink"/><path d="M45 55h74M45 78h52" class="thin"/><path d="M82 0v-25" class="thin"/><circle cx="82" cy="-36" r="10" fill="#f1c85b" class="ink"/></g>
+  <g transform="translate(875 162)"><rect width="178" height="160" rx="16" fill="#fffaf0" class="ink"/><path d="M35 24h108v112H35z" fill="#f1c85b" opacity=".8" class="ink"/><path d="M54 54h70M54 82h50M54 110h68" class="thin"/><path d="M29 30L10 14M146 30l19-16" class="thin"/></g>
+  <g transform="translate(1120 385)"><rect width="178" height="130" rx="18" fill="#173b50" class="ink"/><path d="M35 47h108M35 72h75" stroke="#7be0d4" stroke-width="8" stroke-linecap="round"/><circle cx="137" cy="96" r="13" fill="#f1c85b"/><path d="M132 96l5 5 10-13" fill="none" stroke="#173b50" stroke-width="4"/></g>
+  <g transform="translate(573 534)"><path d="M64 0l45 28v83l-45 28-45-28V28z" fill="#f1c85b" class="ink"/><path d="M19 28l45 28 45-28M64 56v83" fill="none" class="ink"/></g>
+  
+</svg>
