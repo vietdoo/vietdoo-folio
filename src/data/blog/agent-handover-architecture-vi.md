@@ -186,3 +186,10 @@ Vòng lặp hoàn chỉnh: Output của phiên làm việc trước chính là �
 Kiến trúc Handover không phải là một công nghệ mới lạ. Nó mô phỏng lại đúng quy trình bàn giao ca làm việc trong y tế và hàng không: một protocol cố định, một sổ ghi chép trạng thái, và một checklist nghiêm ngặt.
 
 Phần thưởng lớn nhất bạn nhận được là **Tính khả chuyển thực sự (True Interchangeability)**. Khi ngữ cảnh được đóng đóng gói sống động ngay trong repo chứ không nằm ở cửa sổ chat, bạn có thể thoải mái chuyển đổi giữa Claude, Cursor, Copilot hay bất kỳ model mới nào vừa ra mắt mà không sợ mất đà dự án. AI Agent chỉ là lực lượng thực thi tạm thời — chính Protocol bàn giao mới là Kiến trúc bền vững của bạn.
+
+## Video Demo
+
+<video controls width="100%">
+  <source src="/blog/videos/blog-recording.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
