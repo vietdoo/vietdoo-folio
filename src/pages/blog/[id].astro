@@ -66,6 +66,7 @@ const translations = [
 
 <LayoutBlogPost
   description={primaryEntry.data.description!}
+  image={primaryEntry.data.image}
   enHref={
     hasEnglishTranslation && hasVietnameseTranslation && englishEntry
       ? getBlogPostHref(englishEntry, "en")
