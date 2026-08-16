@@ -1,7 +1,7 @@
 ---
 title: "Thiết kế SLO cho AI Agent: Đo Success Rate, Latency, Cost và Safety như thế nào?"
 description: "Một framework hướng production để đo AI Agent theo bốn chiều success, latency, cost và safety thay vì che giấu độ tin cậy sau một con số pass rate."
-pubDate: 2026-08-14
+pubDate: 2026-05-28
 category: "engineering"
 lang: "vi"
 translationKey: "ai-agent-slo-success-latency-cost-safety"

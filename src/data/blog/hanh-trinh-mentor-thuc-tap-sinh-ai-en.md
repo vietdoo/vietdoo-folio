@@ -1,7 +1,7 @@
 ---
 title: "Mentoring a RAG System: What Production Teaches That Tutorials Don't"
 description: "Architecture, production incidents, and key takeaways from guiding a senior intern to build a RAG chatbot + dashboard on Cloud — written for engineers, not to brag."
-pubDate: 2026-07-27
+pubDate: 2026-02-06
 category: "engineering"
 image: "/blog/hanh-trinh-mentor-thuc-tap-sinh-ai/hero.jpg"
 lang: "en"

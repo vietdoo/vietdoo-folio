@@ -1,7 +1,7 @@
 ---
 title: "5 Triết lý kỹ thuật giúp tôi viết code sống sót qua hàng triệu request"
 description: "Năm thói quen production giúp hệ thống dễ hiểu, đo được và chịu thay đổi tốt hơn rất lâu sau đợt traffic đầu tiên."
-pubDate: 2026-07-20
+pubDate: 2026-01-16
 category: "architecture"
 lang: "vi"
 translationKey: "engineering-principles-million-requests"

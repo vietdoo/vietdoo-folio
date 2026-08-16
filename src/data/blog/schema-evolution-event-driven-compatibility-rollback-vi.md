@@ -1,7 +1,7 @@
 ---
 title: "Schema Evolution trong Event-Driven System: Compatibility, Rollback và Data Contract"
 description: "Playbook production để thay đổi event schema mà không làm hỏng consumer cũ, không mắc kẹt khi replay và không nhầm registry compatibility với một release an toàn."
-pubDate: 2026-08-14
+pubDate: 2026-06-29
 category: "architecture"
 lang: "vi"
 translationKey: "schema-evolution-event-driven-compatibility-rollback"

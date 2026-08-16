@@ -1,7 +1,7 @@
 ---
 title: "Human-in-the-Loop không phải nút “Approve”: Thiết kế Action Gate và chống Consent Fatigue"
 description: "Cách thiết kế human oversight cho AI Agent bằng action envelope, risk tier, approval còn hiệu lực, preview rõ ràng, escalation và auditability."
-pubDate: 2026-08-14
+pubDate: 2026-06-18
 category: "architecture"
 lang: "vi"
 translationKey: "human-in-loop-action-gate-consent-fatigue"

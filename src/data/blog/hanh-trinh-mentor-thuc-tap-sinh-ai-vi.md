@@ -1,7 +1,7 @@
 ---
 title: "Mentor một RAG system: những gì production dạy mà tutorial không dạy"
 description: "Kiến trúc, sự cố production, và những gì tôi rút ra khi hướng dẫn một thực tập sinh xây chatbot RAG + dashboard trên Cloud — viết cho các kỹ sư khác đọc, không phải để kể lể."
-pubDate: 2026-07-27
+pubDate: 2026-02-06
 category: "engineering"
 image: "/blog/hanh-trinh-mentor-thuc-tap-sinh-ai/hero.jpg"
 lang: "vi"

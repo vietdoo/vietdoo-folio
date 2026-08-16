@@ -1,7 +1,7 @@
 ---
 title: "Designing SLOs for AI Agents: Measuring Success Rate, Latency, Cost, and Safety"
 description: "A production-oriented framework for measuring AI agents across task success, latency, cost, and safety instead of hiding reliability behind one pass rate."
-pubDate: 2026-08-14
+pubDate: 2026-05-28
 category: "engineering"
 lang: "en"
 translationKey: "ai-agent-slo-success-latency-cost-safety"

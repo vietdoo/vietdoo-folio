@@ -1,7 +1,7 @@
 ---
 title: "NLU trong Production: Từ câu nói tự nhiên đến action an toàn và có thể kiểm thử"
 description: "Một mô hình thực tế cho Natural Language Understanding: biến câu nói tự nhiên thành contract intent và entity có kiểu trước khi policy và action code tiếp quản."
-pubDate: 2026-08-14
+pubDate: 2026-06-08
 category: "engineering"
 lang: "vi"
 translationKey: "nlu-from-utterance-to-safe-action"

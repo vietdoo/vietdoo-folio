@@ -1,7 +1,7 @@
 ---
 title: "MCP Tool Poisoning: When a Tool Description Becomes an Attack Payload"
 description: "Why MCP tool metadata must be treated as untrusted input, and how to separate discovery, capability approval, argument validation, and execution."
-pubDate: 2026-08-14
+pubDate: 2026-04-16
 category: "architecture"
 lang: "en"
 translationKey: "mcp-tool-poisoning-description-payload"

@@ -1,7 +1,7 @@
 ---
 title: "Đừng đưa AI Agent lên Production khi chưa có Evals: Thiết kế Regression Suite cho Tool-Calling Agent"
 description: "Một agent có thể trả lời đúng nhưng vẫn gọi nhầm tool, làm sai state, lặp vô hạn hoặc đốt quá ngân sách. Bài viết này biến những lỗi đó thành regression suite có thể chạy trong CI/CD."
-pubDate: 2026-08-13
+pubDate: 2026-05-18
 category: "engineering"
 image: "/blog/agent-evals-hero.jpg"
 lang: "vi"

@@ -1,7 +1,7 @@
 ---
 title: "Zero-Downtime Deployment: Kỹ thuật Canary Release & DB Migration an toàn trên K8s"
 description: "Chiến lược thực chiến triển khai hệ thống quy mô lớn không gián đoạn dịch vụ với Kubernetes Canary Deployment và mô hình Expand-Contract Database Migration."
-pubDate: 2026-08-05
+pubDate: 2026-03-16
 category: "architecture"
 lang: "vi"
 translationKey: "zero-downtime-canary-db-migration"

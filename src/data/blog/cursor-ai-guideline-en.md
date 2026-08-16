@@ -1,7 +1,7 @@
 ---
 title: "Mastering Cursor AI: 3-Layer Model, UI Pipeline & Zero Trust Security"
 description: "A practical engineering playbook for taming Cursor AI with a 3-layer model, 3-step UI pipeline, and Zero Trust Security so developers spend less time cleaning up AI-generated code."
-pubDate: 2026-08-11
+pubDate: 2026-02-26
 category: "engineering"
 image: "/blog/cursor-ai-guideline/hero.jpg"
 lang: "en"

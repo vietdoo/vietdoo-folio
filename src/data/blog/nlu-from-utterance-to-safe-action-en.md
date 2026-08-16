@@ -1,7 +1,7 @@
 ---
 title: "NLU in Production: From Utterance to a Safe, Testable Action"
 description: "A practical production model for Natural Language Understanding: turn messy utterances into typed intent and entity contracts before policy and action code take over."
-pubDate: 2026-08-14
+pubDate: 2026-06-08
 category: "engineering"
 lang: "en"
 translationKey: "nlu-from-utterance-to-safe-action"

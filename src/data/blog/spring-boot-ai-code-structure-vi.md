@@ -1,7 +1,7 @@
 ---
 title: "Kiến trúc mã nguồn Spring Boot tối ưu token"
 description: "Hướng dẫn tổ chức mã nguồn giúp AI hiểu nhanh, sinh đúng, và giảm chi phí token trong vòng đời phát triển sản phẩm với Java 21 và Spring Boot 3.x."
-pubDate: 2026-08-11
+pubDate: 2026-03-06
 category: "architecture"
 image: "/blog/spring-boot-ai-code-structure/springboot-ai-cover.jpg"
 lang: "vi"

@@ -1,7 +1,7 @@
 ---
 title: "Human-in-the-Loop Is Not an Approve Button: Designing Action Gates Without Consent Fatigue"
 description: "A practical design for human oversight in AI agents: bounded action envelopes, risk tiers, fresh approvals, previews, escalation, and auditability."
-pubDate: 2026-08-14
+pubDate: 2026-06-18
 category: "architecture"
 lang: "en"
 translationKey: "human-in-loop-action-gate-consent-fatigue"

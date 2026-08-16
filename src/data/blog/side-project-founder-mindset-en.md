@@ -1,7 +1,7 @@
 ---
 title: "The Developer-Founder Mindset: Building Side-Projects from 0 to 1 on a $0 Budget"
 description: "Practical insights from a Founder @ VNDO: How to choose a lean tech stack, design pragmatic system architectures, manage time effectively, and ship products to Production."
-pubDate: 2026-08-05
+pubDate: 2026-01-27
 category: "engineering"
 image: "/blog/side-project-founder-mindset/hero.jpg"
 lang: "en"

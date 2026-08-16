@@ -1,7 +1,7 @@
 ---
 title: "Token-Optimized Spring Boot Codebase Architecture"
 description: "A guide to structuring source code to help AI understand faster, generate accurately, and reduce token costs throughout the product development lifecycle with Java 21 & Spring Boot 3.x."
-pubDate: 2026-08-11
+pubDate: 2026-03-06
 category: "architecture"
 image: "/blog/spring-boot-ai-code-structure/springboot-ai-cover.jpg"
 lang: "en"

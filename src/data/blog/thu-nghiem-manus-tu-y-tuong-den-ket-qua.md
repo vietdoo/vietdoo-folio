@@ -1,7 +1,7 @@
 ---
 title: "Dùng thử Manus: Từ một ý tưởng mơ hồ đến kết quả có thể sử dụng"
 description: "Một quy trình thực tế để bắt đầu với Manus: chọn bài toán nhỏ, viết yêu cầu có ngữ cảnh, duyệt kế hoạch, kiểm tra đầu ra và lặp lại một cách có chủ đích."
-pubDate: 2026-08-11
+pubDate: 2026-03-26
 category: "engineering"
 image: "/blog/thu-nghiem-manus/hero.jpg"
 lang: "vi"

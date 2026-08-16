@@ -1,7 +1,7 @@
 ---
 title: "Prompt Injection trong Agent có Tool: Tách ranh giới Instruction, Data và Action"
 description: "Một mô hình thực chiến để phòng Prompt Injection trong agent có tool bằng cách tách instruction, dữ liệu không tin cậy và action thực thi thành ba boundary độc lập."
-pubDate: 2026-08-14
+pubDate: 2026-04-27
 category: "architecture"
 lang: "vi"
 translationKey: "prompt-injection-tool-boundaries"

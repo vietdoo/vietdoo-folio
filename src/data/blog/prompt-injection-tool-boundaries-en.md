@@ -1,7 +1,7 @@
 ---
 title: "Prompt Injection in Tool-Using Agents: Separating Instruction, Data, and Action Boundaries"
 description: "A practical production model for containing prompt injection in tool-using agents by separating instructions, untrusted data, and executable actions."
-pubDate: 2026-08-14
+pubDate: 2026-04-27
 category: "architecture"
 lang: "en"
 translationKey: "prompt-injection-tool-boundaries"

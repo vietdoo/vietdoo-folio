@@ -1,7 +1,7 @@
 ---
 title: "AI Agent Observability: Trace Prompts, Tool Calls, Tokens, and Cost Without Turning Logs into a Data Leak"
 description: "A tool-calling agent must be explainable when it is slow, expensive, wrong, or unsafe. That does not require turning every prompt and tool payload into an ungoverned data lake. Here is a metadata-first blueprint for safe agent observability."
-pubDate: 2026-08-13
+pubDate: 2026-05-06
 category: "engineering"
 image: "/blog/agent-observability-hero.jpg"
 lang: "en"

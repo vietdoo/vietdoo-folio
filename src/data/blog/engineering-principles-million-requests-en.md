@@ -1,7 +1,7 @@
 ---
 title: "5 Engineering Principles That Help My Code Survive Millions of Requests"
 description: "Five production habits I use to keep systems understandable, measurable, and resilient long after the launch-day traffic spike."
-pubDate: 2026-07-20
+pubDate: 2026-01-16
 category: "architecture"
 lang: "en"
 translationKey: "engineering-principles-million-requests"

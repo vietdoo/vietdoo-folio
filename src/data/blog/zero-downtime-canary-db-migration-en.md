@@ -1,7 +1,7 @@
 ---
 title: "Zero-Downtime Deployment: Kubernetes Canary Release & Safe DB Migration Techniques"
 description: "A battle-tested production guide to zero-downtime deployments using Kubernetes Canary Release traffic splitting and Expand-Contract Database Migration."
-pubDate: 2026-08-05
+pubDate: 2026-03-16
 category: "architecture"
 lang: "en"
 translationKey: "zero-downtime-canary-db-migration"

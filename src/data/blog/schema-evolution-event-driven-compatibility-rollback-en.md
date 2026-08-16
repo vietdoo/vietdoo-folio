@@ -1,7 +1,7 @@
 ---
 title: "Schema Evolution in Event-Driven Systems: Compatibility, Rollback, and Data Contracts"
 description: "A production playbook for evolving event schemas without breaking old consumers, replaying bad data, or confusing registry compatibility with a safe release."
-pubDate: 2026-08-14
+pubDate: 2026-06-29
 category: "architecture"
 lang: "en"
 translationKey: "schema-evolution-event-driven-compatibility-rollback"

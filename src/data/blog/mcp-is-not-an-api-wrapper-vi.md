@@ -1,7 +1,7 @@
 ---
 title: "MCP không chỉ là API Wrapper: Least Privilege, OAuth Consent và Human Approval cho AI Agent"
 description: "MCP biến đề xuất của model thành đường đi có thể đọc dữ liệu, sửa hệ thống và tạo hiệu ứng bên ngoài. Blueprint này tách OAuth delegation, server-side policy và approval theo từng hành động để agent không có quyền lớn hơn ý định người dùng."
-pubDate: 2026-08-13
+pubDate: 2026-04-06
 category: "engineering"
 image: "/blog/mcp-security-hero.jpg"
 lang: "vi"

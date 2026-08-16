@@ -1,7 +1,7 @@
 ---
 title: "Làm Chủ Cursor AI: Quy Trình 3 Lớp, UI Pipeline & Zero Trust Security"
 description: "Cẩm nang thực chiến để 'thu phục' Cursor AI bằng mô hình 3 lớp, pipeline UI 3 bước và Zero Trust Security, giúp dev không phải đi dọn rác code AI."
-pubDate: 2026-08-11
+pubDate: 2026-02-26
 category: "engineering"
 image: "/blog/cursor-ai-guideline/hero.jpg"
 lang: "vi"

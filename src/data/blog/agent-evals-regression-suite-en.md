@@ -1,7 +1,7 @@
 ---
 title: "Do Not Ship a Tool-Calling AI Agent Without Evals: Designing a Regression Suite"
 description: "A correct final answer can still hide the wrong tool call, an unsafe state change, a retry loop, or an unbounded bill. Here is how to turn those failures into a regression suite that belongs in CI/CD."
-pubDate: 2026-08-13
+pubDate: 2026-05-18
 category: "engineering"
 image: "/blog/agent-evals-hero.jpg"
 lang: "en"

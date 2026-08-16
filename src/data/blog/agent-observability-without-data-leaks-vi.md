@@ -1,7 +1,7 @@
 ---
 title: "Observability cho AI Agent: Trace Prompt, Tool Call, Token và Cost mà không biến Log thành rò rỉ dữ liệu"
 description: "Một trace agent cần giải thích được vì sao hệ thống chậm, đắt, sai hoặc nguy hiểm—nhưng không được biến prompt, tool payload và response thành một data lake không kiểm soát. Đây là blueprint metadata-first để quan sát an toàn."
-pubDate: 2026-08-13
+pubDate: 2026-05-06
 category: "engineering"
 image: "/blog/agent-observability-hero.jpg"
 lang: "vi"

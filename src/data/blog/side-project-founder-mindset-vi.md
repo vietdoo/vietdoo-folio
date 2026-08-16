@@ -1,7 +1,7 @@
 ---
 title: "Tư duy Founder trong Lập trình: Xây dựng Side-Project từ A-Z với Chi phí 0$"
 description: "Góc nhìn thực chiến từ Founder VNDO: Cách lựa chọn Tech Stack tinh gọn, thiết kế kiến trúc hệ thống thực dụng, quản lý thời gian và đưa sản phẩm lên Production."
-pubDate: 2026-08-05
+pubDate: 2026-01-27
 category: "engineering"
 image: "/blog/side-project-founder-mindset/hero.jpg"
 lang: "vi"

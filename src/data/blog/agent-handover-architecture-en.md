@@ -1,7 +1,7 @@
 ---
 title: "Stop AI Agent Amnesia: The Handover Architecture Pattern"
 description: "A repo-level pattern that lets any AI agent pick up work where another one dropped it: one constitution, a handover ledger, a routing map, and a non-AI forcing function."
-pubDate: 2026-08-02
+pubDate: 2026-02-16
 category: "architecture"
 image: "/blog/agent-handover-architecture.jpg"
 lang: "en"

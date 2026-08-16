@@ -1,7 +1,7 @@
 ---
 title: "MCP Is Not Just an API Wrapper: Least Privilege, OAuth Consent, and Human Approval for AI Agents"
 description: "MCP turns a model suggestion into a path that can read private data, alter systems, and create external effects. This production blueprint separates OAuth delegation, server-side policy, and action-bound approval so an agent never has more authority than the user intended."
-pubDate: 2026-08-13
+pubDate: 2026-04-06
 category: "engineering"
 image: "/blog/mcp-security-hero.jpg"
 lang: "en"

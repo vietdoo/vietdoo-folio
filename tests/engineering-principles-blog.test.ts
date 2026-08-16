@@ -35,7 +35,7 @@ describe("engineering principles bilingual blog post", () => {
 
     expect(post).toContain(`lang: "${lang}"`);
     expect(post).toContain('translationKey: "engineering-principles-million-requests"');
-    expect(post).toContain("pubDate: 2026-07-20");
+    expect(post).toContain("pubDate: 2026-01-16");
     expect(post).toContain('category: "architecture"');
     expect(post).toContain("draft: false");
     expect(post).toContain(`](${thumbnail})`);
