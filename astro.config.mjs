@@ -12,6 +12,7 @@ import svelte from "@astrojs/svelte";
 
 import db from "@astrojs/db";
 import { unified } from "@astrojs/markdown-remark";
+import rehypeMermaid from "rehype-mermaid";
 
 const envSiteUrl = process.env.SITE_URL ?? "https://vietdoo.vndo.vn/";
 const site = envSiteUrl.endsWith("/") ? envSiteUrl : `${envSiteUrl}/`;
@@ -90,6 +91,7 @@ export default defineConfig({
   ],
   markdown: unified({
     remarkPlugins: [remarkReadingTime],
+    rehypePlugins: [rehypeMermaid],
   }),
   prefetch: {
     prefetchAll: true,
