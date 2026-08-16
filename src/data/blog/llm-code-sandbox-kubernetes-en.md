@@ -11,6 +11,14 @@ draft: false
 
 ![An LLM-generated code package entering a layered guarded execution chamber](/blog/llm-code-sandbox/hero.jpg)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/llm-code-sandbox/hero.jpg" aria-label="Explainer video for this article, English version">
+    <source src="/blog/llm-code-sandbox-kubernetes/video-en.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+  <figcaption>Deep-dive explainer video: English version.</figcaption>
+</figure>
+
 Giving an AI agent a read-only search tool is one thing. Giving it a Python interpreter, a shell, a browser, or the ability to install a package is another.
 
 The code may be useful. It may also contain an accidental infinite loop, an unexpected network call, a dependency with a known vulnerability, a prompt-injected instruction, or a perfectly ordinary library that reads more of the filesystem than the product intended. The model does not need to be malicious for the execution boundary to fail.

@@ -15,6 +15,14 @@ The difficult part of schema evolution is not adding a field to a JSON object. I
 
 ![An event stream travels through version gates while old and new consumers continue operating under an explicit contract](/blog/schema-evolution/hero.png)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/schema-evolution/hero.png" aria-label="Explainer video for this article, English version">
+    <source src="/blog/schema-evolution-event-driven-compatibility-rollback/video-en.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+  <figcaption>Deep-dive explainer video: English version.</figcaption>
+</figure>
+
 The principle I rely on is simple: **compatibility is a release discipline, not a registry setting**. A registry can reject an obviously incompatible schema, but it cannot tell you whether every consumer handles the meaning of a new field or whether a rollback will produce valid business behavior.
 
 ## An event is a public API with a long memory

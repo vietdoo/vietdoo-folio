@@ -11,6 +11,14 @@ draft: false
 
 ![Kỹ sư kiểm tra regression suite cho AI agent trước khi release](/blog/agent-evals-hero.jpg)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/agent-evals-hero.jpg" aria-label="Video giải thích nội dung bài viết, phiên bản tiếng Việt">
+    <source src="/blog/agent-evals-regression-suite/video-vi.mp4" type="video/mp4" />
+    Trình duyệt của bạn không hỗ trợ video HTML5.
+  </video>
+  <figcaption>Video giải thích chuyên sâu: phiên bản tiếng Việt.</figcaption>
+</figure>
+
 Tôi đã từng thấy một AI agent trả lời câu cuối cùng hoàn toàn đúng — và vẫn không thể cho phép nó chạy production.
 
 Tình huống rất quen: người dùng hỏi trạng thái một hồ sơ. Agent trả về đúng mã hồ sơ, đúng trạng thái, đúng deadline. Demo nhìn mượt đến mức cả phòng gật đầu. Nhưng mở trace ra, bạn thấy nó đã gọi một tool ghi dữ liệu trước khi tool tra cứu; ở lần chạy khác, nó retry cùng một tool bốn lần; và ở một input hơi nhiễu, nó cố thay đổi trạng thái hồ sơ chỉ vì câu “nếu có thể, giúp tôi xử lý luôn”. Lần demo đầu tiên không chạm vào nhánh nguy hiểm nên tất cả đều tưởng hệ thống đã sẵn sàng.

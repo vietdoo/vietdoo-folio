@@ -15,6 +15,14 @@ That makes “the request returned 200” a poor definition of reliability. An a
 
 ![An engineer watches four hand-drawn gauges for task success, latency, cost, and safety around a production AI agent](/blog/ai-agent-slo/hero.png)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/ai-agent-slo/hero.png" aria-label="Explainer video for this article, English version">
+    <source src="/blog/ai-agent-slo-success-latency-cost-safety/video-en.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+  <figcaption>Deep-dive explainer video: English version.</figcaption>
+</figure>
+
 My working model is a four-dimensional scorecard: **success, latency, cost, and safety**. These dimensions should be measured from the same trace, because a task is only truly healthy when the outcome is useful, arrives within an acceptable time, stays within budget, and does not create an unacceptable risk.
 
 ## Availability is necessary but not sufficient

@@ -11,6 +11,14 @@ draft: false
 
 ![Một kỹ sư thiết kế model router để gửi từng tác vụ của agent tới các model có capability, cost và latency khác nhau](/blog/model-router/hero.jpg)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/model-router/hero.jpg" aria-label="Video giải thích nội dung bài viết, phiên bản tiếng Việt">
+    <source src="/blog/model-router-ai-agent/video-vi.mp4" type="video/mp4" />
+    Trình duyệt của bạn không hỗ trợ video HTML5.
+  </video>
+  <figcaption>Video giải thích chuyên sâu: phiên bản tiếng Việt.</figcaption>
+</figure>
+
 Trước đây tôi thường nghĩ chọn model chỉ là một quyết định cấu hình. Chọn một model, đặt tên nó vào biến môi trường, rồi chuyển sang phần thú vị hơn: tool, retrieval, orchestration và trải nghiệm người dùng.
 
 Cách nghĩ đó không còn đúng khi agent bắt đầu hữu ích trong thực tế. Một lượt xử lý có thể cần model rẻ để phân loại. Bước kế tiếp lại cần một model có khả năng suy luận cẩn thận trên context dài. Bước sau nữa chỉ là định dạng arguments cho tool. Gửi tất cả bước tới model mạnh nhất sẽ lãng phí tiền và làm tăng latency. Gửi mọi thứ tới model nhỏ nhất tạo ra một hệ thống nhanh, cho tới khi một ca khó âm thầm trở thành một quyết định sai.

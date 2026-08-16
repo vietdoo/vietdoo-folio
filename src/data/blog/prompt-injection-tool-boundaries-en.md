@@ -15,6 +15,14 @@ The dangerous mistake is to treat every piece of text that reaches the model as 
 
 ![A hand-drawn AI agent passes through separate instruction, data, and action gates before reaching a protected external system](/blog/prompt-injection-tool-boundaries/hero.png)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/prompt-injection-tool-boundaries/hero.png" aria-label="Explainer video for this article, English version">
+    <source src="/blog/prompt-injection-tool-boundaries/video-en.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+  <figcaption>Deep-dive explainer video: English version.</figcaption>
+</figure>
+
 This is the production rule I use: **a prompt is a reasoning input, not a security boundary**. The agent may propose an action, but a separate policy layer must decide whether the action is allowed, with which identity, against which resource, and under what conditions.
 
 ## The failure starts when text becomes authority

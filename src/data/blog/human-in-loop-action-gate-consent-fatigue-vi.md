@@ -15,6 +15,14 @@ Vấn đề không phải con người bất cẩn. Vấn đề là approval req
 
 ![Một reviewer đứng trước action gate rõ ràng, nhìn thấy target, effect, risk và expiry trước khi action được execute](/blog/human-action-gate/hero.png)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/human-action-gate/hero.png" aria-label="Video giải thích nội dung bài viết, phiên bản tiếng Việt">
+    <source src="/blog/human-in-loop-action-gate-consent-fatigue/video-vi.mp4" type="video/mp4" />
+    Trình duyệt của bạn không hỗ trợ video HTML5.
+  </video>
+  <figcaption>Video giải thích chuyên sâu: phiên bản tiếng Việt.</figcaption>
+</figure>
+
 Một human gate hữu ích không chỉ là một khoảng dừng trong workflow. Nó là một decision boundary. Reviewer phải hiểu **điều gì sẽ xảy ra, xảy ra với target nào, bằng authority nào và approval còn hiệu lực bao lâu**.
 
 ## Vì sao nút approve chung chung thất bại

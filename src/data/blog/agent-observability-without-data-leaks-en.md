@@ -11,6 +11,14 @@ draft: false
 
 ![An engineer examines an AI-agent trace while a secure vault protects sensitive fragments](/blog/agent-observability-hero.jpg)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/agent-observability-hero.jpg" aria-label="Explainer video for this article, English version">
+    <source src="/blog/agent-observability-without-data-leaks/video-en.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+  <figcaption>Deep-dive explainer video: English version.</figcaption>
+</figure>
+
 A support agent has just been slow, costly, and wrong. Yet the conventional dashboard is reassuring: every API request returned `200`, p95 latency is below the service SLO, and there is no unhandled exception. One log line says `tool=get_customer_profile`; another says `retry=1`. None of that explains the incident. Did the agent select the wrong tool? Did it retry after an upstream failure? Which prompt revision produced the route? How many tokens did the retry consume? Did the trace exporter retain the authorization header that arrived inside a tool error?
 
 The predictable response is to capture everything: the system prompt, user messages, retrieved chunks, tool arguments, tool results, completions, and perhaps model reasoning when a framework exposes it. That can make one investigation convenient while quietly creating a second data lake—one filled with customer conversations, credentials, PII, payment context, and internal payloads, but without the mature contracts, retention limits, reviews, and access controls of the primary systems of record.

@@ -15,6 +15,14 @@ Phần khó của Schema Evolution không phải thêm một field vào JSON obj
 
 ![Một event stream đi qua các version gate trong khi consumer cũ và mới vẫn hoạt động theo một contract rõ ràng](/blog/schema-evolution/hero.png)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/schema-evolution/hero.png" aria-label="Video giải thích nội dung bài viết, phiên bản tiếng Việt">
+    <source src="/blog/schema-evolution-event-driven-compatibility-rollback/video-vi.mp4" type="video/mp4" />
+    Trình duyệt của bạn không hỗ trợ video HTML5.
+  </video>
+  <figcaption>Video giải thích chuyên sâu: phiên bản tiếng Việt.</figcaption>
+</figure>
+
 Nguyên tắc tôi thường dùng là: **compatibility là kỷ luật release, không phải một setting trong registry**. Registry có thể từ chối schema rõ ràng incompatible, nhưng không biết mọi consumer có hiểu meaning của field mới hay rollback có tạo ra business behavior đúng hay không.
 
 ## Event là public API có trí nhớ dài

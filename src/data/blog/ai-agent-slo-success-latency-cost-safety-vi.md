@@ -15,6 +15,14 @@ Vì vậy, “request trả về 200” là một định nghĩa rất kém cho 
 
 ![Một engineer theo dõi bốn đồng hồ success, latency, cost và safety xoay quanh một AI Agent production](/blog/ai-agent-slo/hero.png)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/ai-agent-slo/hero.png" aria-label="Video giải thích nội dung bài viết, phiên bản tiếng Việt">
+    <source src="/blog/ai-agent-slo-success-latency-cost-safety/video-vi.mp4" type="video/mp4" />
+    Trình duyệt của bạn không hỗ trợ video HTML5.
+  </video>
+  <figcaption>Video giải thích chuyên sâu: phiên bản tiếng Việt.</figcaption>
+</figure>
+
 Mô hình tôi thường dùng là một scorecard bốn chiều: **success, latency, cost và safety**. Bốn chiều này nên được đo từ cùng một trace, vì một task chỉ thực sự khỏe khi kết quả đúng, đến trong khoảng thời gian chấp nhận được, nằm trong ngân sách và không tạo ra risk không thể chấp nhận.
 
 ## Availability cần thiết nhưng chưa đủ

@@ -11,6 +11,14 @@ draft: false
 
 ![Workflow AI agent tiếp tục từ checkpoint bền vững sau khi worker bị crash](/blog/durable-agent/hero.jpg)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/durable-agent/hero.jpg" aria-label="Video giải thích nội dung bài viết, phiên bản tiếng Việt">
+    <source src="/blog/durable-execution-ai-agent/video-vi.mp4" type="video/mp4" />
+    Trình duyệt của bạn không hỗ trợ video HTML5.
+  </video>
+  <figcaption>Video giải thích chuyên sâu: phiên bản tiếng Việt.</figcaption>
+</figure>
+
 Một chatbot thường đủ ngắn để nằm trong một HTTP timeout. Một agent hữu ích trong production thì thường không.
 
 Agent có thể phải đọc nhiều hệ thống, chờ approval, retry provider, ngủ tới một deadline, xử lý tài liệu lớn hoặc tiếp tục sau một lần deploy. Khi agent vượt qua ranh giới đó, một `try/catch` quanh model call không còn là thiết kế reliability. Nó chỉ là phản ứng cục bộ với một lỗi.

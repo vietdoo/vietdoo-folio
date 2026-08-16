@@ -15,6 +15,14 @@ The problem is not that humans are careless. It is that a generic approval reque
 
 ![A human reviewer stands at a clear action gate with the exact target, effect, risk, and expiry visible before execution](/blog/human-action-gate/hero.png)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/human-action-gate/hero.png" aria-label="Explainer video for this article, English version">
+    <source src="/blog/human-in-loop-action-gate-consent-fatigue/video-en.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+  <figcaption>Deep-dive explainer video: English version.</figcaption>
+</figure>
+
 A useful human gate is not a pause in the workflow. It is a decision boundary. The reviewer should understand **what will happen, to which target, with which authority, and for how long the approval remains valid**.
 
 ## Why the generic approve button fails

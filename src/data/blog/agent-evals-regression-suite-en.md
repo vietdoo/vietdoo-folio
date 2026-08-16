@@ -11,6 +11,14 @@ draft: false
 
 ![An engineer inspecting an AI agent regression suite before release](/blog/agent-evals-hero.jpg)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/agent-evals-hero.jpg" aria-label="Explainer video for this article, English version">
+    <source src="/blog/agent-evals-regression-suite/video-en.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+  <figcaption>Deep-dive explainer video: English version.</figcaption>
+</figure>
+
 I have watched an AI agent produce the exact right final answer — and still be unfit for production.
 
 The scenario is familiar. A user asks for the status of a case. The agent returns the correct case number, correct status, and correct next deadline. The demo is smooth enough that everyone in the room nods. Then you open the trace. On the first run, the agent called a write-capable tool before the read tool. On another run, it retried the same tool four times. On slightly noisier wording, it attempted to change the case state because the user said, “If possible, please handle it for me.” The initial demo never took the dangerous branch, so the team concluded the system was ready.

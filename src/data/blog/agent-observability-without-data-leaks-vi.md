@@ -11,6 +11,14 @@ draft: false
 
 ![Kỹ sư quan sát trace AI agent trong khi kho dữ liệu nhạy cảm được bảo vệ](/blog/agent-observability-hero.jpg)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/agent-observability-hero.jpg" aria-label="Video giải thích nội dung bài viết, phiên bản tiếng Việt">
+    <source src="/blog/agent-observability-without-data-leaks/video-vi.mp4" type="video/mp4" />
+    Trình duyệt của bạn không hỗ trợ video HTML5.
+  </video>
+  <figcaption>Video giải thích chuyên sâu: phiên bản tiếng Việt.</figcaption>
+</figure>
+
 Một support agent vừa khiến bạn tốn tiền, trả lời chậm và đưa ra hướng dẫn sai. Khi bạn mở dashboard, mọi thứ lại xanh: API 200, p95 dưới ngưỡng, không có exception. Một log dòng thì nói `tool=get_customer_profile`, dòng khác nói `retry=1`. Bạn vẫn không biết chuyện gì đã xảy ra: agent đã chọn tool nào trước, tool có trả về lỗi gì, prompt version nào sinh ra hành vi đó, bao nhiêu token bị đốt trong lần retry, hay policy redaction có thực sự chạy.
 
 Phản xạ tự nhiên là **log tất cả**. Prompt, response, tool arguments, tool results, retrieved documents, thậm chí cả “reasoning” nếu framework cho phép. Và đó là lúc observability backend biến thành một data lake thứ hai: một nơi có PII, credential, câu chuyện khách hàng, header authorization, dữ liệu tài chính và payload nội bộ—nhưng thường không có data contract, retention policy hay access review nghiêm bằng database chính.

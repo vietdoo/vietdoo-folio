@@ -11,6 +11,14 @@ draft: false
 
 ![An AI agent workflow continues from durable checkpoints after a worker crash](/blog/durable-agent/hero.jpg)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/durable-agent/hero.jpg" aria-label="Explainer video for this article, English version">
+    <source src="/blog/durable-execution-ai-agent/video-en.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+  <figcaption>Deep-dive explainer video: English version.</figcaption>
+</figure>
+
 A chatbot request is short enough to fit inside one HTTP timeout. A useful agent workflow often is not.
 
 It may need to inspect several systems, wait for an approval, retry a provider, sleep until a deadline, process a large document, or resume after a deployment. The moment an agent crosses that boundary, the usual `try/catch` around a model call is no longer a reliability design. It is only a local reaction to one failure.

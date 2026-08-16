@@ -15,6 +15,14 @@ Sai lầm nguy hiểm nhất là xem mọi text đi vào model như thể chúng
 
 ![Một AI agent đi qua ba cổng instruction, data và action trước khi chạm tới hệ thống bên ngoài được bảo vệ](/blog/prompt-injection-tool-boundaries/hero.png)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/prompt-injection-tool-boundaries/hero.png" aria-label="Video giải thích nội dung bài viết, phiên bản tiếng Việt">
+    <source src="/blog/prompt-injection-tool-boundaries/video-vi.mp4" type="video/mp4" />
+    Trình duyệt của bạn không hỗ trợ video HTML5.
+  </video>
+  <figcaption>Video giải thích chuyên sâu: phiên bản tiếng Việt.</figcaption>
+</figure>
+
 Quy tắc production tôi thường dùng là: **prompt là input để suy luận, không phải security boundary**. Agent có thể đề xuất một action, nhưng một lớp policy độc lập phải quyết định action đó có được phép hay không, dùng identity nào, tác động lên resource nào và trong điều kiện nào.
 
 ## Sự cố bắt đầu khi text trở thành authority

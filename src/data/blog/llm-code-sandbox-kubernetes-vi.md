@@ -11,6 +11,14 @@ draft: false
 
 ![Một gói code do LLM tạo đi vào execution chamber nhiều lớp được bảo vệ](/blog/llm-code-sandbox/hero.jpg)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/llm-code-sandbox/hero.jpg" aria-label="Video giải thích nội dung bài viết, phiên bản tiếng Việt">
+    <source src="/blog/llm-code-sandbox-kubernetes/video-vi.mp4" type="video/mp4" />
+    Trình duyệt của bạn không hỗ trợ video HTML5.
+  </video>
+  <figcaption>Video giải thích chuyên sâu: phiên bản tiếng Việt.</figcaption>
+</figure>
+
 Cho AI agent một read-only search tool là một chuyện. Cho nó Python interpreter, shell, browser hoặc quyền cài package là chuyện hoàn toàn khác.
 
 Code có thể hữu ích. Nó cũng có thể chứa vòng lặp vô hạn do tình huống mơ hồ, network call ngoài dự kiến, dependency có lỗ hổng, instruction bị prompt injection hoặc một thư viện bình thường đọc nhiều filesystem hơn product dự định. Model không cần có ý đồ xấu thì execution boundary mới thất bại.

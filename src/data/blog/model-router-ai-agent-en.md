@@ -11,6 +11,14 @@ draft: false
 
 ![An engineer designing a model router that sends agent work to models with different capability, cost, and latency profiles](/blog/model-router/hero.jpg)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/model-router/hero.jpg" aria-label="Explainer video for this article, English version">
+    <source src="/blog/model-router-ai-agent/video-en.mp4" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>
+  <figcaption>Deep-dive explainer video: English version.</figcaption>
+</figure>
+
 I used to think model selection was a configuration decision. Pick a model, put its name in an environment variable, and move on to the interesting part: tools, retrieval, orchestration, and user experience.
 
 That mental model stops working as soon as an agent becomes useful. One turn may need a cheap classifier. The next may need careful reasoning over a long context. A later step may be mostly mechanical tool-call formatting. Sending every step to the most capable model wastes money and adds latency. Sending everything to the smallest model produces a system that is fast right up until a difficult case quietly becomes a bad decision.
