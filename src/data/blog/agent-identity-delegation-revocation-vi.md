@@ -131,6 +131,9 @@ actor_token_type=urn:ietf:params:oauth:token-type:jwt
 
 Đây là ví dụ minh hoạ, không phải cấu hình copy-paste cho mọi provider. Authorization server phải validate client, subject token, actor token, audience, task scope và policy cục bộ trước khi cấp token. Session credential gốc của user không nên trở thành tấm vé universal cho mọi tool.
 
+![Flow bốn bước từ user delegation tới resource API enforcement](/blog/agent-identity-delegation-revocation/token-exchange-playwright.png)
+
+
 Token hoặc authorization context được cấp nên làm mối quan hệ có thể inspect. Tên claim cụ thể phụ thuộc provider và profile, nhưng semantics nên gần như sau:
 
 ```json

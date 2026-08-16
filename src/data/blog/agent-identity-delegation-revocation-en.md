@@ -131,6 +131,9 @@ actor_token_type=urn:ietf:params:oauth:token-type:jwt
 
 This example is illustrative rather than a drop-in provider configuration. The authorization server must validate the client, the subject token, the actor token, the requested audience, the task scope and local policy before issuing anything. The user’s original session credential should not become a universal pass for every tool.
 
+![A four-step token exchange flow from user delegation to resource API enforcement](/blog/agent-identity-delegation-revocation/token-exchange-playwright.png)
+
+
 An issued token or equivalent authorization context should make the relationship inspectable. Exact claim names vary by provider and profile, but the semantics should resemble this:
 
 ```json
