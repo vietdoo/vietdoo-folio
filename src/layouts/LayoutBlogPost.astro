@@ -11,6 +11,7 @@ import { SITE } from "../site-config";
 type Props = {
   description: string;
   url: string;
+  image?: string;
   enHref?: string | undefined;
   viHref?: string | undefined;
   translations: {
@@ -24,6 +25,7 @@ type Props = {
 const {
   description,
   url,
+  image,
   enHref,
   viHref,
   translations,
@@ -36,6 +38,7 @@ const hasTranslation = Boolean(enHref && viHref);
   description={description}
   page="blog"
   slug={url}
+  image={image}
   title={translations[0]?.title || ""}
   pubDate={translations[0]?.pubDate?.toISOString()}
 >

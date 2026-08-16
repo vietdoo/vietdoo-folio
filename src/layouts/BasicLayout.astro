@@ -24,6 +24,7 @@ interface Props {
   hideHeader?: boolean;
   showSearch?: boolean;
   searchPlaceholder?: string;
+  image?: string;
 }
 
 const {
@@ -41,11 +42,20 @@ const {
   hideHeader,
   showSearch,
   searchPlaceholder,
+  image: propImage,
 } = Astro.props;
 
 const siteBaseUrl = SITE.site.url.endsWith("/") ? SITE.site.url.slice(0, -1) : SITE.site.url;
 const canonicalUrl = new URL(Astro.url.pathname, siteBaseUrl).href;
-const image = `${siteBaseUrl}/og.webp`;
+
+let image = `${siteBaseUrl}/og.webp`;
+if (propImage) {
+  if (propImage.startsWith("http://") || propImage.startsWith("https://")) {
+    image = propImage;
+  } else {
+    image = `${siteBaseUrl}${propImage.startsWith("/") ? "" : "/"}${propImage}`;
+  }
+}
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 const isHome = currentPath === "/";
