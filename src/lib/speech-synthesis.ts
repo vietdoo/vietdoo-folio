@@ -123,16 +123,6 @@ function bindGlobalListeners() {
   window.addEventListener("blog-lang-change", stopAll);
 }
 
-function currentBlogLanguage(): SpeechLanguage {
-  const documentLanguage = document.documentElement.lang;
-  if (documentLanguage === "vi" || documentLanguage.startsWith("vi-")) return "vi";
-  try {
-    return localStorage.getItem("portfolio:blog-lang") === "vi" ? "vi" : "en";
-  } catch {
-    return "en";
-  }
-}
-
 function setupPlayer(player: HTMLElement): SpeechController | null {
   if (player.dataset.ttsReady === "true") return null;
   player.dataset.ttsReady = "true";
@@ -147,7 +137,6 @@ function setupPlayer(player: HTMLElement): SpeechController | null {
   const progress = player.querySelector<HTMLElement>("[data-tts-progress]");
   const progressBar = player.querySelector<HTMLElement>("[data-tts-progress-bar]");
   const time = player.querySelector<HTMLElement>("[data-tts-time]");
-  const languageButtons = player.querySelectorAll<HTMLButtonElement>("[data-tts-switch-language]");
 
   let state: SpeechPlayerState = "idle";
   let chunks: string[] = [];
@@ -166,15 +155,6 @@ function setupPlayer(player: HTMLElement): SpeechController | null {
   };
 
   const estimateMinutes = () => Math.max(1, Math.ceil((extractReadableArticleText(article as HTMLElement).split(/\s+/).length / 150)));
-
-  const updateLanguageButtons = () => {
-    const activeLanguage = currentBlogLanguage();
-    languageButtons.forEach((button) => {
-      const active = button.dataset.ttsSwitchLanguage === activeLanguage;
-      button.setAttribute("aria-pressed", String(active));
-      button.dataset.active = String(active);
-    });
-  };
 
   const updateProgress = () => {
     const completed = chunks.length ? Math.min(chunkIndex, chunks.length) : 0;
@@ -216,7 +196,6 @@ function setupPlayer(player: HTMLElement): SpeechController | null {
     if (status) status.textContent = !synthesis ? labels.unsupported : labels.empty;
     toggle?.setAttribute("disabled", "true");
     stop?.setAttribute("disabled", "true");
-    languageButtons.forEach((button) => button.setAttribute("disabled", "true"));
     return null;
   }
 
@@ -279,21 +258,11 @@ function setupPlayer(player: HTMLElement): SpeechController | null {
   });
 
   stop.addEventListener("click", stopPlayback);
-  languageButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const nextLanguage = button.dataset.ttsSwitchLanguage;
-      if (nextLanguage === "en" || nextLanguage === "vi") {
-        window.dispatchEvent(new CustomEvent("blog-lang-change", { detail: { lang: nextLanguage } }));
-      }
-    });
-  });
-
   const refreshVoices = () => {
     voiceList = getVoices(synthesis);
   };
   synthesis.addEventListener?.("voiceschanged", refreshVoices);
   refreshVoices();
-  updateLanguageButtons();
   updateProgress();
   updateState("idle");
 

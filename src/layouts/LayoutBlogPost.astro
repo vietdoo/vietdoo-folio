@@ -30,7 +30,6 @@ const {
 } = Astro.props;
 
 const hasTranslation = Boolean(enHref && viHref);
-const availableLanguages = translations.map((translation) => translation.lang);
 ---
 
 <BasicLayout
@@ -104,7 +103,6 @@ const availableLanguages = translations.map((translation) => translation.lang);
             <AudioPlayer
               lang={translation.lang}
               targetId={`blog-article-${translation.lang}`}
-              availableLanguages={availableLanguages}
             />
           </div>
         );
@@ -186,18 +184,18 @@ const availableLanguages = translations.map((translation) => translation.lang);
   import { BLOG_LANG_KEY } from "../lib/blog-lang";
   import { setupSpeechPlayers } from "../lib/speech-synthesis";
 
-  function applyBlogLanguage() {
+  function applyBlogLanguage(forcedLang?: "en" | "vi") {
     const param = new URLSearchParams(window.location.search).get("lang");
     const stored = localStorage.getItem(BLOG_LANG_KEY);
-    let selectedLang = param
-      ? param === "vi"
-        ? "vi"
-        : "en"
-      : stored === "vi"
-        ? "vi"
-        : "en";
+    let selectedLang: "en" | "vi" = forcedLang || (param === "vi" || stored === "vi" ? "vi" : "en");
 
-    if (param) {
+    if (forcedLang) {
+      localStorage.setItem(BLOG_LANG_KEY, forcedLang);
+      const nextUrl = new URL(window.location.href);
+      if (forcedLang === "vi") nextUrl.searchParams.set("lang", "vi");
+      else nextUrl.searchParams.delete("lang");
+      window.history.replaceState({}, "", nextUrl.toString());
+    } else if (param) {
       localStorage.setItem(BLOG_LANG_KEY, selectedLang);
     }
 
@@ -212,7 +210,7 @@ const availableLanguages = translations.map((translation) => translation.lang);
       availableElements.length > 0 &&
       !availableLanguages.has(selectedLang)
     ) {
-      selectedLang = availableElements[0]?.dataset.blogLanguage || "en";
+      selectedLang = availableElements[0]?.dataset.blogLanguage === "vi" ? "vi" : "en";
     }
 
     availableElements.forEach((element) => {
@@ -242,23 +240,10 @@ const availableLanguages = translations.map((translation) => translation.lang);
   function setupBlogLanguageListeners() {
     applyBlogLanguage();
 
-    document
-      .querySelectorAll<HTMLElement>("[data-lang-toggle] [data-lang-option]")
-      .forEach((option) => {
-        option.addEventListener("click", () => {
-          const lang = option.dataset.langOption;
-          if (lang) {
-            localStorage.setItem(BLOG_LANG_KEY, lang);
-            applyBlogLanguage();
-          }
-        });
-      });
-
     window.addEventListener("blog-lang-change", (e: any) => {
       const lang = e.detail?.lang;
-      if (lang) {
-        localStorage.setItem(BLOG_LANG_KEY, lang);
-        applyBlogLanguage();
+      if (lang === "en" || lang === "vi") {
+        applyBlogLanguage(lang);
       }
     });
 
