@@ -1,0 +1,29 @@
+
+> astro-bento-portfolio@0.0.2 dev /app
+> astro dev --remote
+
+(node:79386) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+13:48:12 [vite] connected.
+13:48:15 [astro:db] Connected to remote database.
+13:48:15 [types] Generated 1ms
+13:48:15 [vite] connected.
+13:48:16 [content] Syncing content
+13:48:16 [content] Synced content
+13:48:16 [vite] Re-optimizing dependencies because vite config has changed
+ astro  v7.0.9 ready in 8457 ms
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+13:48:16 watching for file changes...
+13:48:18 [vite] [optimizer] bundling dependencies...
+13:48:44 [200] /blog/multi-tenant-ai-agent-platform 341ms
+13:48:46 [vite] [optimizer] bundling dependencies...
+13:48:46 [vite] dependencies optimized: astro/virtual-modules/transitions-events.js, astro/virtual-modules/transitions-router.js, astro/virtual-modules/transitions-swap-functions.js, astro/virtual-modules/transitions-types.js
+13:48:46 [vite] optimized dependencies changed. reloading
+13:48:46 [200] /blog/multi-tenant-ai-agent-platform 13ms
+13:48:53 [ERROR] Invalid URL (The stacktrace appears to be already rewritten by something else, but was passed to vite.ssrFixStacktrace. This may cause incorrect stacktraces.)
+  Stack trace:
+    at new URL (node:internal/url:818:25)
+    at eval (astro:db:6:25)
+    [...] See full stack trace in the browser, or rerun with --verbose.
+ ELIFECYCLE  Command failed with exit code 143.

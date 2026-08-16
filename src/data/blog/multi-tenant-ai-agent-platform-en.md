@@ -11,8 +11,6 @@ draft: false
 
 ![A multi-tenant AI platform with separate tenant workspaces connected to a shared control plane](/blog/multi-tenant-agent/hero.jpg)
 
-<video controls width="100%" src="/blog/multi-tenant-agent/MultiTenantPlatform.mp4"></video>
-
 The first version of an AI agent platform usually has one customer, one workspace, one vector index, one set of tools, and one bill. The architecture feels clean because the boundaries are mostly implied by the application process.
 
 Then the second customer arrives.
@@ -20,6 +18,8 @@ Then the second customer arrives.
 The platform now has to answer questions that a single-tenant prototype was allowed to ignore. Can a prompt from tenant A influence a tool choice for tenant B? Can a memory search return a result from the wrong workspace? Which tenant pays when a shared model call expands its context three times? What happens when one customer submits a burst that consumes the queue for everyone else?
 
 These are not only authorization questions. They are **systems-boundary questions**. A platform may correctly authenticate a request and still leak data through a cache key, a trace attribute, a shared prompt template, a vector filter, a retry queue, or a cost dashboard.
+
+![Multi-Tenant Concept Animation](/blog/multi-tenant-agent/MultiTenantPlatform.gif)
 
 This article describes multi-tenancy as an end-to-end property of an AI agent platform. It focuses on prompt, tool, memory, model routing, observability, rate limits, secrets, and billing attribution. The aim is not to prescribe one isolation tier for every customer. It is to make the boundary explicit so that a team can choose where to share and where to separate.
 

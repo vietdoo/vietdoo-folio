@@ -11,8 +11,6 @@ draft: false
 
 ![Multi-tenant AI platform với các workspace tenant riêng biệt kết nối tới shared control plane](/blog/multi-tenant-agent/hero.jpg)
 
-<video controls width="100%" src="/blog/multi-tenant-agent/MultiTenantPlatform.mp4"></video>
-
 Phiên bản đầu tiên của một AI agent platform thường có một khách hàng, một workspace, một vector index, một nhóm tool và một hóa đơn. Kiến trúc có vẻ sạch vì các boundary phần lớn được ngầm hiểu bởi application process.
 
 Rồi khách hàng thứ hai xuất hiện.
@@ -20,6 +18,8 @@ Rồi khách hàng thứ hai xuất hiện.
 Platform phải trả lời những câu hỏi mà prototype single-tenant từng được phép bỏ qua. Prompt của tenant A có thể ảnh hưởng tới lựa chọn tool cho tenant B không? Memory search có thể trả về kết quả của workspace khác không? Ai trả tiền khi một model call dùng chung phải mở rộng context ba lần? Điều gì xảy ra khi một khách hàng tạo burst chiếm toàn bộ queue?
 
 Đây không chỉ là câu hỏi authorization. Đây là **câu hỏi về boundary của hệ thống**. Một platform có thể authenticate request đúng nhưng vẫn làm lộ dữ liệu qua cache key, trace attribute, prompt template dùng chung, vector filter, retry queue hoặc cost dashboard.
+
+![Multi-Tenant Concept Animation](/blog/multi-tenant-agent/MultiTenantPlatform.gif)
 
 Bài viết này xem multi-tenancy như một thuộc tính end-to-end của AI agent platform. Trọng tâm là prompt, tool, memory, model routing, observability, rate limit, secret và billing attribution. Mục tiêu không phải áp một isolation tier cho mọi khách hàng. Mục tiêu là làm boundary rõ ràng để team biết chỗ nào có thể share và chỗ nào phải tách.
 
