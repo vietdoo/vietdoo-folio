@@ -11,6 +11,8 @@ draft: false
 
 ![A multi-tenant AI platform with separate tenant workspaces connected to a shared control plane](/blog/multi-tenant-agent/hero.jpg)
 
+<video controls width="100%" src="/blog/multi-tenant-agent/MultiTenantPlatform.mp4"></video>
+
 The first version of an AI agent platform usually has one customer, one workspace, one vector index, one set of tools, and one bill. The architecture feels clean because the boundaries are mostly implied by the application process.
 
 Then the second customer arrives.
