@@ -15,6 +15,14 @@ Một lớp NLU hữu ích trả lời ba câu hỏi: **người dùng đang mu�
 
 ![Một câu nói tự nhiên đi qua các cổng intent, entity, context và policy trước khi trở thành typed action](/blog/nlu-production/hero.png)
 
+<figure class="blog-video">
+  <video controls preload="metadata" playsinline poster="/blog/nlu-production/hero.png" aria-label="Video giải thích NLU từ câu nói tự nhiên đến action an toàn">
+    <source src="/blog/nlu-production/nlu-from-utterance-to-safe-action-vi.mp4" type="video/mp4" />
+    Trình duyệt của bạn không hỗ trợ video HTML5.
+  </video>
+  <figcaption>Video tóm tắt: từ utterance đến safe action — phiên bản tiếng Việt.</figcaption>
+</figure>
+
 Mô hình production có thể viết ngắn gọn:
 
 ```text
