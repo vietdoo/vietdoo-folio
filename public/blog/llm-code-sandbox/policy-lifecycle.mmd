@@ -1,0 +1,20 @@
+flowchart LR
+    A[Code request] --> B[Policy and tenant check]
+    B --> C[Build immutable execution contract]
+    C --> D[Admission and quota]
+    D --> E[Ephemeral sandbox]
+    E --> F[Runtime limits and egress policy]
+    F --> G[Structured result]
+    G --> H[Artifact scan and quarantine]
+    H --> I[Persist provenance]
+    I --> J[Teardown and cleanup]
+    E -. timeout or violation .-> J
+    D -. rejected .-> J
+    classDef start fill:#f8efd9,stroke:#12233f,color:#12233f
+    classDef control fill:#20c7bd,stroke:#12233f,color:#12233f
+    classDef runtime fill:#f5b942,stroke:#12233f,color:#12233f
+    classDef terminal fill:#f07167,stroke:#12233f,color:#12233f
+    class A,G start
+    class B,C,D,F,H,I control
+    class E runtime
+    class J terminal

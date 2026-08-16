@@ -1,0 +1,19 @@
+flowchart LR
+    U[LLM-generated code] --> R[Ephemeral runner]
+    R --> S[Syscall and runtime policy]
+    S --> C[Container namespace and cgroups]
+    C --> G[gVisor or microVM boundary]
+    G --> K[Hardened host kernel]
+    S -. blocked .-> N[Unapproved network]
+    S -. blocked .-> F[Host filesystem]
+    S -. blocked .-> Q[Cloud metadata and secrets]
+    R --> W[Scoped workspace]
+    R --> A[Quarantined artifact]
+    classDef input fill:#f8efd9,stroke:#12233f,color:#12233f
+    classDef layer fill:#20c7bd,stroke:#12233f,color:#12233f
+    classDef boundary fill:#f5b942,stroke:#12233f,color:#12233f
+    classDef blocked fill:#f07167,stroke:#12233f,color:#12233f
+    class U,W,A input
+    class R,S,C,K layer
+    class G boundary
+    class N,F,Q blocked
