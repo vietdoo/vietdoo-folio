@@ -11,6 +11,8 @@ draft: false
 
 ![Multi-tenant AI platform với các workspace tenant riêng biệt kết nối tới shared control plane](/blog/multi-tenant-agent/hero.jpg)
 
+<video controls width="100%" src="/blog/multi-tenant-agent/MultiTenantPlatform.mp4"></video>
+
 Phiên bản đầu tiên của một AI agent platform thường có một khách hàng, một workspace, một vector index, một nhóm tool và một hóa đơn. Kiến trúc có vẻ sạch vì các boundary phần lớn được ngầm hiểu bởi application process.
 
 Rồi khách hàng thứ hai xuất hiện.
