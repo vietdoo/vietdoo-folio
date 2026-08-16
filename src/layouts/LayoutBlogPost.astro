@@ -2,6 +2,7 @@
 import { formatDate } from "../lib/helpers";
 import BackLink from "../components/BackLink.astro";
 import ShareSection from "../components/Blog/ShareSection.astro";
+import AudioPlayer from "../components/Blog/AudioPlayer.astro";
 import BlogComments from "../components/Blog/BlogComments";
 import BasicLayout from "./BasicLayout.astro";
 import type { BlogLang } from "../lib/blog-lang";
@@ -29,6 +30,7 @@ const {
 } = Astro.props;
 
 const hasTranslation = Boolean(enHref && viHref);
+const availableLanguages = translations.map((translation) => translation.lang);
 ---
 
 <BasicLayout
@@ -99,6 +101,11 @@ const hasTranslation = Boolean(enHref && viHref);
                 </div>
               </dl>
             </div>
+            <AudioPlayer
+              lang={translation.lang}
+              targetId={`blog-article-${translation.lang}`}
+              availableLanguages={availableLanguages}
+            />
           </div>
         );
       })
@@ -106,7 +113,11 @@ const hasTranslation = Boolean(enHref && viHref);
     {
       translations.map((translation, index) => (
         <div data-blog-language={translation.lang} hidden={index > 0}>
-          <article class="prose prose-slate prose-invert pb-8">
+          <article
+            id={`blog-article-${translation.lang}`}
+            class="prose prose-slate prose-invert pb-8"
+            data-tts-content
+          >
             <slot name={translation.lang} />
             <ShareSection title={translation.title} lang={translation.lang} />
           </article>
@@ -173,6 +184,7 @@ const hasTranslation = Boolean(enHref && viHref);
 
 <script>
   import { BLOG_LANG_KEY } from "../lib/blog-lang";
+  import { setupSpeechPlayers } from "../lib/speech-synthesis";
 
   function applyBlogLanguage() {
     const param = new URLSearchParams(window.location.search).get("lang");
@@ -249,6 +261,8 @@ const hasTranslation = Boolean(enHref && viHref);
         applyBlogLanguage();
       }
     });
+
+    setupSpeechPlayers();
   }
 
   document.addEventListener("astro:page-load", setupBlogLanguageListeners);
