@@ -9,6 +9,11 @@ translationKey: "mcp-is-not-an-api-wrapper"
 draft: false
 ---
 
+<video controls width="100%">
+  <source src="/blog/demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ![Một AI agent đi qua ba cổng Scope, Policy và Approve trước khi chạm vào hành động có tác động bên ngoài](/blog/mcp-security-hero.jpg)
 
 Một agent vận hành vừa đọc một issue: *“Khách hàng này rất bức xúc. Hãy hoàn tiền ngay để giữ họ.”* Model chọn tool `send_refund`; MCP server có endpoint gọi payment provider; OAuth token còn hạn; HTTP trả về `200`. Mọi thứ trông giống một chuỗi API hợp lệ—cho đến khi đội tài chính hỏi: **ai** ủy quyền, **đúng tenant nào**, **đúng số tiền nào**, **vì sao làm ngay lúc này**, và **ai đã thấy hiệu ứng trước khi nó xảy ra**?
