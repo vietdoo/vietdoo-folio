@@ -32,6 +32,7 @@ const {
 } = Astro.props;
 
 const hasTranslation = Boolean(enHref && viHref);
+const availableLanguages = translations.map((translation) => translation.lang);
 ---
 
 <BasicLayout
@@ -106,6 +107,7 @@ const hasTranslation = Boolean(enHref && viHref);
             <AudioPlayer
               lang={translation.lang}
               targetId={`blog-article-${translation.lang}`}
+              availableLanguages={availableLanguages}
             />
           </div>
         );
@@ -242,6 +244,17 @@ const hasTranslation = Boolean(enHref && viHref);
 
   function setupBlogLanguageListeners() {
     applyBlogLanguage();
+
+    document
+      .querySelectorAll<HTMLElement>("[data-lang-toggle] [data-lang-option]")
+      .forEach((option) => {
+        option.addEventListener("click", () => {
+          const lang = option.dataset.langOption;
+          if (lang === "en" || lang === "vi") {
+            applyBlogLanguage(lang);
+          }
+        });
+      });
 
     window.addEventListener("blog-lang-change", (e: any) => {
       const lang = e.detail?.lang;

@@ -171,3 +171,10 @@ Read context → route → change code **and** docs together → append the ledg
 None of this is new. It's the shift handover from hospitals and aviation: a fixed protocol, a written record of what's pending, and a checklist that a tired human — or a stateless model — cannot skip. Multi-agent development has exactly the same shape, and it needs the same boring discipline.
 
 The payoff is real portability. When context lives in the repo instead of a chat window, you can switch agents mid-feature, run several in parallel on different slices, or hire a human who reads the same ledger. The agent stops being your architecture. The handover protocol is.
+
+## Video Demo
+
+<video controls width="100%">
+  <source src="/blog/videos/blog-recording.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
