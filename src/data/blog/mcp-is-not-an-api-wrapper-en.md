@@ -8,6 +8,11 @@ lang: "en"
 translationKey: "mcp-is-not-an-api-wrapper"
 draft: false
 ---
+<video controls width="100%">
+  <source src="/blog/demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 
 ![An AI agent passes Scope, Policy, and Approve gates before it can reach an external action](/blog/mcp-security-hero.jpg)
 
