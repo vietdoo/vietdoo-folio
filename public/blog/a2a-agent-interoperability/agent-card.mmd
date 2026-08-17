@@ -1,0 +1,15 @@
+%%{init: {"theme":"base","themeVariables":{"background":"#0b1020","primaryColor":"#111b3a","primaryTextColor":"#f4f0e6","primaryBorderColor":"#48d8e8","lineColor":"#6ee7f2","secondaryColor":"#1a2146","tertiaryColor":"#231f45","fontFamily":"Inter, ui-sans-serif, system-ui"}}}%%
+flowchart LR
+    C["Client Agent\nintent + policy"]:::agent -->|"1. discover"| W["Agent Card\nidentity · skills · interfaces · auth"]:::card
+    W -->|"2. select compatible skill"| V["Capability validation\npolicy + audience + scope"]:::validate
+    V -->|"3. send message"| R["Remote Agent\nopaque runtime"]:::agent
+    R -->|"4a. immediate Message"| M["Final response"]:::good
+    R -->|"4b. Task + updates"| T["working · input-required\ncompleted · failed"]:::task
+    T -->|"artifact / status"| C
+    R -. "SSE stream or push notification" .-> C
+
+    classDef agent fill:#102b4a,stroke:#48d8e8,color:#effcff,stroke-width:2px;
+    classDef card fill:#183c32,stroke:#6ee7b7,color:#ddfff1,stroke-width:2px;
+    classDef validate fill:#2a1940,stroke:#d78cff,color:#fff0ff,stroke-width:2px;
+    classDef task fill:#40222f,stroke:#ff8a8a,color:#ffe4e4,stroke-width:2px;
+    classDef good fill:#3a2c16,stroke:#f5c84c,color:#fff5cf,stroke-width:2px;

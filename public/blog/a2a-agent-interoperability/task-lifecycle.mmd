@@ -1,0 +1,15 @@
+%%{init: {"theme":"base","themeVariables":{"background":"#0b1020","primaryColor":"#111b3a","primaryTextColor":"#f4f0e6","primaryBorderColor":"#48d8e8","lineColor":"#6ee7f2","secondaryColor":"#1a2146","tertiaryColor":"#231f45","fontFamily":"Inter, ui-sans-serif, system-ui"}}}%%
+stateDiagram-v2
+    [*] --> submitted
+    submitted --> working: accepted
+    submitted --> rejected: invalid / unauthorized
+    working --> input_required: needs clarification
+    input_required --> working: user replies
+    working --> completed: artifact ready
+    working --> failed: terminal error
+    working --> canceled: cancel accepted
+    input_required --> canceled: user cancels
+    completed --> [*]
+    failed --> [*]
+    rejected --> [*]
+    canceled --> [*]

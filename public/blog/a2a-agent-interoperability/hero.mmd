@@ -1,0 +1,18 @@
+%%{init: {"theme":"base","themeVariables":{"background":"#0b1020","primaryColor":"#111b3a","primaryTextColor":"#f4f0e6","primaryBorderColor":"#48d8e8","lineColor":"#6ee7f2","secondaryColor":"#1a2146","tertiaryColor":"#231f45","fontFamily":"Inter, ui-sans-serif, system-ui"}}}%%
+flowchart LR
+    U["User goal"]:::user --> C["Client Agent\nintent + consent"]:::agent
+    C --> D["Agent Card\ncapabilities + auth"]:::card
+    D --> G{{"A2A boundary\nJSON-RPC / HTTP"}}:::gateway
+    G --> R["Remote Agent\nopaque runtime"]:::agent
+    R --> T["Task\nworking → input-required\n→ completed"]:::task
+    T --> A["Artifact\ntext · file · JSON"]:::artifact
+    A --> C
+    R -. "stream / push updates" .-> C
+    G -. "signed metadata + policy" .-> C
+
+    classDef user fill:#16233f,stroke:#f5c84c,color:#fff3c4,stroke-width:2px;
+    classDef agent fill:#102b4a,stroke:#48d8e8,color:#effcff,stroke-width:2px;
+    classDef card fill:#182f37,stroke:#6ee7b7,color:#d8fff0,stroke-width:2px;
+    classDef gateway fill:#2a1940,stroke:#d78cff,color:#fff0ff,stroke-width:3px;
+    classDef task fill:#40222f,stroke:#ff8a8a,color:#ffe4e4,stroke-width:2px;
+    classDef artifact fill:#3a2c16,stroke:#f5c84c,color:#fff5cf,stroke-width:2px;

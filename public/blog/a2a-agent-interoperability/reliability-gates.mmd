@@ -1,0 +1,16 @@
+%%{init: {"theme":"base","themeVariables":{"background":"#0b1020","primaryColor":"#111b3a","primaryTextColor":"#f4f0e6","primaryBorderColor":"#48d8e8","lineColor":"#6ee7f2","secondaryColor":"#1a2146","tertiaryColor":"#231f45","fontFamily":"Inter, ui-sans-serif, system-ui"}}}%%
+flowchart TD
+    START["Before delegation"]:::start --> CAP["Capability match\nAgent Card + policy"]:::gate
+    CAP --> AUTH["Authenticate + authorize\nverify audience and scope"]:::gate
+    AUTH --> IDEMP["Idempotency key\nretry-safe request"]:::gate
+    IDEMP --> TIME["Timeout + cancellation\nbounded work"]:::gate
+    TIME --> OBS["Trace task, state, artifact\nwithout leaking payloads"]:::gate
+    OBS --> DEC{{"Safe to delegate?"}}:::decision
+    DEC -->|yes| SEND["Send / stream / push"]:::good
+    DEC -->|no| STOP["Refuse, escalate, or ask\nfor missing consent"]:::stop
+
+    classDef start fill:#2a1940,stroke:#d78cff,color:#fff0ff,stroke-width:3px;
+    classDef gate fill:#102b4a,stroke:#48d8e8,color:#effcff,stroke-width:2px;
+    classDef decision fill:#3a2c16,stroke:#f5c84c,color:#fff5cf,stroke-width:2px;
+    classDef good fill:#183c32,stroke:#6ee7b7,color:#ddfff1,stroke-width:2px;
+    classDef stop fill:#40222f,stroke:#ff8a8a,color:#ffe4e4,stroke-width:2px;
