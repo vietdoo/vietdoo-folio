@@ -100,10 +100,12 @@ const hasTranslation = Boolean(enHref && viHref);
                   <dd class="m-0 mt-1">{displayReadingTime}</dd>
                 </div>
               </dl>
-              <AudioPlayer
-                lang={translation.lang}
-                targetId={`blog-article-${translation.lang}`}
-              />
+              <div class="basis-full sm:basis-auto sm:flex-1">
+                <AudioPlayer
+                  lang={translation.lang}
+                  targetId={`blog-article-${translation.lang}`}
+                />
+              </div>
             </div>
           </div>
         );
