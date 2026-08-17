@@ -1,4 +1,4 @@
-import { createSignal, onMount, onCleanup } from "solid-js";
+import { createSignal, createMemo, onMount, onCleanup } from "solid-js";
 import * as d3 from "d3";
 import vietnamData from "../lib/maps/vietnam-provinces.json";
 import worldData from "../lib/world.json";
@@ -804,10 +804,10 @@ export default function VietnamMap() {
   });
 
   const totalProvinces = Object.keys(PROVINCE_MAP).length;
-  const visitedCount = () => visited().length;
-  const visitedPercent = () => ((visitedCount() / totalProvinces) * 100).toFixed(1);
+  const visitedCount = createMemo(() => visited().length);
+  const visitedPercent = createMemo(() => ((visitedCount() / totalProvinces) * 100).toFixed(1));
 
-  const regionCounts = () => {
+  const regionCounts = createMemo(() => {
     let bac = 0;
     let trung = 0;
     let nam = 0;
@@ -820,7 +820,7 @@ export default function VietnamMap() {
       else if (r.includes("Nam")) nam++;
     });
     return { bac, trung, nam };
-  };
+  });
 
   return (
     <div class="relative w-full h-screen overflow-hidden text-white bg-[#0a131d] select-none touch-none">
