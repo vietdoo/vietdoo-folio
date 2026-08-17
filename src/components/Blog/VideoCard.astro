@@ -5,33 +5,79 @@
 <script is:inline>
   (() => {
     const copy = {
-      en: {
-        label: "Article video",
-        hint: "Watch the explanation in context",
-        fallback: "Explainer video for this article",
-      },
-      vi: {
-        label: "Video bài viết",
-        hint: "Xem phần giải thích ngay trong bài",
-        fallback: "Video giải thích nội dung bài viết",
-      },
+      en: "Article summary video",
+      vi: "Video tóm tắt bài viết",
     };
 
-    function enhanceBlogVideos() {
-      const language = document.documentElement.lang === "vi" ? "vi" : "en";
-      const labels = copy[language];
+    function toPath(value) {
+      if (!value) return "";
+      try {
+        return new URL(value, window.location.href).pathname;
+      } catch {
+        return value;
+      }
+    }
 
+    function removeDuplicateHero(article, video, figure) {
+      const firstImage = article.querySelector("img");
+      const poster = video.getAttribute("poster");
+      if (!firstImage || !poster) return;
+
+      const imagePath = toPath(
+        firstImage.getAttribute("src") || firstImage.currentSrc,
+      );
+      if (!imagePath || imagePath !== toPath(poster)) return;
+
+      const imageBlock = firstImage.closest("p, figure, picture") || firstImage;
+      if (imageBlock !== figure && !imageBlock.closest(".blog-video-card")) {
+        imageBlock.remove();
+      }
+    }
+
+    function separateFollowingVideo(article, figure) {
+      if (
+        figure.previousElementSibling?.classList.contains("blog-video-card")
+      ) {
+        const firstContentBlock = Array.from(article.children).find(
+          (element) =>
+            !element.classList.contains("blog-video-card") &&
+            ["P", "H2", "H3", "BLOCKQUOTE"].includes(element.tagName),
+        );
+        if (firstContentBlock) {
+          firstContentBlock.after(figure);
+        }
+      }
+    }
+
+    function enhanceBlogVideos() {
       document
         .querySelectorAll("article[data-tts-content]")
         .forEach((article) => {
-          article.querySelectorAll("video").forEach((video) => {
+          const articleLanguage =
+            article
+              .closest("[data-blog-language]")
+              ?.getAttribute("data-blog-language") ||
+            document.documentElement.lang;
+          const captionText = copy[articleLanguage === "vi" ? "vi" : "en"];
+          const videos = Array.from(article.querySelectorAll("video"));
+
+          videos.forEach((video, index) => {
             if (video.dataset.videoCardReady === "true") return;
 
             const existingFigure = video.closest("figure");
             const figure = existingFigure || document.createElement("figure");
 
             if (!existingFigure) {
-              video.parentNode?.insertBefore(figure, video);
+              const parent = video.parentElement;
+              if (
+                parent?.tagName === "P" &&
+                parent.children.length === 1 &&
+                parent.firstElementChild === video
+              ) {
+                parent.replaceWith(figure);
+              } else {
+                video.parentNode?.insertBefore(figure, video);
+              }
               figure.appendChild(video);
             }
 
@@ -40,31 +86,26 @@
             video.classList.add("blog-video-card__player");
             video.dataset.videoCardReady = "true";
 
-            if (!figure.querySelector(".blog-video-card__header")) {
-              const header = document.createElement("div");
-              header.className = "blog-video-card__header";
-              header.innerHTML = `
-              <div class="blog-video-card__identity">
-                <span class="blog-video-card__icon" aria-hidden="true">▶</span>
-                <div>
-                  <p class="blog-video-card__label">${labels.label}</p>
-                  <p class="blog-video-card__hint">${labels.hint}</p>
-                </div>
-              </div>
-              <span class="blog-video-card__badge">MP4</span>
-            `;
-              figure.insertBefore(header, video);
-            }
+            figure
+              .querySelectorAll(".blog-video-card__header")
+              .forEach((header) => header.remove());
 
             const caption = figure.querySelector("figcaption");
             if (caption) {
-              caption.classList.add("blog-video-card__caption");
+              caption.className = "blog-video-card__caption";
+              caption.textContent = captionText;
             } else {
-              const fallbackCaption = document.createElement("figcaption");
-              fallbackCaption.className = "blog-video-card__caption";
-              fallbackCaption.textContent =
-                video.getAttribute("aria-label") || labels.fallback;
-              figure.appendChild(fallbackCaption);
+              const summary = document.createElement("figcaption");
+              summary.className = "blog-video-card__caption";
+              summary.textContent = captionText;
+              figure.appendChild(summary);
+            }
+
+            if (index === 0) {
+              removeDuplicateHero(article, video, figure);
+              article.prepend(figure);
+            } else {
+              separateFollowingVideo(article, figure);
             }
           });
         });
@@ -80,121 +121,48 @@
 
 <style is:global>
   article[data-tts-content] .blog-video-card {
-    position: relative;
     display: block;
-    margin: 2.5rem 0 3rem;
+    margin: 0.25rem 0 2rem;
     overflow: hidden;
-    border: 1px solid rgb(148 163 184 / 0.2);
-    border-radius: 1.25rem;
-    background:
-      radial-gradient(
-        circle at 100% 0%,
-        rgb(245 158 11 / 0.08),
-        transparent 32%
-      ),
-      linear-gradient(145deg, rgb(30 41 59 / 0.92), rgb(15 23 42 / 0.96));
-    box-shadow: 0 24px 70px rgb(0 0 0 / 0.24);
-  }
-
-  article[data-tts-content] .blog-video-card__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.9rem 1rem;
-    border-bottom: 1px solid rgb(148 163 184 / 0.14);
-  }
-
-  article[data-tts-content] .blog-video-card__identity {
-    display: flex;
-    min-width: 0;
-    align-items: center;
-    gap: 0.7rem;
-  }
-
-  article[data-tts-content] .blog-video-card__icon {
-    display: grid;
-    flex: 0 0 auto;
-    width: 2rem;
-    height: 2rem;
-    place-items: center;
-    border: 1px solid rgb(251 191 36 / 0.42);
-    border-radius: 999px;
-    background: rgb(245 158 11 / 0.16);
-    color: rgb(253 230 138);
-    font-size: 0.65rem;
-  }
-
-  article[data-tts-content] .blog-video-card__label,
-  article[data-tts-content] .blog-video-card__hint {
-    margin: 0;
-  }
-
-  article[data-tts-content] .blog-video-card__label {
-    color: rgb(248 250 252);
-    font-size: 0.82rem;
-    font-weight: 650;
-    letter-spacing: 0.01em;
-  }
-
-  article[data-tts-content] .blog-video-card__hint {
-    margin-top: 0.15rem;
-    color: rgb(148 163 184);
-    font-size: 0.72rem;
-    line-height: 1.35;
-  }
-
-  article[data-tts-content] .blog-video-card__badge {
-    flex: 0 0 auto;
-    border: 1px solid rgb(148 163 184 / 0.2);
-    border-radius: 999px;
-    padding: 0.28rem 0.52rem;
-    color: rgb(148 163 184);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    border: 1px solid rgb(255 255 255 / 0.14);
+    border-radius: 0.9rem;
+    background: rgb(10 10 10);
+    box-shadow: 0 12px 36px rgb(0 0 0 / 0.18);
   }
 
   article[data-tts-content] .blog-video-card__player {
     display: block;
     width: 100%;
     aspect-ratio: 16 / 9;
-    background: rgb(2 6 23);
+    background: rgb(0 0 0);
     object-fit: cover;
   }
 
   article[data-tts-content] .blog-video-card__caption {
     margin: 0;
-    padding: 0.8rem 1rem 0.95rem;
-    border-top: 1px solid rgb(148 163 184 / 0.14);
-    color: rgb(148 163 184);
-    font-size: 0.82rem;
-    line-height: 1.5;
+    padding: 0.7rem 0.85rem 0.78rem;
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+    color: rgb(163 163 163);
+    font-size: 0.75rem;
+    line-height: 1.4;
   }
 
   article[data-tts-content] .blog-video-card:focus-within {
-    border-color: rgb(251 191 36 / 0.58);
+    border-color: rgb(255 255 255 / 0.38);
     box-shadow:
-      0 0 0 3px rgb(245 158 11 / 0.12),
-      0 24px 70px rgb(0 0 0 / 0.24);
+      0 0 0 3px rgb(255 255 255 / 0.08),
+      0 12px 36px rgb(0 0 0 / 0.18);
   }
 
   @media (max-width: 640px) {
     article[data-tts-content] .blog-video-card {
-      margin: 2rem -0.25rem 2.5rem;
-      border-radius: 1rem;
-    }
-
-    article[data-tts-content] .blog-video-card__header {
-      padding: 0.75rem 0.8rem;
-    }
-
-    article[data-tts-content] .blog-video-card__hint {
-      max-width: 13rem;
+      margin: 0 0 1.75rem;
+      border-radius: 0.75rem;
     }
 
     article[data-tts-content] .blog-video-card__caption {
-      padding: 0.72rem 0.8rem 0.85rem;
+      padding: 0.65rem 0.75rem 0.72rem;
+      font-size: 0.72rem;
     }
   }
 </style>
