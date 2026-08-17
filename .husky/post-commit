@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+ui_changes=$(git diff-tree --no-commit-id --name-only -r HEAD | grep -E '^(src/(components|layouts|pages|styles)/|public/)' || true)
+
+if [ -n "$ui_changes" ]; then
+  latest_report=$(find .artifacts/ui-review -type f -name report.md -print 2>/dev/null | sort | tail -n 1)
+  if [ -n "$latest_report" ]; then
+    printf '%s\n' "[ui-review] Visual review artifact: $latest_report"
+    printf '%s\n' "[ui-review] Attach before.png, after.png, and report.md to the task report."
+  else
+    printf '%s\n' "[ui-review] Reminder: this commit changes rendered UI, but no local UI review report was found."
+    printf '%s\n' "[ui-review] Run: pnpm ui:review -- before/after --url <route> --name <slug>"
+  fi
+fi

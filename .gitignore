@@ -32,3 +32,6 @@ context/
 
 # raw map source data
 /data/
+
+# temporary before/after UI review artifacts
+.artifacts/ui-review/

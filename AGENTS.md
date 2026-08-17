@@ -24,3 +24,13 @@
 - **Tên & Description**:
   - Đặt tên danh từ ngắn gọn, tự nhiên (ví dụ: `Word counter`, `JWT decoder`).
   - Description ngắn gọn 1 dòng, mô tả trực tiếp tính năng.
+
+
+## Visual Before/After Review
+- For every meaningful feature, page, component, layout, styling, responsive, interaction, or content edit, use the Folio UI review workflow before declaring the task complete.
+- Before editing, capture a real baseline with `pnpm ui:review -- before --url <route> --name <slug>` while the local site is running.
+- After editing and running the relevant checks, capture the real post-change state with `pnpm ui:review -- after --url <route> --name <slug>`.
+- Inspect `.artifacts/ui-review/<slug>/before.png`, `after.png`, `diff.png`, and `report.md`. In the final response, attach or link the before screenshot, after screenshot, and report, and state the route and viewport used.
+- For responsive work, capture both desktop (`1440x1000`) and mobile (`390x844`) states. For a focused component, use `--selector` but keep a full-page capture for context when possible.
+- Never claim visual verification when screenshot capture failed. Report the exact failure and distinguish expected visual changes from unrelated changes.
+- Keep `.artifacts/ui-review/` out of commits unless the user explicitly requests the artifacts to be versioned.
