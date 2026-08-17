@@ -762,3 +762,350 @@ html[data-ui-theme="light"] .folio-theme-toggle:hover {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* ── Light UI refinement pass: editorial paper system ─────────── */
+html[data-ui-theme="light"] {
+  --light-paper: #e9dfcf;
+  --light-paper-deep: #dfd1bd;
+  --light-surface: #f2eadc;
+  --light-surface-strong: #fbf7ef;
+  --light-card: #f7f0e4;
+  --light-card-hover: #fffaf2;
+  --light-ink: #4c3933;
+  --light-ink-strong: #2f2421;
+  --light-ink-soft: #756158;
+  --light-ink-faint: #927f74;
+  --light-line: rgba(76, 57, 51, 0.22);
+  --light-line-strong: rgba(76, 57, 51, 0.38);
+  --light-accent: #8b493b;
+  --light-accent-strong: #6f342c;
+  --light-accent-soft: #c48169;
+  --light-shadow: rgba(76, 57, 51, 0.14);
+}
+
+html[data-ui-theme="light"] body {
+  color: var(--light-ink) !important;
+  font-family: "Be Vietnam Pro", "Inter", system-ui, -apple-system, sans-serif !important;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+html[data-ui-theme="light"] body::before {
+  --line-color: rgba(76, 57, 51, 0.065);
+  --line-size: 56px;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(255, 250, 241, 0.48), transparent 34%),
+    radial-gradient(circle at 82% 22%, rgba(139, 73, 59, 0.055), transparent 30%),
+    linear-gradient(90deg, var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size),
+    linear-gradient(var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size);
+  opacity: 0.9;
+}
+
+html[data-ui-theme="light"] h1,
+html[data-ui-theme="light"] h2,
+html[data-ui-theme="light"] h3,
+html[data-ui-theme="light"] h4,
+html[data-ui-theme="light"] h5,
+html[data-ui-theme="light"] h6 {
+  color: var(--light-ink-strong) !important;
+  font-family: "Noto Serif", "Be Vietnam Pro", Georgia, serif !important;
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+}
+
+html[data-ui-theme="light"] p,
+html[data-ui-theme="light"] li,
+html[data-ui-theme="light"] dd,
+html[data-ui-theme="light"] dt,
+html[data-ui-theme="light"] label,
+html[data-ui-theme="light"] blockquote {
+  color: var(--light-ink) !important;
+  font-family: "Be Vietnam Pro", "Inter", system-ui, -apple-system, sans-serif !important;
+  line-height: 1.62;
+}
+
+html[data-ui-theme="light"] code,
+html[data-ui-theme="light"] pre,
+html[data-ui-theme="light"] time,
+html[data-ui-theme="light"] .font-mono {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace !important;
+}
+
+html[data-ui-theme="light"] button,
+html[data-ui-theme="light"] input,
+html[data-ui-theme="light"] textarea,
+html[data-ui-theme="light"] select {
+  font-family: "Be Vietnam Pro", "Inter", system-ui, -apple-system, sans-serif;
+}
+
+html[data-ui-theme="light"] a {
+  color: var(--light-ink) !important;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+html[data-ui-theme="light"] a:hover {
+  color: var(--light-accent-strong) !important;
+}
+
+/* Make every standard tile read as a cream object on the paper canvas. */
+html[data-ui-theme="light"] .card {
+  background: var(--light-card) !important;
+  color: var(--light-ink) !important;
+  border-color: var(--light-line) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 12px 28px var(--light-shadow), 0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
+}
+
+html[data-ui-theme="light"] .card:hover {
+  background: var(--light-card-hover) !important;
+  border-color: var(--light-line-strong) !important;
+  box-shadow: 0 16px 34px rgba(76, 57, 51, 0.18), 0 1px 0 rgba(255, 255, 255, 0.7) inset !important;
+}
+
+html[data-ui-theme="light"] .card h2,
+html[data-ui-theme="light"] .card h3,
+html[data-ui-theme="light"] .card h4 {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .card .text-darkslate-300,
+html[data-ui-theme="light"] .card .text-darkslate-400,
+html[data-ui-theme="light"] .card .text-white\/50,
+html[data-ui-theme="light"] .card .text-white\/60,
+html[data-ui-theme="light"] .card .text-white\/70,
+html[data-ui-theme="light"] .card .text-white\/80,
+html[data-ui-theme="light"] .card .text-white\/90 {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .card .text-white,
+html[data-ui-theme="light"] .card .text-darkslate-100,
+html[data-ui-theme="light"] .card .text-darkslate-200 {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .card [class*="border-darkslate-"],
+html[data-ui-theme="light"] .card [class*="border-white/"] {
+  border-color: var(--light-line) !important;
+}
+
+html[data-ui-theme="light"] .card [class*="bg-darkslate-700"],
+html[data-ui-theme="light"] .card [class*="bg-darkslate-600"],
+html[data-ui-theme="light"] .card [class*="bg-darkslate-500"] {
+  background: var(--light-surface) !important;
+}
+
+/* Hero: calm the animated bugs and turn dark chips into readable warm labels. */
+html[data-ui-theme="light"] .card:has(#memoji-avatar) #bugs-container,
+html[data-ui-theme="light"] .card:has(#memoji-avatar) #bugs-canvas {
+  opacity: 0.28 !important;
+}
+
+html[data-ui-theme="light"] .card:has(#memoji-avatar) .text-primary-300,
+html[data-ui-theme="light"] .card:has(#memoji-avatar) .text-primary-400 {
+  color: var(--light-accent-strong) !important;
+}
+
+html[data-ui-theme="light"] .card:has(#memoji-avatar) .text-white\/80,
+html[data-ui-theme="light"] .card:has(#memoji-avatar) .text-white\/90,
+html[data-ui-theme="light"] .card:has(#memoji-avatar) .text-darkslate-300 {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .card:has(#memoji-avatar) [class*="bg-darkslate-700"] {
+  background: var(--light-surface-strong) !important;
+  border-color: var(--light-line-strong) !important;
+}
+
+/* Blog: keep the photograph dramatic, but make the surrounding feed paper-clear. */
+html[data-ui-theme="light"] .blog-card-shell .blog-recent-feed {
+  border-color: var(--light-line) !important;
+}
+
+html[data-ui-theme="light"] .blog-card-shell .blog-recent-feed .text-white\/50,
+html[data-ui-theme="light"] .blog-card-shell .blog-recent-feed .text-white\/90 {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .blog-card-shell .blog-recent-feed h4 {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .blog-card-shell .blog-recent-feed .text-primary-400\/90 {
+  color: var(--light-accent-strong) !important;
+}
+
+html[data-ui-theme="light"] .blog-billboard-container {
+  background: #5a4039 !important;
+  border-color: var(--light-line-strong) !important;
+  box-shadow: 0 10px 22px rgba(76, 57, 51, 0.16) !important;
+}
+
+html[data-ui-theme="light"] .blog-billboard-container .text-white\/70 {
+  color: rgba(255, 250, 241, 0.82) !important;
+}
+
+html[data-ui-theme="light"] .blog-billboard-container .text-white\/40 {
+  color: rgba(255, 250, 241, 0.58) !important;
+}
+
+/* The journey card remains an intentional dark editorial strip for marquee contrast. */
+html[data-ui-theme="light"] .card:has(.marquee-left) {
+  background: #5a4039 !important;
+  color: #fff9f0 !important;
+  border-color: #765247 !important;
+  box-shadow: 0 12px 28px rgba(76, 57, 51, 0.2) !important;
+}
+
+html[data-ui-theme="light"] .card:has(.marquee-left) .bg-darkslate-800 {
+  background: #5a4039 !important;
+}
+
+html[data-ui-theme="light"] .card:has(.marquee-left) h2,
+html[data-ui-theme="light"] .card:has(.marquee-left) .text-white\/60 {
+  color: #fff9f0 !important;
+}
+
+/* Header and search controls: dark ink pills against paper, not pale-on-pale controls. */
+html[data-ui-theme="light"] nav button.bg-darkslate-600\/70,
+html[data-ui-theme="light"] nav .bg-darkslate-900\/90,
+html[data-ui-theme="light"] nav .bg-darkslate-900\/95,
+html[data-ui-theme="light"] nav .bg-darkslate-900\/98 {
+  background: var(--light-ink-strong) !important;
+  color: var(--light-surface-strong) !important;
+  border-color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] nav button.bg-darkslate-600\/70:hover {
+  background: var(--light-accent-strong) !important;
+  border-color: var(--light-accent-strong) !important;
+}
+
+html[data-ui-theme="light"] nav input,
+html[data-ui-theme="light"] nav textarea,
+html[data-ui-theme="light"] .mobile-search-panel input {
+  background: var(--light-surface-strong) !important;
+  color: var(--light-ink-strong) !important;
+  border-color: var(--light-line-strong) !important;
+  box-shadow: 0 2px 10px rgba(76, 57, 51, 0.07) inset !important;
+}
+
+html[data-ui-theme="light"] nav input::placeholder,
+html[data-ui-theme="light"] .mobile-search-panel input::placeholder {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] nav a.bg-primary-500,
+html[data-ui-theme="light"] a.bg-primary-500,
+html[data-ui-theme="light"] button.bg-primary-500 {
+  color: #fff9f0 !important;
+}
+
+html[data-ui-theme="light"] #sound-toggle,
+html[data-ui-theme="light"] .style-btn-panel,
+html[data-ui-theme="light"] #formatToggle {
+  background: var(--light-surface-strong) !important;
+  color: var(--light-ink-strong) !important;
+  border-color: var(--light-line-strong) !important;
+}
+
+html[data-ui-theme="light"] [data-lang-toggle] [data-lang-option][data-active="true"] {
+  background: var(--light-accent) !important;
+  color: #fff9f0 !important;
+}
+
+html[data-ui-theme="light"] [data-lang-toggle] [data-lang-option][data-active="false"] {
+  color: var(--light-ink-soft) !important;
+}
+
+@media (max-width: 767px) {
+  html[data-ui-theme="light"] body {
+    font-size: 14px;
+  }
+
+  html[data-ui-theme="light"] .card {
+    border-radius: 12px !important;
+    box-shadow: 0 8px 20px rgba(76, 57, 51, 0.13), 0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui-theme="light"] #bugs-container,
+  html[data-ui-theme="light"] #bugs-canvas {
+    display: none !important;
+  }
+}
+
+
+/* ── Inner-page reading refinement ───────────────────────────── */
+html[data-ui-theme="light"] .blog-meta-panel {
+  background: var(--light-card) !important;
+  border-color: var(--light-line-strong) !important;
+  color: var(--light-ink) !important;
+  box-shadow: 0 8px 20px rgba(76, 57, 51, 0.11) !important;
+}
+
+html[data-ui-theme="light"] .blog-meta-panel .text-neutral-100,
+html[data-ui-theme="light"] .blog-meta-panel .text-neutral-200,
+html[data-ui-theme="light"] .blog-meta-panel .text-neutral-300 {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .blog-meta-panel .text-neutral-400,
+html[data-ui-theme="light"] .blog-meta-panel .text-neutral-500 {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .blog-reading-content {
+  color: var(--light-ink) !important;
+  --tw-prose-body: var(--light-ink);
+  --tw-prose-headings: var(--light-ink-strong);
+  --tw-prose-lead: var(--light-ink);
+  --tw-prose-links: var(--light-accent-strong);
+  --tw-prose-bold: var(--light-ink-strong);
+  --tw-prose-counters: var(--light-accent-strong);
+  --tw-prose-bullets: var(--light-accent);
+  --tw-prose-hr: var(--light-line);
+  --tw-prose-quotes: var(--light-ink-strong);
+  --tw-prose-quote-borders: var(--light-accent-soft);
+  --tw-prose-captions: var(--light-ink-soft);
+  --tw-prose-code: var(--light-ink-strong);
+  --tw-prose-pre-code: #fff9f0;
+  --tw-prose-pre-bg: #4a3530;
+  --tw-prose-th-borders: var(--light-line-strong);
+  --tw-prose-td-borders: var(--light-line);
+}
+
+html[data-ui-theme="light"] .blog-reading-content :where(strong, b) {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .blog-reading-content :where(a) {
+  color: var(--light-accent-strong) !important;
+  text-decoration-color: var(--light-accent-soft) !important;
+}
+
+html[data-ui-theme="light"] .blog-reading-content :where(blockquote) {
+  background: rgba(251, 247, 239, 0.58);
+  border-left-color: var(--light-accent) !important;
+  border-radius: 0 10px 10px 0;
+  padding: 0.8rem 1rem;
+}
+
+html[data-ui-theme="light"] .blog-reading-content :where(code):not(:where([class~="not-prose"] *)) {
+  background: rgba(139, 73, 59, 0.1);
+  border-radius: 4px;
+  padding: 0.12em 0.3em;
+}
+
+html[data-ui-theme="light"] .desktop-search-form input::placeholder,
+html[data-ui-theme="light"] .mobile-search-panel input::placeholder {
+  color: rgba(255, 249, 240, 0.68) !important;
+}
+
+html[data-ui-theme="light"] .desktop-search-form input {
+  color: #fff9f0 !important;
+}

@@ -25,7 +25,7 @@ const postCount = uniquePostsMap.size;
   padding="p-3.5 sm:p-4"
   arrowCorner={true}
 >
-  <div class="h-full flex flex-col justify-between gap-2.5 select-none">
+  <div class="blog-card-shell h-full flex flex-col justify-between gap-2.5 select-none">
     {/* Top Header Bar */}
     <div class="flex items-center gap-2 pr-6 flex-shrink-0">
       <h2 class="text-base font-bold m-0 text-white tracking-tight">
@@ -102,7 +102,7 @@ const postCount = uniquePostsMap.size;
     </div>
 
     {/* Recent Articles Mini Feed (Bottom Half) */}
-    <div class="flex-1 flex flex-col justify-between pt-2 border-t border-white/10 min-h-0 gap-1.5">
+    <div class="blog-recent-feed flex-1 flex flex-col justify-between pt-2 border-t border-white/10 min-h-0 gap-1.5">
       <span class="text-[10px] uppercase font-mono font-bold tracking-wider text-white/50">
         Recent Articles
       </span>

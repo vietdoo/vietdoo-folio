@@ -69,7 +69,7 @@ const hasTranslation = Boolean(enHref && viHref);
             >
               {translation.title}
             </h1>
-            <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4 rounded-xl border border-solid border-neutral-800 bg-neutral-900/70 px-4 py-4 text-sm">
+            <div class="blog-meta-panel mt-6 flex flex-wrap items-center gap-x-6 gap-y-4 rounded-xl border border-solid border-neutral-800 bg-neutral-900/70 px-4 py-4 text-sm">
               <div class="flex items-center gap-3">
                 <img
                   src="https://avatars.githubusercontent.com/u/64247567"
@@ -116,7 +116,7 @@ const hasTranslation = Boolean(enHref && viHref);
         <div data-blog-language={translation.lang} hidden={index > 0}>
           <article
             id={`blog-article-${translation.lang}`}
-            class="prose prose-slate prose-invert pb-8"
+            class="blog-reading-content prose prose-slate prose-invert pb-8"
             data-tts-content
           >
             <slot name={translation.lang} />
