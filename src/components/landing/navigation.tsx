@@ -1,21 +1,93 @@
-import { createSignal, onMount, onCleanup, For } from "solid-js";
+import { createSignal, onCleanup, onMount, For } from "solid-js";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navLinks = [
-  { name: "Dự án", href: "/du-an" },
-  { name: "Cách hoạt động", href: "#how-it-works" },
-  { name: "Tích hợp", href: "#integrations" },
+  { name: "Blog", href: "/blog" },
+  { name: "Showcase", href: "/engineering-showcase" },
+  { name: "Playground", href: "/playground" },
+];
+
+const menuSections = [
+  {
+    label: "Khám phá",
+    links: [
+      {
+        name: "Trang chủ",
+        description: "Một góc nhỏ của vietdoo",
+        href: "/",
+        index: "01",
+      },
+      {
+        name: "Bài viết",
+        description: "Ghi chép về engineering & AI",
+        href: "/blog",
+        index: "02",
+      },
+      {
+        name: "Engineering Showcase",
+        description: "Những thứ đang được xây dựng",
+        href: "/engineering-showcase",
+        index: "03",
+      },
+      {
+        name: "Playground",
+        description: "Các thử nghiệm nhỏ trên web",
+        href: "/playground",
+        index: "04",
+      },
+    ],
+  },
+  {
+    label: "Kết nối",
+    links: [
+      {
+        name: "Guestbook",
+        description: "Để lại một lời nhắn",
+        href: "/guestbook",
+        index: "05",
+      },
+      {
+        name: "Bookshelf",
+        description: "Những cuốn sách đang đọc",
+        href: "/books",
+        index: "06",
+      },
+      {
+        name: "Vietnam Journey",
+        description: "10 tỉnh thành đã ghé qua",
+        href: "/visit",
+        index: "07",
+      },
+      {
+        name: "Resume",
+        description: "Kinh nghiệm & kỹ năng",
+        href: "/resume",
+        index: "08",
+      },
+    ],
+  },
 ];
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = createSignal(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = createSignal(false);
 
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
   onMount(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeMobileMenu();
+    };
+
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("keydown", handleKeydown);
     handleScroll();
-    onCleanup(() => window.removeEventListener("scroll", handleScroll));
+
+    onCleanup(() => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("keydown", handleKeydown);
+    });
   });
 
   return (
@@ -37,12 +109,15 @@ export function Navigation() {
               isScrolled() ? "h-14" : "h-20"
             }`}
           >
-            {/* Logo Icon & Back Button */}
             <div class="flex items-center gap-3 shrink-0">
-              <a href="/" class="flex items-center group text-white no-underline">
+              <a
+                href="/"
+                class="flex items-center gap-2.5 group text-white no-underline"
+                aria-label="Về trang chủ vietdoo"
+              >
                 <img
                   src="/vndo.png"
-                  alt="Logo"
+                  alt="VNDO logo"
                   width={40}
                   height={40}
                   class={`rounded-md object-cover transition-all duration-500 ${
@@ -54,12 +129,23 @@ export function Navigation() {
                     target.src = "/icon-light-32x32.png";
                   }}
                 />
+                <span class="hidden sm:flex flex-col leading-none">
+                  <span class="text-[11px] font-bold tracking-[0.16em] uppercase text-white">
+                    vietdoo
+                  </span>
+                  <span class="text-[9px] tracking-[0.08em] text-darkslate-300 mt-1">
+                    VNDO / ENGINEERING
+                  </span>
+                </span>
               </a>
 
               <button
                 type="button"
                 onClick={() => {
-                  if (typeof window !== "undefined" && window.history.length > 1) {
+                  if (
+                    typeof window !== "undefined" &&
+                    window.history.length > 1
+                  ) {
                     window.history.back();
                   } else {
                     window.location.href = "/";
@@ -68,19 +154,30 @@ export function Navigation() {
                 class="flex items-center gap-2 px-4 py-2 rounded-full bg-darkslate-600/70 hover:bg-darkslate-500 border border-darkslate-400/50 text-white hover:border-primary-500/50 hover:shadow-md active:scale-95 transition-all text-sm font-semibold cursor-pointer shrink-0"
                 aria-label="Quay lại"
               >
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                  />
                 </svg>
                 <span>Back</span>
               </button>
             </div>
 
-            {/* Desktop Nav Links */}
-            <div class="hidden md:flex items-center gap-12">
+            <div class="hidden md:flex items-center gap-10">
               <For each={navLinks}>
                 {(link) => (
                   <a
                     href={link.href}
+                    data-skip-loader
                     class="text-sm text-darkslate-200 hover:text-white transition-colors duration-300 relative group"
                   >
                     {link.name}
@@ -90,43 +187,61 @@ export function Navigation() {
               </For>
             </div>
 
-            {/* Desktop Actions */}
             <div class="hidden md:flex items-center gap-4">
               <ThemeToggle />
               <a
-                href="/login"
-                class={`text-darkslate-200 hover:text-white transition-all duration-500 ${
-                  isScrolled() ? "text-xs" : "text-sm"
-                }`}
+                href="/resume"
+                class="text-darkslate-200 hover:text-white transition-all duration-500 text-sm"
               >
-                Đăng nhập
+                Resume
               </a>
               <a
-                href="/signup"
-                class={`inline-flex items-center justify-center bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-full transition-all duration-500 shadow-sm ${
-                  isScrolled() ? "px-4 h-8 text-xs" : "px-6 h-10 text-sm"
-                }`}
+                href="mailto:vietdoo@outlook.com"
+                class="inline-flex items-center justify-center bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-full transition-all duration-500 shadow-sm px-5 h-10 text-sm"
               >
-                Bắt đầu miễn phí
+                Say hello ↗
               </a>
             </div>
 
-            {/* Mobile Theme Toggle + Hamburger */}
             <div class="md:hidden flex items-center gap-2">
               <ThemeToggle compact />
               <button
+                type="button"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen())}
-                class="md:hidden p-2 text-white hover:text-primary-400 focus:outline-none"
-                aria-label="Mở menu"
+                class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white hover:border-primary-400/60 hover:text-primary-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400/70 active:scale-95 transition-all"
+                aria-label={isMobileMenuOpen() ? "Đóng menu" : "Mở menu"}
                 aria-expanded={isMobileMenuOpen()}
+                aria-controls="mobile-navigation"
               >
                 {isMobileMenuOpen() ? (
-                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
                   </svg>
                 ) : (
-                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    aria-hidden="true"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M4 7h16M4 12h16M4 17h10"
+                    />
                   </svg>
                 )}
               </button>
@@ -135,68 +250,169 @@ export function Navigation() {
         </nav>
       </header>
 
-      {/* Mobile Fullscreen Overlay */}
       <div
-        class={`md:hidden fixed inset-0 bg-darkslate-900/95 backdrop-blur-2xl z-40 transition-all duration-500 ${
-          isMobileMenuOpen() ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        class={`md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-200 ${
+          isMobileMenuOpen()
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
+        aria-hidden={!isMobileMenuOpen()}
+        onClick={closeMobileMenu}
       >
-        <div class="flex justify-end px-6 pt-6">
-          <button
-            onClick={() => setIsMobileMenuOpen(false)}
-            class="p-2 rounded-full text-white hover:bg-darkslate-700 transition-colors"
-            aria-label="Close menu"
-          >
-            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
+        <aside
+          id="mobile-navigation"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Điều hướng vietdoo"
+          onClick={(event) => event.stopPropagation()}
+          class={`absolute right-0 top-0 flex h-full w-[min(91vw,430px)] flex-col overflow-y-auto border-l border-white/10 bg-darkslate-900/98 px-5 pb-6 pt-5 shadow-2xl transition-transform duration-300 ${
+            isMobileMenuOpen() ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div class="flex items-center justify-between border-b border-white/10 pb-5">
+            <div class="flex items-center gap-3">
+              <img
+                src="/vndo.png"
+                alt="VNDO logo"
+                width="40"
+                height="40"
+                class="h-10 w-10 rounded-xl object-cover"
+              />
+              <div>
+                <p class="m-0 text-sm font-bold tracking-[0.16em] text-white">
+                  VIETDOO
+                </p>
+                <p class="m-0 mt-1 text-[10px] uppercase tracking-[0.14em] text-darkslate-300">
+                  personal folio / vndo
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={closeMobileMenu}
+              class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/75 hover:border-primary-400/60 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400/70 active:scale-95 transition-all"
+              aria-label="Đóng menu"
+            >
+              <svg
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
 
-        <div class="flex flex-col h-full px-8 pt-8 pb-16 justify-between">
-          <div class="flex flex-col justify-center gap-6 my-auto">
-            <For each={navLinks}>
-              {(link, i) => (
-                <a
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  class={`text-2xl font-medium text-white hover:text-primary-400 transition-all duration-500 ${
-                    isMobileMenuOpen() ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                  }`}
-                  style={{ "transition-delay": isMobileMenuOpen() ? `${i() * 75}ms` : "0ms" }}
-                >
-                  {link.name}
-                </a>
+          <div class="relative mt-6 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.045] p-4 shadow-xl">
+            <div
+              class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary-400 to-transparent"
+              aria-hidden="true"
+            />
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="m-0 text-[10px] font-bold uppercase tracking-[0.18em] text-primary-300">
+                  Currently building
+                </p>
+                <h2 class="m-0 mt-2 text-xl font-bold tracking-tight text-white">
+                  Do Quoc Viet <span class="text-primary-300">(vietdoo)</span>
+                </h2>
+                <p class="m-0 mt-2 text-xs leading-relaxed text-darkslate-200">
+                  Software Engineer @ VNPT · Founder @ VNDO
+                </p>
+              </div>
+              <span
+                class="mt-1 h-2 w-2 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]"
+                aria-label="Đang hoạt động"
+              />
+            </div>
+            <p class="m-0 mt-4 max-w-[34ch] text-sm leading-relaxed text-white/75">
+              Building scalable backend systems, data infrastructure and AI
+              agent workflows.
+            </p>
+          </div>
+
+          <div class="mt-7 shrink-0 flex flex-col gap-7">
+            <For each={menuSections}>
+              {(section) => (
+                <section>
+                  <p class="m-0 mb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-darkslate-400">
+                    {section.label}
+                  </p>
+                  <div class="flex flex-col gap-1">
+                    <For each={section.links}>
+                      {(link, index) => (
+                        <a
+                          href={link.href}
+                          data-skip-loader
+                          onClick={closeMobileMenu}
+                          class={`group flex items-center gap-3 rounded-xl border border-transparent px-3 py-3.5 transition-all duration-200 hover:border-white/10 hover:bg-white/5 ${
+                            isMobileMenuOpen()
+                              ? "translate-y-0 opacity-100"
+                              : "translate-y-2 opacity-0"
+                          }`}
+                          style={{
+                            "transition-delay": isMobileMenuOpen()
+                              ? `${index() * 35}ms`
+                              : "0ms",
+                          }}
+                        >
+                          <span class="w-6 shrink-0 font-mono text-[10px] text-primary-400/70 group-hover:text-primary-300">
+                            {link.index}
+                          </span>
+                          <span class="min-w-0 flex-1">
+                            <span class="block text-[15px] font-semibold text-white group-hover:text-primary-300">
+                              {link.name}
+                            </span>
+                            <span class="mt-1 block truncate text-xs text-darkslate-300">
+                              {link.description}
+                            </span>
+                          </span>
+                          <span
+                            class="text-lg text-darkslate-500 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-primary-300"
+                            aria-hidden="true"
+                          >
+                            ↗
+                          </span>
+                        </a>
+                      )}
+                    </For>
+                  </div>
+                </section>
               )}
             </For>
           </div>
 
-          <div
-            class={`flex flex-col gap-4 pt-8 border-t border-darkslate-600 transition-all duration-500 ${
-              isMobileMenuOpen() ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-            style={{ "transition-delay": isMobileMenuOpen() ? "300ms" : "0ms" }}
-          >
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-darkslate-300">Giao diện</span>
+          <div class="mt-auto shrink-0 pt-7">
+            <div class="flex items-center justify-between border-t border-white/10 pt-5">
+              <div>
+                <p class="m-0 text-[10px] font-bold uppercase tracking-[0.2em] text-darkslate-400">
+                  Giao diện
+                </p>
+                <p class="m-0 mt-1 text-xs text-darkslate-300">
+                  Chọn chế độ bạn thích
+                </p>
+              </div>
               <ThemeToggle />
             </div>
             <a
-              href="/signup"
-              onClick={() => setIsMobileMenuOpen(false)}
-              class="w-full bg-primary-500 hover:bg-primary-600 text-white rounded-full h-14 text-base font-medium flex items-center justify-center shadow-lg"
+              href="mailto:vietdoo@outlook.com"
+              onClick={closeMobileMenu}
+              class="mt-5 flex h-12 w-full items-center justify-center rounded-xl bg-primary-500 text-sm font-bold text-white shadow-lg shadow-primary-500/20 transition-all hover:bg-primary-600 active:scale-[0.98]"
             >
-              Bắt đầu miễn phí
+              Gửi lời chào ↗
             </a>
-            <a
-              href="/login"
-              onClick={() => setIsMobileMenuOpen(false)}
-              class="w-full border border-darkslate-400 text-white hover:bg-darkslate-800 rounded-full h-12 text-base font-medium flex items-center justify-center"
-            >
-              Đăng nhập
-            </a>
+            <p class="m-0 mt-3 text-center text-[11px] text-darkslate-400">
+              vietdoo@outlook.com · Ho Chi Minh City, Vietnam
+            </p>
           </div>
-        </div>
+        </aside>
       </div>
     </>
   );
