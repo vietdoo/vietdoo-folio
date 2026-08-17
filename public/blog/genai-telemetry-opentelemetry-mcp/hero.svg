@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Portable GenAI telemetry</title><desc id="desc">One semantic vocabulary crosses model, retrieval, MCP, tool, policy, and outcome boundaries.</desc>
+  <defs>
+    <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.7"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#172535" flood-opacity=".16"/></filter>
+    <style>
+      .ink{stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;}
+      .thin{stroke:#172535;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+      .label{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-weight:800;letter-spacing:.5px}
+      .small{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-size:25px;font-weight:600}
+      .arrow{fill:none;stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowhead)}
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#172535"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="#f8f4e9"/>
+  <path d="M0 120 C300 75 530 145 820 98 S1320 105 1600 75" fill="none" stroke="#d8d1bd" stroke-width="18" opacity=".55"/>
+  <path d="M30 820 C360 770 640 850 930 800 S1330 835 1570 775" fill="none" stroke="#d8d1bd" stroke-width="14" opacity=".45"/>
+  <g filter="url(#wobble)"><circle cx="800" cy="450" r="120" fill="#d9a441" class="ink"/><text x="800" y="465" text-anchor="middle" class="label" font-size="36">AGENT</text><circle cx="330" cy="260" r="95" fill="#7fb4c8" class="ink"/><text x="330" y="275" text-anchor="middle" class="label" font-size="30">MODEL</text><circle cx="1270" cy="260" r="95" fill="#3b8f8b" class="ink"/><text x="1270" y="275" text-anchor="middle" class="label" font-size="30">MCP</text><circle cx="330" cy="650" r="95" fill="#d76b58" class="ink"/><text x="330" y="665" text-anchor="middle" class="label" font-size="30">RETRIEVAL</text><circle cx="1270" cy="650" r="95" fill="#203e5f" class="ink"/><text x="1270" y="665" text-anchor="middle" class="label" font-size="30" fill="#f8f4e9">OUTCOME</text><path d="M410 290 Q620 380 680 410 M1190 290 Q980 380 920 410 M410 620 Q620 530 680 490 M1190 620 Q980 530 920 490" class="arrow"/><path d="M260 470 Q800 100 1340 470 Q800 800 260 470" fill="none" stroke="#172535" stroke-width="5" stroke-dasharray="18 18"/></g>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Execution graph</title><desc id="desc">The trace follows the real distributed path of an agent turn.</desc>
+  <defs>
+    <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.7"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#172535" flood-opacity=".16"/></filter>
+    <style>
+      .ink{stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;}
+      .thin{stroke:#172535;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+      .label{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-weight:800;letter-spacing:.5px}
+      .small{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-size:25px;font-weight:600}
+      .arrow{fill:none;stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowhead)}
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#172535"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="#f8f4e9"/>
+  <path d="M0 120 C300 75 530 145 820 98 S1320 105 1600 75" fill="none" stroke="#d8d1bd" stroke-width="18" opacity=".55"/>
+  <path d="M30 820 C360 770 640 850 930 800 S1330 835 1570 775" fill="none" stroke="#d8d1bd" stroke-width="14" opacity=".45"/>
+  <g filter="url(#wobble)"><rect x="80" y="370" width="190" height="135" rx="28" fill="#7fb4c8" class="ink" filter="url(#shadow)"/>
+    <path d="M108 408 Q175.0 388 240 412" fill="none" stroke="#3b8f8b" stroke-width="7" opacity=".8"/>
+    <text x="175.0" y="449.5" text-anchor="middle" class="label" font-size="31">REQUEST</text><path d="M285 435 C297.5 390.0 377.5 480.0 390 435" class="arrow"/><rect x="420" y="370" width="190" height="135" rx="28" fill="#d9a441" class="ink" filter="url(#shadow)"/>
+    <path d="M448 408 Q515.0 388 580 412" fill="none" stroke="#d76b58" stroke-width="7" opacity=".8"/>
+    <text x="515.0" y="449.5" text-anchor="middle" class="label" font-size="31">MODEL</text><path d="M625 435 C637.5 390.0 717.5 480.0 730 435" class="arrow"/><rect x="760" y="370" width="190" height="135" rx="28" fill="#3b8f8b" class="ink" filter="url(#shadow)"/>
+    <path d="M788 408 Q855.0 388 920 412" fill="none" stroke="#d9a441" stroke-width="7" opacity=".8"/>
+    <text x="855.0" y="449.5" text-anchor="middle" class="label" font-size="31">MCP</text><path d="M965 435 C977.5 390.0 1057.5 480.0 1070 435" class="arrow"/><rect x="1100" y="370" width="190" height="135" rx="28" fill="#d76b58" class="ink" filter="url(#shadow)"/>
+    <path d="M1128 408 Q1195.0 388 1260 412" fill="none" stroke="#d9a441" stroke-width="7" opacity=".8"/>
+    <text x="1195.0" y="449.5" text-anchor="middle" class="label" font-size="31">TOOL</text><path d="M1305 435 C1317.5 390.0 1397.5 480.0 1410 435" class="arrow"/><circle cx="800" cy="700" r="70" fill="#203e5f" class="ink"/><text x="800" y="713" text-anchor="middle" class="label" font-size="27" fill="#f8f4e9">POLICY</text><path d="M800 505 L800 625" class="arrow"/></g>
+</svg>
