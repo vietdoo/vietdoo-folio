@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Temporal RAG</title><desc id="desc">Evidence is filtered by the time it was valid before semantic ranking.</desc>
+  <defs>
+    <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.7"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#172535" flood-opacity=".16"/></filter>
+    <style>
+      .ink{stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;}
+      .thin{stroke:#172535;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+      .label{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-weight:800;letter-spacing:.5px}
+      .small{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-size:25px;font-weight:600}
+      .arrow{fill:none;stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowhead)}
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#172535"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="#f8f4e9"/>
+  <path d="M0 120 C300 75 530 145 820 98 S1320 105 1600 75" fill="none" stroke="#d8d1bd" stroke-width="18" opacity=".55"/>
+  <path d="M30 820 C360 770 640 850 930 800 S1330 835 1570 775" fill="none" stroke="#d8d1bd" stroke-width="14" opacity=".45"/>
+  <g filter="url(#wobble)"><path d="M160 500 C420 430 650 540 880 450 S1260 430 1450 500" fill="none" stroke="#172535" stroke-width="12"/><circle cx="350" cy="500" r="38" fill="#d9a441" class="ink"/><circle cx="780" cy="480" r="38" fill="#3b8f8b" class="ink"/><circle cx="1200" cy="470" r="38" fill="#d76b58" class="ink"/><rect x="225" y="250" width="250" height="125" rx="28" fill="#d9a441" class="ink" filter="url(#shadow)"/>
+    <path d="M253 288 Q350.0 268 445 292" fill="none" stroke="#d76b58" stroke-width="7" opacity=".8"/>
+    <text x="350.0" y="324.5" text-anchor="middle" class="label" font-size="31">THEN</text><rect x="660" y="220" width="250" height="125" rx="28" fill="#3b8f8b" class="ink" filter="url(#shadow)"/>
+    <path d="M688 258 Q785.0 238 880 262" fill="none" stroke="#d9a441" stroke-width="7" opacity=".8"/>
+    <text x="785.0" y="294.5" text-anchor="middle" class="label" font-size="31">NOW</text><rect x="1080" y="250" width="300" height="125" rx="28" fill="#7fb4c8" class="ink" filter="url(#shadow)"/>
+    <path d="M1108 288 Q1230.0 268 1350 292" fill="none" stroke="#3b8f8b" stroke-width="7" opacity=".8"/>
+    <text x="1230.0" y="324.5" text-anchor="middle" class="label" font-size="31">ANSWER WITH DATE</text><path d="M350 410 C525.0 365.0 605.0 455.0 780 410" class="arrow"/><path d="M820 410 C970.0 365.0 1050.0 455.0 1200 410" class="arrow"/><path d="M280 620 q90 -130 180 0 M710 610 q90 -150 180 0 M1110 600 q120 -150 240 0" fill="none" class="thin"/></g>
+</svg>

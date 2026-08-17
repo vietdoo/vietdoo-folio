@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Time-aware retrieval pipeline</title><desc id="desc">Planner, temporal filter, semantic ranker, contradiction checker, and generator.</desc>
+  <defs>
+    <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.7"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#172535" flood-opacity=".16"/></filter>
+    <style>
+      .ink{stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;}
+      .thin{stroke:#172535;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+      .label{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-weight:800;letter-spacing:.5px}
+      .small{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-size:25px;font-weight:600}
+      .arrow{fill:none;stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowhead)}
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#172535"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="#f8f4e9"/>
+  <path d="M0 120 C300 75 530 145 820 98 S1320 105 1600 75" fill="none" stroke="#d8d1bd" stroke-width="18" opacity=".55"/>
+  <path d="M30 820 C360 770 640 850 930 800 S1330 835 1570 775" fill="none" stroke="#d8d1bd" stroke-width="14" opacity=".45"/>
+  <g filter="url(#wobble)"><rect x="70" y="350" width="250" height="170" rx="28" fill="#7fb4c8" class="ink" filter="url(#shadow)"/>
+    <path d="M98 388 Q195.0 368 290 392" fill="none" stroke="#3b8f8b" stroke-width="7" opacity=".8"/>
+    <text x="195.0" y="447.0" text-anchor="middle" class="label" font-size="31">PLAN TIME</text><path d="M340 435 C380.0 390.0 460.0 480.0 500 435" class="arrow"/><rect x="540" y="350" width="250" height="170" rx="28" fill="#d9a441" class="ink" filter="url(#shadow)"/>
+    <path d="M568 388 Q665.0 368 760 392" fill="none" stroke="#d76b58" stroke-width="7" opacity=".8"/>
+    <text x="665.0" y="447.0" text-anchor="middle" class="label" font-size="31">FILTER</text><path d="M810 435 C850.0 390.0 930.0 480.0 970 435" class="arrow"/><rect x="1010" y="350" width="250" height="170" rx="28" fill="#3b8f8b" class="ink" filter="url(#shadow)"/>
+    <path d="M1038 388 Q1135.0 368 1230 392" fill="none" stroke="#d9a441" stroke-width="7" opacity=".8"/>
+    <text x="1135.0" y="447.0" text-anchor="middle" class="label" font-size="31">RANK</text><path d="M1280 435 C1330.0 390.0 1410.0 480.0 1460 435" class="arrow"/><circle cx="855" cy="650" r="85" fill="#d76b58" class="ink"/><path d="M820 650 l25 25 50 -60" fill="none" class="ink"/><text x="855" y="770" text-anchor="middle" class="label" font-size="32">CONFLICT CHECK</text></g>
+</svg>
