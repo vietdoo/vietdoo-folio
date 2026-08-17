@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Risk-aware release gates</title><desc id="desc">Hard failures, quality thresholds, and review paths vary by risk tier.</desc>
+  <defs>
+    <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.7"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#172535" flood-opacity=".16"/></filter>
+    <style>
+      .ink{stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;}
+      .thin{stroke:#172535;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+      .label{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-weight:800;letter-spacing:.5px}
+      .small{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-size:25px;font-weight:600}
+      .arrow{fill:none;stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowhead)}
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#172535"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="#f8f4e9"/>
+  <path d="M0 120 C300 75 530 145 820 98 S1320 105 1600 75" fill="none" stroke="#d8d1bd" stroke-width="18" opacity=".55"/>
+  <path d="M30 820 C360 770 640 850 930 800 S1330 835 1570 775" fill="none" stroke="#d8d1bd" stroke-width="14" opacity=".45"/>
+  <g filter="url(#wobble)"><path d="M270 240 L270 700 L1370 700" class="ink"/><path d="M270 540 L1370 540 M270 390 L1370 390" class="thin" opacity=".5"/><path d="M520 240 L520 700 M780 240 L780 700 M1040 240 L1040 700" class="thin" opacity=".5"/><rect x="300" y="575" width="180" height="90" rx="20" fill="#3b8f8b" class="ink"/><rect x="560" y="425" width="180" height="240" rx="20" fill="#d9a441" class="ink"/><rect x="820" y="300" width="180" height="365" rx="20" fill="#d76b58" class="ink"/><rect x="1080" y="250" width="180" height="415" rx="20" fill="#203e5f" class="ink"/><text x="310" y="205" class="label" font-size="33">LOW</text><text x="570" y="205" class="label" font-size="33">MEDIUM</text><text x="830" y="205" class="label" font-size="33">HIGH</text><text x="1090" y="205" class="label" font-size="33" fill="#203e5f">CRITICAL</text></g>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Eval-driven AI systems</title><desc id="desc">A golden set flows through traces and release gates to measurable outcomes.</desc>
+  <defs>
+    <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.7"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#172535" flood-opacity=".16"/></filter>
+    <style>
+      .ink{stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;}
+      .thin{stroke:#172535;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+      .label{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-weight:800;letter-spacing:.5px}
+      .small{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-size:25px;font-weight:600}
+      .arrow{fill:none;stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowhead)}
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#172535"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="#f8f4e9"/>
+  <path d="M0 120 C300 75 530 145 820 98 S1320 105 1600 75" fill="none" stroke="#d8d1bd" stroke-width="18" opacity=".55"/>
+  <path d="M30 820 C360 770 640 850 930 800 S1330 835 1570 775" fill="none" stroke="#d8d1bd" stroke-width="14" opacity=".45"/>
+  <g filter="url(#wobble)"><rect x="90" y="330" width="260" height="190" rx="28" fill="#d9a441" class="ink" filter="url(#shadow)"/>
+    <path d="M118 368 Q220.0 348 320 372" fill="none" stroke="#d76b58" stroke-width="7" opacity=".8"/>
+    <text x="220.0" y="437.0" text-anchor="middle" class="label" font-size="31">GOLDEN SET</text><path d="M360 425 C400.0 380.0 480.0 470.0 520 425" class="arrow"/><rect x="560" y="280" width="260" height="290" rx="28" fill="#7fb4c8" class="ink" filter="url(#shadow)"/>
+    <path d="M588 318 Q690.0 298 790 322" fill="none" stroke="#3b8f8b" stroke-width="7" opacity=".8"/>
+    <text x="690.0" y="437.0" text-anchor="middle" class="label" font-size="31">TRACE</text><path d="M830 425 C870.0 380.0 950.0 470.0 990 425" class="arrow"/><rect x="1030" y="330" width="260" height="190" rx="28" fill="#3b8f8b" class="ink" filter="url(#shadow)"/>
+    <path d="M1058 368 Q1160.0 348 1260 372" fill="none" stroke="#d9a441" stroke-width="7" opacity=".8"/>
+    <text x="1160.0" y="437.0" text-anchor="middle" class="label" font-size="31">RELEASE GATE</text><path d="M1300 425 C1340.0 380.0 1420.0 470.0 1460 425" class="arrow"/><rect x="1330" y="610" width="210" height="120" rx="28" fill="#d76b58" class="ink" filter="url(#shadow)"/>
+    <path d="M1358 648 Q1435.0 628 1510 652" fill="none" stroke="#d9a441" stroke-width="7" opacity=".8"/>
+    <text x="1435.0" y="682.0" text-anchor="middle" class="label" font-size="31">OUTCOME</text><path d="M700 230 q30 -80 70 0 q30 80 70 0" fill="none" class="thin"/><circle cx="700" cy="230" r="18" fill="#d76b58" class="thin"/><circle cx="840" cy="230" r="18" fill="#d9a441" class="thin"/></g>
+</svg>

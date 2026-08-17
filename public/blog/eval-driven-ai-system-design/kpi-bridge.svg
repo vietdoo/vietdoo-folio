@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">From trace to business outcome</title><desc id="desc">Technical evidence becomes operational evidence and then a measurable business observation.</desc>
+  <defs>
+    <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.7"/>
+    </filter>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="0" dy="12" stdDeviation="8" flood-color="#172535" flood-opacity=".16"/></filter>
+    <style>
+      .ink{stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;}
+      .thin{stroke:#172535;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+      .label{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-weight:800;letter-spacing:.5px}
+      .small{font-family:ui-sans-serif,system-ui,sans-serif;fill:#172535;font-size:25px;font-weight:600}
+      .arrow{fill:none;stroke:#172535;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;marker-end:url(#arrowhead)}
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#172535"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="#f8f4e9"/>
+  <path d="M0 120 C300 75 530 145 820 98 S1320 105 1600 75" fill="none" stroke="#d8d1bd" stroke-width="18" opacity=".55"/>
+  <path d="M30 820 C360 770 640 850 930 800 S1330 835 1570 775" fill="none" stroke="#d8d1bd" stroke-width="14" opacity=".45"/>
+  <g filter="url(#wobble)"><rect x="110" y="365" width="270" height="180" rx="28" fill="#7fb4c8" class="ink" filter="url(#shadow)"/>
+    <path d="M138 403 Q245.0 383 350 407" fill="none" stroke="#3b8f8b" stroke-width="7" opacity=".8"/>
+    <text x="245.0" y="467.0" text-anchor="middle" class="label" font-size="31">TRACE</text><path d="M400 455 C465.0 410.0 545.0 500.0 610 455" class="arrow"/><rect x="650" y="365" width="270" height="180" rx="28" fill="#d9a441" class="ink" filter="url(#shadow)"/>
+    <path d="M678 403 Q785.0 383 890 407" fill="none" stroke="#d76b58" stroke-width="7" opacity=".8"/>
+    <text x="785.0" y="467.0" text-anchor="middle" class="label" font-size="31">REVIEW</text><path d="M940 455 C1005.0 410.0 1085.0 500.0 1150 455" class="arrow"/><rect x="1190" y="365" width="300" height="180" rx="28" fill="#3b8f8b" class="ink" filter="url(#shadow)"/>
+    <path d="M1218 403 Q1340.0 383 1460 407" fill="none" stroke="#d9a441" stroke-width="7" opacity=".8"/>
+    <text x="1340.0" y="467.0" text-anchor="middle" class="label" font-size="31">OUTCOME</text><circle cx="500" cy="245" r="50" fill="#d76b58" class="ink"/><path d="M475 245 l18 18 35 -40" fill="none" class="ink"/><circle cx="1040" cy="660" r="50" fill="#d9a441" class="ink"/><path d="M1015 660 l18 18 35 -40" fill="none" class="ink"/></g>
+</svg>
