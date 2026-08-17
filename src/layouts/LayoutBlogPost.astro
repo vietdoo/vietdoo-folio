@@ -23,17 +23,9 @@ type Props = {
   }[];
 };
 
-const {
-  description,
-  url,
-  image,
-  enHref,
-  viHref,
-  translations,
-} = Astro.props;
+const { description, url, image, enHref, viHref, translations } = Astro.props;
 
 const hasTranslation = Boolean(enHref && viHref);
-const availableLanguages = translations.map((translation) => translation.lang);
 ---
 
 <BasicLayout
@@ -44,7 +36,9 @@ const availableLanguages = translations.map((translation) => translation.lang);
   title={translations[0]?.title || ""}
   pubDate={translations[0]?.pubDate?.toISOString()}
 >
-  <main class="mx-auto max-w-3xl w-full min-h-screen px-3.5 sm:px-8 py-6 sm:py-8 text-neutral-100">
+  <main
+    class="mx-auto max-w-3xl w-full min-h-screen px-3.5 sm:px-8 py-6 sm:py-8 text-neutral-100"
+  >
     <VideoCard />
     {
       translations.map((translation, index) => {
@@ -55,8 +49,11 @@ const availableLanguages = translations.map((translation) => translation.lang);
         const readingLabel = isVietnamese ? "Thời gian đọc" : "Reading time";
         const displayReadingTime = isVietnamese
           ? translation.minutesRead
-              ? translation.minutesRead.replace(/(\d+)\s*min(?:s)?\s*read/i, "~$1 phút đọc")
-              : "5 phút đọc"
+            ? translation.minutesRead.replace(
+                /(\d+)\s*min(?:s)?\s*read/i,
+                "~$1 phút đọc",
+              )
+            : "5 phút đọc"
           : translation.minutesRead;
 
         return (
@@ -72,9 +69,7 @@ const availableLanguages = translations.map((translation) => translation.lang);
             >
               {translation.title}
             </h1>
-            <div
-              class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4 rounded-xl border border-solid border-neutral-800 bg-neutral-900/70 px-4 py-4 text-sm"
-            >
+            <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4 rounded-xl border border-solid border-neutral-800 bg-neutral-900/70 px-4 py-4 text-sm">
               <div class="flex items-center gap-3">
                 <img
                   src="https://avatars.githubusercontent.com/u/64247567"
@@ -105,12 +100,11 @@ const availableLanguages = translations.map((translation) => translation.lang);
                   <dd class="m-0 mt-1">{displayReadingTime}</dd>
                 </div>
               </dl>
+              <AudioPlayer
+                lang={translation.lang}
+                targetId={`blog-article-${translation.lang}`}
+              />
             </div>
-            <AudioPlayer
-              lang={translation.lang}
-              targetId={`blog-article-${translation.lang}`}
-              availableLanguages={availableLanguages}
-            />
           </div>
         );
       })
@@ -164,10 +158,11 @@ const availableLanguages = translations.map((translation) => translation.lang);
         }
       });
       var options = document.querySelectorAll(
-        "[data-lang-toggle] [data-lang-option]"
+        "[data-lang-toggle] [data-lang-option]",
       );
       options.forEach(function (option) {
-        var isCurrent = option.getAttribute("data-lang-option") === selectedLang;
+        var isCurrent =
+          option.getAttribute("data-lang-option") === selectedLang;
         option.setAttribute("data-active", isCurrent ? "true" : "false");
         option.setAttribute("aria-pressed", String(isCurrent));
         if (isCurrent) {
@@ -177,7 +172,7 @@ const availableLanguages = translations.map((translation) => translation.lang);
         }
       });
       var titleEl = document.querySelector(
-        '[data-blog-language="' + selectedLang + '"] [data-blog-title]'
+        '[data-blog-language="' + selectedLang + '"] [data-blog-title]',
       );
       if (titleEl && titleEl.getAttribute("data-document-title")) {
         document.title = titleEl.getAttribute("data-document-title");
@@ -194,7 +189,8 @@ const availableLanguages = translations.map((translation) => translation.lang);
   function applyBlogLanguage(forcedLang?: "en" | "vi") {
     const param = new URLSearchParams(window.location.search).get("lang");
     const stored = localStorage.getItem(BLOG_LANG_KEY);
-    let selectedLang: "en" | "vi" = forcedLang || (param === "vi" || stored === "vi" ? "vi" : "en");
+    let selectedLang: "en" | "vi" =
+      forcedLang || (param === "vi" || stored === "vi" ? "vi" : "en");
 
     if (forcedLang) {
       localStorage.setItem(BLOG_LANG_KEY, forcedLang);
@@ -207,17 +203,15 @@ const availableLanguages = translations.map((translation) => translation.lang);
     }
 
     const availableElements = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-blog-language]")
+      document.querySelectorAll<HTMLElement>("[data-blog-language]"),
     );
     const availableLanguages = new Set(
-      availableElements.map((el) => el.dataset.blogLanguage)
+      availableElements.map((el) => el.dataset.blogLanguage),
     );
 
-    if (
-      availableElements.length > 0 &&
-      !availableLanguages.has(selectedLang)
-    ) {
-      selectedLang = availableElements[0]?.dataset.blogLanguage === "vi" ? "vi" : "en";
+    if (availableElements.length > 0 && !availableLanguages.has(selectedLang)) {
+      selectedLang =
+        availableElements[0]?.dataset.blogLanguage === "vi" ? "vi" : "en";
     }
 
     availableElements.forEach((element) => {
@@ -238,7 +232,7 @@ const availableLanguages = translations.map((translation) => translation.lang);
       });
 
     const title = document.querySelector<HTMLElement>(
-      `[data-blog-language="${selectedLang}"] [data-blog-title]`
+      `[data-blog-language="${selectedLang}"] [data-blog-title]`,
     )?.dataset.documentTitle;
     if (title) document.title = title;
     document.documentElement.lang = selectedLang;

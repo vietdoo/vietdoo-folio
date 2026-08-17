@@ -4,18 +4,13 @@ import type { BlogLang } from "../../lib/blog-lang";
 type Props = {
   lang: BlogLang;
   targetId: string;
-  availableLanguages: BlogLang[];
 };
 
-const { lang, targetId, availableLanguages } = Astro.props;
+const { lang, targetId } = Astro.props;
 const isVietnamese = lang === "vi";
 const title = isVietnamese ? "Nghe bài viết" : "Listen to article";
-const subtitle = isVietnamese
-  ? "Đọc bằng giọng nói trên thiết bị của bạn"
-  : "Narrated locally by your browser";
 const readyLabel = isVietnamese ? "Sẵn sàng đọc" : "Ready to read";
-const languageLabel = isVietnamese ? "Ngôn ngữ đọc" : "Narration language";
-const stopLabel = isVietnamese ? "Dừng và đặt lại" : "Stop and reset";
+const progressLabel = isVietnamese ? "Tiến độ đọc" : "Narration progress";
 ---
 
 <section
@@ -27,63 +22,60 @@ const stopLabel = isVietnamese ? "Dừng và đặt lại" : "Stop and reset";
 >
   <div class="tts-player__identity">
     <span class="tts-player__icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M4 10v4h3l4 3V7l-4 3H4Z" stroke-linejoin="round" />
-        <path d="M15 9.5a4 4 0 0 1 0 5M17.5 7a7.5 7.5 0 0 1 0 10" stroke-linecap="round" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+      >
+        <path d="M4 10v4h3l4 3V7l-4 3H4Z" stroke-linejoin="round"></path>
+        <path
+          d="M15 9.5a4 4 0 0 1 0 5M17.5 7a7.5 7.5 0 0 1 0 10"
+          stroke-linecap="round"></path>
       </svg>
     </span>
-    <div>
-      <p class="tts-player__title">{title}</p>
-      <p class="tts-player__subtitle">{subtitle}</p>
-    </div>
+    <p class="tts-player__title">{title}</p>
   </div>
 
-  <div class="tts-player__controls">
-    <button
-      type="button"
-      class="tts-player__play"
-      data-tts-toggle
-      aria-label={isVietnamese ? "Đọc bài viết" : "Read article"}
+  <button
+    type="button"
+    class="tts-player__play"
+    data-tts-toggle
+    aria-label={isVietnamese ? "Đọc bài viết" : "Read article"}
+  >
+    <svg
+      data-tts-icon-play
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
     >
-      <svg data-tts-icon-play viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M8 5.7c0-1.17 1.28-1.9 2.29-1.3l8.36 5.02a1.82 1.82 0 0 1 0 3.13l-8.36 5.02A1.52 1.52 0 0 1 8 16.27V5.7Z" />
-      </svg>
-      <svg data-tts-icon-pause viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none">
-        <path d="M7 5.5A1.5 1.5 0 0 1 8.5 4h1A1.5 1.5 0 0 1 11 5.5v13A1.5 1.5 0 0 1 9.5 20h-1A1.5 1.5 0 0 1 7 18.5v-13ZM13 5.5A1.5 1.5 0 0 1 14.5 4h1A1.5 1.5 0 0 1 17 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-13Z" />
-      </svg>
-    </button>
+      <path
+        d="M8 5.7c0-1.17 1.28-1.9 2.29-1.3l8.36 5.02a1.82 1.82 0 0 1 0 3.13l-8.36 5.02A1.52 1.52 0 0 1 8 16.27V5.7Z"
+      ></path>
+    </svg>
+    <svg
+      data-tts-icon-pause
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      style="display:none"
+    >
+      <path
+        d="M7 5.5A1.5 1.5 0 0 1 8.5 4h1A1.5 1.5 0 0 1 11 5.5v13A1.5 1.5 0 0 1 9.5 20h-1A1.5 1.5 0 0 1 7 18.5v-13ZM13 5.5A1.5 1.5 0 0 1 14.5 4h1A1.5 1.5 0 0 1 17 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5v-13Z"
+      ></path>
+    </svg>
+  </button>
 
-    <button type="button" class="tts-player__stop" data-tts-stop aria-label={stopLabel}>
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <rect x="6" y="6" width="12" height="12" rx="1.5" />
-      </svg>
-    </button>
-
-    <div class="tts-player__status" aria-live="polite">
-      <span data-tts-status>{readyLabel}</span>
-      <span class="tts-player__time" data-tts-time aria-label={isVietnamese ? "Tiến độ" : "Progress"}></span>
-    </div>
-  </div>
-
-  {availableLanguages.length > 1 && (
-    <div class="tts-player__language" role="group" aria-label={languageLabel}>
-      <span class="tts-player__language-label" aria-hidden="true">{languageLabel}</span>
-      <div class="tts-player__language-options">
-        {availableLanguages.map((availableLanguage) => (
-          <button
-            type="button"
-            data-tts-switch-language={availableLanguage}
-            aria-pressed={availableLanguage === lang ? "true" : "false"}
-            data-active={availableLanguage === lang ? "true" : "false"}
-          >
-            {availableLanguage === "vi" ? "VI" : "EN"}
-          </button>
-        ))}
-      </div>
-    </div>
-  )}
-
-  <div class="tts-player__progress" data-tts-progress role="progressbar" aria-label={isVietnamese ? "Tiến độ đọc" : "Narration progress"} aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+  <div class="sr-only" data-tts-status aria-live="polite">{readyLabel}</div>
+  <div
+    class="tts-player__progress"
+    data-tts-progress
+    role="progressbar"
+    aria-label={progressLabel}
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+  >
     <span data-tts-progress-bar></span>
   </div>
 </section>
@@ -92,54 +84,119 @@ const stopLabel = isVietnamese ? "Dừng và đặt lại" : "Stop and reset";
   .tts-player {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: 0.75rem 1rem;
-    margin-top: 1rem;
-    padding: 0.8rem 0.9rem 0.95rem;
-    border: 1px solid rgb(64 64 64 / 0.85);
-    border-radius: 0.9rem;
-    background: linear-gradient(110deg, rgb(38 38 38 / 0.88), rgb(23 23 23 / 0.72));
+    gap: 0.75rem;
+    padding: 0.82rem 1rem 0.95rem;
+    border-top: 1px solid rgb(64 64 64 / 0.72);
     color: rgb(229 229 229);
-    box-shadow: 0 12px 28px rgb(0 0 0 / 0.12);
   }
 
-  .tts-player[hidden] { display: none; }
-  .tts-player[data-tts-unavailable="true"] { opacity: 0.78; }
-  .tts-player__identity, .tts-player__controls, .tts-player__language { display: flex; align-items: center; }
-  .tts-player__identity { min-width: 0; gap: 0.65rem; }
-  .tts-player__icon { display: grid; width: 2.2rem; height: 2.2rem; flex: 0 0 auto; place-items: center; border-radius: 0.65rem; color: rgb(253 186 116); background: rgb(124 45 18 / 0.28); }
-  .tts-player__icon svg { width: 1.2rem; height: 1.2rem; }
-  .tts-player__title, .tts-player__subtitle { margin: 0; }
-  .tts-player__title { color: rgb(245 245 245); font-size: 0.85rem; font-weight: 650; }
-  .tts-player__subtitle { margin-top: 0.12rem; color: rgb(163 163 163); font-size: 0.7rem; }
-  .tts-player__controls { gap: 0.45rem; }
-  .tts-player__play, .tts-player__stop, .tts-player__language-options button { display: inline-grid; place-items: center; border: 1px solid rgb(82 82 82); color: rgb(229 229 229); background: rgb(38 38 38 / 0.72); cursor: pointer; transition: transform 160ms ease-out, border-color 160ms ease-out, background 160ms ease-out, color 160ms ease-out; }
-  .tts-player__play:hover, .tts-player__stop:hover, .tts-player__language-options button:hover { border-color: rgb(251 146 60); color: rgb(255 237 213); background: rgb(124 45 18 / 0.55); }
-  .tts-player__play:active, .tts-player__stop:active, .tts-player__language-options button:active { transform: scale(0.97); }
-  .tts-player__play:focus-visible, .tts-player__stop:focus-visible, .tts-player__language-options button:focus-visible { outline: 2px solid rgb(251 146 60); outline-offset: 2px; }
-  .tts-player__play { width: 2.15rem; height: 2.15rem; border-radius: 999px; color: rgb(255 237 213); background: rgb(194 65 12 / 0.86); border-color: rgb(251 146 60 / 0.9); }
-  .tts-player__play svg { width: 0.92rem; height: 0.92rem; }
-  .tts-player__stop { width: 1.9rem; height: 1.9rem; border-radius: 0.55rem; }
-  .tts-player__stop svg { width: 0.78rem; height: 0.78rem; }
-  .tts-player__status { min-width: 6.7rem; color: rgb(163 163 163); font-size: 0.7rem; line-height: 1.35; }
-  .tts-player__time { display: block; color: rgb(115 115 115); font-variant-numeric: tabular-nums; }
-  .tts-player__language { gap: 0.45rem; }
-  .tts-player__language-label { color: rgb(115 115 115); font-size: 0.65rem; }
-  .tts-player__language-options { display: flex; overflow: hidden; border: 1px solid rgb(82 82 82); border-radius: 0.5rem; }
-  .tts-player__language-options button { min-width: 2rem; padding: 0.35rem 0.42rem; border: 0; border-radius: 0; color: rgb(163 163 163); font-size: 0.65rem; font-weight: 700; }
-  .tts-player__language-options button[data-active="true"] { color: rgb(255 237 213); background: rgb(194 65 12 / 0.75); }
-  .tts-player__progress { position: absolute; right: 0.9rem; bottom: 0.42rem; left: 0.9rem; height: 2px; overflow: hidden; border-radius: 999px; background: rgb(82 82 82 / 0.5); }
-  .tts-player__progress span { display: block; width: 0; height: 100%; border-radius: inherit; background: rgb(251 146 60); transition: width 160ms linear; }
-  button:disabled { cursor: not-allowed; opacity: 0.55; }
+  .tts-player[hidden] {
+    display: none;
+  }
 
-  @media (max-width: 640px) {
-    .tts-player { grid-template-columns: minmax(0, 1fr) auto; }
-    .tts-player__language { grid-column: 1 / -1; justify-content: space-between; }
-    .tts-player__status { min-width: 5.5rem; }
+  .tts-player[data-tts-unavailable="true"] {
+    opacity: 0.7;
+  }
+
+  .tts-player__identity {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .tts-player__icon {
+    display: grid;
+    width: 1.55rem;
+    height: 1.55rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid rgb(82 82 82);
+    border-radius: 999px;
+    color: rgb(163 163 163);
+  }
+
+  .tts-player__icon svg {
+    width: 0.82rem;
+    height: 0.82rem;
+  }
+
+  .tts-player__title {
+    margin: 0;
+    color: rgb(229 229 229);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .tts-player__play {
+    display: inline-grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 1px solid rgb(115 115 115);
+    border-radius: 999px;
+    color: rgb(229 229 229);
+    background: transparent;
+    cursor: pointer;
+    transition:
+      background 160ms ease-out,
+      border-color 160ms ease-out,
+      color 160ms ease-out,
+      transform 160ms ease-out;
+  }
+
+  .tts-player__play:hover {
+    border-color: rgb(245 245 245);
+    color: rgb(23 23 23);
+    background: rgb(245 245 245);
+  }
+
+  .tts-player__play:active {
+    transform: scale(0.96);
+  }
+
+  .tts-player__play:focus-visible {
+    outline: 2px solid rgb(245 245 245);
+    outline-offset: 2px;
+  }
+
+  .tts-player__play svg {
+    width: 0.78rem;
+    height: 0.78rem;
+  }
+
+  .tts-player__progress {
+    position: absolute;
+    right: 1rem;
+    bottom: 0.38rem;
+    left: 1rem;
+    height: 1px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgb(64 64 64 / 0.75);
+  }
+
+  .tts-player__progress span {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: rgb(229 229 229);
+    transition: width 160ms linear;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .tts-player__play, .tts-player__stop, .tts-player__language-options button, .tts-player__progress span { transition: none; }
+    .tts-player__play,
+    .tts-player__progress span {
+      transition: none;
+    }
   }
 </style>
