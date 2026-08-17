@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 
 :root {
   --darkslate-50: #f7f7f7;
@@ -574,4 +574,191 @@ body::before {
   background-color: transparent !important;
   color: var(--darkslate-300, #9a9a9a) !important;
   font-weight: 500 !important;
+}
+
+
+/* ── Chimes-inspired light UI mode ─────────────────────────── */
+html[data-ui-theme="light"] {
+  color-scheme: light;
+  --light-paper: #e8dfd0;
+  --light-paper-deep: #ddd0bd;
+  --light-surface: #f5efe5;
+  --light-surface-strong: #fbf7f0;
+  --light-ink: #58423c;
+  --light-ink-strong: #3a2d2a;
+  --light-ink-soft: #806a5d;
+  --light-line: rgba(88, 66, 60, 0.2);
+  --light-accent: #8d4e3f;
+  --light-accent-strong: #733a30;
+}
+
+html[data-ui-theme="light"] body {
+  background-color: var(--light-paper) !important;
+  color: var(--light-ink) !important;
+  font-family: "JetBrains Mono", "Be Vietnam Pro", ui-monospace, monospace;
+}
+
+html[data-ui-theme="light"] body::before {
+  --line-color: rgba(88, 66, 60, 0.075);
+  --line-size: 52px;
+  background:
+    linear-gradient(90deg, var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size),
+    linear-gradient(var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size);
+  -webkit-mask: linear-gradient(-360deg, transparent 12%, white 85%);
+  mask: linear-gradient(-360deg, transparent 12%, white 85%);
+  opacity: 0.75;
+}
+
+html[data-ui-theme="light"] h1,
+html[data-ui-theme="light"] h2,
+html[data-ui-theme="light"] h3,
+html[data-ui-theme="light"] h4,
+html[data-ui-theme="light"] h5,
+html[data-ui-theme="light"] h6 {
+  color: var(--light-ink-strong) !important;
+  font-family: "Noto Serif", "Be Vietnam Pro", Georgia, serif !important;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+html[data-ui-theme="light"] p,
+html[data-ui-theme="light"] li,
+html[data-ui-theme="light"] label,
+html[data-ui-theme="light"] time,
+html[data-ui-theme="light"] blockquote,
+html[data-ui-theme="light"] code,
+html[data-ui-theme="light"] pre {
+  color: var(--light-ink) !important;
+  font-family: "JetBrains Mono", "Be Vietnam Pro", ui-monospace, monospace;
+}
+
+html[data-ui-theme="light"] a {
+  color: var(--light-ink) !important;
+}
+
+html[data-ui-theme="light"] a:hover {
+  color: var(--light-accent-strong) !important;
+}
+
+html[data-ui-theme="light"] input,
+html[data-ui-theme="light"] textarea,
+html[data-ui-theme="light"] select {
+  background-color: var(--light-surface-strong) !important;
+  border-color: var(--light-line) !important;
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] input::placeholder,
+html[data-ui-theme="light"] textarea::placeholder {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .bg-darkslate-900,
+html[data-ui-theme="light"] .bg-darkslate-900\/90,
+html[data-ui-theme="light"] .bg-darkslate-900\/95,
+html[data-ui-theme="light"] .bg-darkslate-900\/98,
+html[data-ui-theme="light"] .bg-darkslate-950 {
+  background-color: var(--light-surface-strong) !important;
+}
+
+html[data-ui-theme="light"] .bg-darkslate-800,
+html[data-ui-theme="light"] .bg-darkslate-800\/80,
+html[data-ui-theme="light"] .bg-darkslate-800\/95 {
+  background-color: color-mix(in srgb, var(--light-surface) 92%, transparent) !important;
+}
+
+html[data-ui-theme="light"] .bg-darkslate-700,
+html[data-ui-theme="light"] .bg-darkslate-600,
+html[data-ui-theme="light"] .bg-darkslate-600\/70,
+html[data-ui-theme="light"] .bg-darkslate-500 {
+  background-color: var(--light-paper-deep) !important;
+}
+
+html[data-ui-theme="light"] .text-white,
+html[data-ui-theme="light"] .text-darkslate-50,
+html[data-ui-theme="light"] .text-darkslate-100,
+html[data-ui-theme="light"] .text-darkslate-200,
+html[data-ui-theme="light"] .text-darkslate-300,
+html[data-ui-theme="light"] .text-darkslate-400 {
+  color: var(--light-ink) !important;
+}
+
+html[data-ui-theme="light"] .border-darkslate-400,
+html[data-ui-theme="light"] .border-darkslate-400\/50,
+html[data-ui-theme="light"] .border-darkslate-500,
+html[data-ui-theme="light"] .border-darkslate-500\/50,
+html[data-ui-theme="light"] .border-darkslate-500\/80,
+html[data-ui-theme="light"] .border-darkslate-600 {
+  border-color: var(--light-line) !important;
+}
+
+html[data-ui-theme="light"] .hover\:bg-darkslate-500:hover,
+html[data-ui-theme="light"] .hover\:bg-darkslate-700:hover,
+html[data-ui-theme="light"] .hover\:bg-darkslate-800:hover {
+  background-color: var(--light-paper-deep) !important;
+}
+
+html[data-ui-theme="light"] .shadow-black\/40,
+html[data-ui-theme="light"] .shadow-black\/50 {
+  --un-shadow-color: rgba(88, 66, 60, 0.16) !important;
+}
+
+html[data-ui-theme="light"] .bg-primary-500 {
+  background-color: var(--light-accent) !important;
+}
+
+html[data-ui-theme="light"] .hover\:bg-primary-600:hover {
+  background-color: var(--light-accent-strong) !important;
+}
+
+html[data-ui-theme="light"] .text-primary-300,
+html[data-ui-theme="light"] .text-primary-400 {
+  color: var(--light-accent) !important;
+}
+
+html[data-ui-theme="light"] .border-primary-500,
+html[data-ui-theme="light"] .hover\:border-primary-500:hover {
+  border-color: var(--light-accent) !important;
+}
+
+html[data-ui-theme="light"] .folio-theme-toggle {
+  color: var(--light-ink) !important;
+  background: color-mix(in srgb, var(--light-surface-strong) 84%, transparent) !important;
+  border-color: var(--light-line) !important;
+  box-shadow: 0 2px 10px rgba(88, 66, 60, 0.08);
+}
+
+html[data-ui-theme="light"] .folio-theme-toggle:hover {
+  color: var(--light-ink-strong) !important;
+  background: var(--light-surface-strong) !important;
+  border-color: rgba(88, 66, 60, 0.36) !important;
+}
+
+.folio-theme-toggle {
+  color: var(--darkslate-100);
+  background: color-mix(in srgb, var(--darkslate-800) 78%, transparent);
+  border-color: color-mix(in srgb, var(--darkslate-400) 70%, transparent);
+}
+
+.folio-theme-toggle:hover {
+  color: #ffffff;
+  border-color: var(--primary-400);
+}
+
+@media (max-width: 767px) {
+  html[data-ui-theme="light"] body::before {
+    --line-size: 36px;
+  }
+
+  html[data-ui-theme="light"] h1,
+  html[data-ui-theme="light"] h2 {
+    letter-spacing: -0.045em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folio-theme-toggle,
+  html[data-ui-theme="light"] * {
+    transition-duration: 0.01ms !important;
+  }
 }

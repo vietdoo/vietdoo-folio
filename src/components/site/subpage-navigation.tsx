@@ -1,4 +1,5 @@
 import { createSignal, onMount, onCleanup } from "solid-js";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export type SubpageNavCta = { href: string; label: string };
 
@@ -346,8 +347,9 @@ export function SubpageNavigation(props: SubpageNavigationProps) {
             </div>
           )}
 
-          {/* Action Links & CTA */}
-          <div class="flex items-center justify-end gap-2.5 sm:gap-3.5 shrink-0">
+          {/* Action Links, Theme Toggle & CTA */}
+          <div class="flex items-center justify-end gap-2 sm:gap-2.5 sm:gap-3.5 shrink-0">
+            <ThemeToggle compact />
             {props.showLangToggle && (
               <div
                 class="inline-flex items-center gap-0.5 p-0.5 rounded-lg border border-solid border-darkslate-500 bg-darkslate-900/90 text-xs select-none"

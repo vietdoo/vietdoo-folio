@@ -1,5 +1,5 @@
 import { createSignal, onMount, onCleanup, For } from "solid-js";
-import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navLinks = [
   { name: "Dự án", href: "/du-an" },
@@ -92,6 +92,7 @@ export function Navigation() {
 
             {/* Desktop Actions */}
             <div class="hidden md:flex items-center gap-4">
+              <ThemeToggle />
               <a
                 href="/login"
                 class={`text-darkslate-200 hover:text-white transition-all duration-500 ${
@@ -110,22 +111,26 @@ export function Navigation() {
               </a>
             </div>
 
-            {/* Mobile Hamburger Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen())}
-              class="md:hidden p-2 text-white hover:text-primary-400 focus:outline-none"
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen() ? (
-                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
+            {/* Mobile Theme Toggle + Hamburger */}
+            <div class="md:hidden flex items-center gap-2">
+              <ThemeToggle compact />
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen())}
+                class="md:hidden p-2 text-white hover:text-primary-400 focus:outline-none"
+                aria-label="Mở menu"
+                aria-expanded={isMobileMenuOpen()}
+              >
+                {isMobileMenuOpen() ? (
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
         </nav>
       </header>
@@ -172,6 +177,10 @@ export function Navigation() {
             }`}
             style={{ "transition-delay": isMobileMenuOpen() ? "300ms" : "0ms" }}
           >
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-darkslate-300">Giao diện</span>
+              <ThemeToggle />
+            </div>
             <a
               href="/signup"
               onClick={() => setIsMobileMenuOpen(false)}

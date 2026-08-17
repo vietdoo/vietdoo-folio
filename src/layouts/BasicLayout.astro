@@ -258,6 +258,18 @@ const jsonLdGraph = {
     <meta content={description} name="description" />
     <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots" />
     <meta name="theme-color" content="#171717" />
+    <script is:inline>
+      (() => {
+        try {
+          const theme = localStorage.getItem("portfolio:ui-mode") === "light" ? "light" : "dark";
+          document.documentElement.dataset.uiTheme = theme;
+          document.documentElement.style.colorScheme = theme;
+          document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "light" ? "#e8dfd0" : "#171717");
+        } catch {
+          document.documentElement.dataset.uiTheme = "dark";
+        }
+      })();
+    </script>
     <meta name="author" content={`${SITE.author.fullNameVi} (${SITE.author.shortName})`} />
     <meta
       name="keywords"
@@ -360,6 +372,9 @@ const jsonLdGraph = {
     <GridTransition />
     <slot name="loader" />
     {
+      !hideHeader && isHome && <Navigation client:load />
+    }
+    {
       !hideHeader && !isHome && (
         <SubpageNavigation
           client:load
@@ -371,7 +386,7 @@ const jsonLdGraph = {
         />
       )
     }
-    <div class={!hideHeader && !isHome && !noPadding ? "w-full flex-1 flex flex-col items-center pt-20 lg:pt-24" : "w-full flex-1 flex flex-col items-center relative overflow-hidden"}>
+    <div class={!hideHeader && !noPadding ? "w-full flex-1 flex flex-col items-center relative overflow-hidden pt-20 lg:pt-24" : "w-full flex-1 flex flex-col items-center relative overflow-hidden"}>
       <slot />
     </div>
     {/* 
@@ -517,6 +532,11 @@ const jsonLdGraph = {
 
   if (typeof document !== "undefined") {
     document.addEventListener("astro:page-load", () => {
+      const uiTheme = localStorage.getItem("portfolio:ui-mode") === "light" ? "light" : "dark";
+      document.documentElement.dataset.uiTheme = uiTheme;
+      document.documentElement.style.colorScheme = uiTheme;
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", uiTheme === "light" ? "#e8dfd0" : "#171717");
+
       const theme = localStorage.getItem("theme");
       if (theme && theme !== "default") {
         document.body.classList.add(theme);

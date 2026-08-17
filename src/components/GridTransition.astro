@@ -37,6 +37,10 @@
   }
 
   function applyTheme() {
+    const uiTheme = localStorage.getItem("portfolio:ui-mode") === "light" ? "light" : "dark";
+    document.documentElement.dataset.uiTheme = uiTheme;
+    document.documentElement.style.colorScheme = uiTheme;
+
     const theme = localStorage.getItem("theme");
     document.body.classList.remove(
       "yellow-theme",
