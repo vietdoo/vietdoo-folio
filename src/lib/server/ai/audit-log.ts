@@ -5,7 +5,11 @@ import type {
   ProviderName,
 } from "./types";
 
-export type AiRequestKind = "chat" | "image-description" | "admin-summary";
+export type AiRequestKind =
+  | "chat"
+  | "image-description"
+  | "fingerprint-summary"
+  | "admin-summary";
 export type AiRequestStatus = "success" | "failed" | "invalid";
 
 export type AiRequestAudit = {

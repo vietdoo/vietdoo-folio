@@ -1,14 +1,17 @@
 import type { APIRoute } from "astro";
+import {
+  SmartRouterError,
+  smartComplete,
+} from "../../lib/server/ai/smart-router";
+import {
+  createAiRequestId,
+  recordAiRequest,
+} from "../../lib/server/ai/audit-log";
+import { enableAiAuditPersistence } from "../../lib/server/ai/audit-log-persistence";
+import { refreshModelOverrides } from "../../lib/server/ai/model-config";
 
-const MODEL = "qwen/qwen3.8-27b-free";
-const ORCAROUTER_URL = "https://api.orcarouter.ai/v1/chat/completions";
-
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json; charset=utf-8" },
-  });
-}
+const KIND = "fingerprint-summary" as const;
+const CAPABILITIES = ["text"] as const;
 
 const ALLOWED_RISKS = new Set(["low", "medium", "high", "local"]);
 const ALLOWED_IDS = new Set([
@@ -28,16 +31,87 @@ const ALLOWED_IDS = new Set([
   "permissions",
 ]);
 
+function json(data: unknown, status = 200, requestId?: string) {
+  const headers = new Headers({
+    "Content-Type": "application/json; charset=utf-8",
+  });
+  if (requestId) headers.set("X-AI-Request-ID", requestId);
+  return new Response(JSON.stringify(data), { status, headers });
+}
+
+async function recordInvalidRequest(requestId: string, errorCode: string) {
+  await recordAiRequest({
+    requestId,
+    kind: KIND,
+    status: "invalid",
+    capabilities: CAPABILITIES,
+    attemptedProviders: [],
+    attemptCount: 0,
+    inputChars: 0,
+    durationMs: 0,
+    errorCode,
+  });
+}
+
+function routerErrorResponse(error: SmartRouterError, requestId: string) {
+  if (error.failures.some((failure) => failure.code === "rate_limited")) {
+    return json(
+      {
+        error: "The AI summary service is rate-limited right now.",
+        code: "rate_limited",
+      },
+      429,
+      requestId,
+    );
+  }
+
+  if (
+    error.failures.some(
+      (failure) =>
+        failure.code === "missing_configuration" ||
+        failure.code === "no_capable_route",
+    )
+  ) {
+    return json(
+      {
+        error: "AI summary is not configured yet.",
+        code: "missing_configuration",
+      },
+      503,
+      requestId,
+    );
+  }
+
+  return json(
+    {
+      error: "The AI summary service is temporarily unavailable.",
+      code: "upstream_error",
+    },
+    502,
+    requestId,
+  );
+}
+
 export const POST: APIRoute = async ({ request }) => {
+  enableAiAuditPersistence();
+  await refreshModelOverrides();
+  const requestId = createAiRequestId();
+
   if (!request.headers.get("content-type")?.includes("application/json")) {
-    return json({ error: "The request body must be JSON." }, 415);
+    await recordInvalidRequest(requestId, "invalid_content_type");
+    return json({ error: "The request body must be JSON." }, 415, requestId);
   }
 
   let body: { score?: unknown; uniqueSignals?: unknown; categories?: unknown };
   try {
     body = await request.json();
   } catch {
-    return json({ error: "The request body is not valid JSON." }, 400);
+    await recordInvalidRequest(requestId, "invalid_json");
+    return json(
+      { error: "The request body is not valid JSON." },
+      400,
+      requestId,
+    );
   }
 
   const score =
@@ -75,67 +149,62 @@ export const POST: APIRoute = async ({ request }) => {
     : [];
 
   if (score === null || uniqueSignals === null || categories.length === 0) {
-    return json({ error: "Please provide a coarse fingerprint summary." }, 400);
-  }
-
-  const apiKey =
-    import.meta.env.ORCAROUTER_API_KEY || process.env.ORCAROUTER_API_KEY;
-  if (!apiKey) {
+    await recordInvalidRequest(requestId, "invalid_coarse_summary");
     return json(
-      { error: "AI summary is not configured.", code: "missing_configuration" },
-      503,
+      { error: "Please provide a coarse fingerprint summary." },
+      400,
+      requestId,
     );
   }
 
-  const prompt = `You are a privacy educator writing a concise Vietnamese summary for a browser fingerprint self-audit. Do not identify the person, infer exact location, name, IP address, hardware serial, or behavior. Do not mention raw values because none were provided. Explain what the coarse categories suggest about uniqueness, emphasize uncertainty, and give 2 practical privacy mitigations. Use a calm, human tone in 2 short paragraphs. Never recommend covert tracking.\n\nExposure score: ${score}/100. Distinctive signal count: ${uniqueSignals}. Categories: ${JSON.stringify(categories)}.`;
+  const prompt = `You are a privacy educator writing a concise Vietnamese summary for a browser fingerprint self-audit. Do not identify the person, infer exact location, name, IP address, hardware serial, or behavior. Do not mention raw values because none were provided. Explain what the coarse categories suggest about uniqueness, emphasize uncertainty, and give 2 practical privacy mitigations. Use a calm, human tone in 2 short paragraphs. Never recommend covert tracking.
+
+Exposure score: ${score}/100. Distinctive signal count: ${uniqueSignals}. Categories: ${JSON.stringify(categories)}.`;
 
   try {
-    const upstream = await fetch(ORCAROUTER_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.3,
-        max_tokens: 500,
-        chat_template_kwargs: { enable_thinking: false },
-      }),
+    const result = await smartComplete({
+      requestId,
+      kind: KIND,
+      messages: [{ role: "user", content: prompt }],
+      requiredCapabilities: CAPABILITIES,
+      inputChars: prompt.length,
+      temperature: 0.3,
+      maxTokens: 500,
     });
-    const payload = await upstream.json().catch(() => null);
-    if (!upstream.ok) {
-      return json(
-        {
-          error:
-            upstream.status === 429
-              ? "The free model is rate-limited right now."
-              : "AI summary service is unavailable.",
-          code: upstream.status === 429 ? "rate_limited" : "upstream_error",
-        },
-        upstream.status === 429 ? 429 : 502,
-      );
-    }
-    const summary = payload?.choices?.[0]?.message?.content;
-    if (typeof summary !== "string" || !summary.trim()) {
-      return json(
-        {
-          error: "The model returned an empty summary.",
-          code: "empty_response",
-        },
-        502,
-      );
-    }
-    return json({ success: true, summary: summary.trim(), model: MODEL });
+
+    return json(
+      {
+        success: true,
+        summary: result.content,
+        model: result.modelLabel,
+      },
+      200,
+      requestId,
+    );
   } catch (error) {
+    if (error instanceof SmartRouterError) {
+      return routerErrorResponse(error, requestId);
+    }
+
     console.error("Fingerprint summary request failed", error);
+    await recordAiRequest({
+      requestId,
+      kind: KIND,
+      status: "failed",
+      capabilities: CAPABILITIES,
+      attemptedProviders: [],
+      attemptCount: 0,
+      inputChars: prompt.length,
+      durationMs: 0,
+      errorCode: "network_error",
+    });
     return json(
       {
         error: "Could not reach the AI summary service.",
         code: "network_error",
       },
       502,
+      requestId,
     );
   }
 };

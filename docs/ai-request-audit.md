@@ -1,6 +1,6 @@
 # AI Request Audit Logging
 
-The AI routes persist one append-only `AiRequestLog` row for every request handled by `/api/chat` and `/api/image-description`.
+The AI routes persist one append-only `AiRequestLog` row for every request handled by `/api/chat`, `/api/image-description`, and `/api/fingerprint-summary`.
 
 ## What is recorded
 
