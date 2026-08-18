@@ -1365,6 +1365,105 @@ import AdminDashboard from "../../components/admin/AdminDashboard";
   .inline-muted {
     color: var(--admin-subtle);
   }
+  .ai-summary-card {
+    margin: 0 0 42px;
+    padding: 22px 24px 18px;
+    border: 1px solid #e0d2c6;
+    border-radius: 14px;
+    background: linear-gradient(110deg, #f8f1ea, #fbfaf7 72%);
+    box-shadow: 0 7px 24px rgba(76, 65, 53, 0.045);
+  }
+  .ai-summary-card.attention {
+    border-color: #e5c1b7;
+    background: linear-gradient(110deg, #fbefec, #fbfaf7 72%);
+  }
+  .ai-summary-card.positive {
+    border-color: #d5dfd4;
+  }
+  .ai-summary-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+  }
+  .ai-summary-heading h3 {
+    margin: 7px 0 0;
+    color: var(--admin-ink);
+    font-size: 18px;
+    letter-spacing: -0.035em;
+  }
+  .ai-summary-badge {
+    flex: 0 0 auto;
+    padding: 5px 8px;
+    border: 1px solid #e2d4c8;
+    border-radius: 999px;
+    background: rgba(255, 253, 249, 0.75);
+    color: var(--admin-accent-dark);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .ai-summary-list {
+    display: grid;
+    gap: 8px;
+    margin: 17px 0 16px;
+    padding: 0;
+    list-style: none;
+  }
+  .ai-summary-list li {
+    position: relative;
+    padding-left: 17px;
+    color: #69645d;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .ai-summary-list li::before {
+    content: "";
+    position: absolute;
+    top: 0.62em;
+    left: 1px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--admin-accent);
+  }
+  .ai-summary-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(220, 207, 196, 0.78);
+    color: var(--admin-subtle);
+    font-size: 10px;
+  }
+  .ai-summary-loading,
+  .ai-summary-error {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 62px;
+    color: var(--admin-muted);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .ai-summary-error {
+    justify-content: space-between;
+    gap: 16px;
+    color: var(--admin-danger);
+  }
+  .ai-summary-error .text-button {
+    flex: 0 0 auto;
+  }
+  .summary-pulse {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--admin-accent);
+    box-shadow: 0 0 0 5px rgba(200, 107, 75, 0.12);
+  }
   .text-button {
     color: var(--admin-accent-dark);
   }
@@ -1531,6 +1630,15 @@ import AdminDashboard from "../../components/admin/AdminDashboard";
       padding: 12px;
       background: rgba(251, 250, 247, 0.72);
       border-radius: 9px;
+    }
+    .ai-summary-card {
+      padding: 18px;
+    }
+    .ai-summary-heading,
+    .ai-summary-error,
+    .ai-summary-footer {
+      align-items: flex-start;
+      flex-direction: column;
     }
   }
   @media (prefers-reduced-motion: reduce) {

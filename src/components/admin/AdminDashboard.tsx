@@ -28,6 +28,18 @@ type AiLog = {
   createdAt: string;
 };
 
+type AiSummary = {
+  headline: string;
+  bullets: string[];
+  tone: "positive" | "neutral" | "attention";
+  generatedAt: string;
+  expiresAt: string;
+  cached: boolean;
+  degraded: boolean;
+  sourceWindow: number;
+  cacheTtlSeconds: number;
+};
+
 type View = "overview" | "logs" | "models";
 
 const navItems: Array<{ id: View; label: string; short: string }> = [
@@ -70,6 +82,9 @@ export default function AdminDashboard() {
   const [refreshing, setRefreshing] = createSignal(false);
   const [toggleLoading, setToggleLoading] = createSignal("");
   const [dataError, setDataError] = createSignal("");
+  const [aiSummary, setAiSummary] = createSignal<AiSummary | null>(null);
+  const [aiSummaryLoading, setAiSummaryLoading] = createSignal(false);
+  const [aiSummaryError, setAiSummaryError] = createSignal("");
 
   const summary = createMemo(() => {
     const current = logs();
@@ -89,6 +104,32 @@ export default function AdminDashboard() {
   const enabledModels = createMemo(
     () => models().filter((model) => model.enabled).length,
   );
+
+  async function loadAiSummary() {
+    setAiSummaryLoading(true);
+    setAiSummaryError("");
+    try {
+      const response = await fetch("/api/admin/summary", {
+        credentials: "same-origin",
+        cache: "no-store",
+      });
+      if (response.status === 401) {
+        setAuthenticated(false);
+        return;
+      }
+      if (!response.ok) throw new Error("Summary is temporarily unavailable.");
+      const body = await response.json();
+      setAiSummary(body.summary ?? null);
+    } catch (error) {
+      setAiSummaryError(
+        error instanceof Error
+          ? error.message
+          : "Summary is temporarily unavailable.",
+      );
+    } finally {
+      setAiSummaryLoading(false);
+    }
+  }
 
   async function loadData(isRefresh = false) {
     if (isRefresh) setRefreshing(true);
@@ -112,6 +153,7 @@ export default function AdminDashboard() {
       setLogs(logsBody.logs ?? []);
       setTotalLogs(logsBody.total ?? 0);
       setAuthenticated(true);
+      void loadAiSummary();
     } catch (error) {
       setDataError(
         error instanceof Error ? error.message : "Could not load admin data.",
@@ -156,6 +198,8 @@ export default function AdminDashboard() {
     setAuthenticated(false);
     setModels([]);
     setLogs([]);
+    setAiSummary(null);
+    setAiSummaryError("");
     setView("overview");
   }
 
@@ -384,6 +428,78 @@ export default function AdminDashboard() {
                             <small>Observed in current window</small>
                           </div>
                         </div>
+                        <section
+                          classList={{
+                            "ai-summary-card": true,
+                            attention: aiSummary()?.tone === "attention",
+                            positive: aiSummary()?.tone === "positive",
+                          }}
+                          aria-live="polite"
+                        >
+                          <div class="ai-summary-heading">
+                            <div>
+                              <span class="eyebrow accent">AI SUMMARY</span>
+                              <h3>
+                                {aiSummaryLoading()
+                                  ? "Reading current activity…"
+                                  : aiSummary()?.headline ?? "Summary unavailable"}
+                              </h3>
+                            </div>
+                            <span class="ai-summary-badge">
+                              {aiSummaryLoading()
+                                ? "Working"
+                                : aiSummary()?.cached
+                                  ? "Cached · 5 min"
+                                  : aiSummary()?.degraded
+                                    ? "Rules fallback"
+                                    : "Fresh insight"}
+                            </span>
+                          </div>
+                          <Show
+                            when={!aiSummaryLoading() && aiSummary()}
+                            fallback={
+                              <Show
+                                when={aiSummaryLoading()}
+                                fallback={
+                                  <div class="ai-summary-error">
+                                    {aiSummaryError() ||
+                                      "Metrics remain available while the summary is unavailable."}
+                                    <button
+                                      class="text-button"
+                                      onClick={() => void loadAiSummary()}
+                                    >
+                                      Try again <span>↻</span>
+                                    </button>
+                                  </div>
+                                }
+                              >
+                                <div class="ai-summary-loading">
+                                  <span class="summary-pulse" />
+                                  Comparing recent request outcomes with the
+                                  current routing state.
+                                </div>
+                              </Show>
+                            }
+                          >
+                            {(currentSummary) => (
+                              <>
+                                <ul class="ai-summary-list">
+                                  <For each={currentSummary().bullets}>
+                                    {(bullet) => <li>{bullet}</li>}
+                                  </For>
+                                </ul>
+                                <div class="ai-summary-footer">
+                                  <span>
+                                    Based on latest {currentSummary().sourceWindow} requests
+                                  </span>
+                                  <Show when={currentSummary().degraded}>
+                                    <span>Deterministic fallback</span>
+                                  </Show>
+                                </div>
+                              </>
+                            )}
+                          </Show>
+                        </section>
                         <div class="section-heading">
                           <div>
                             <span class="eyebrow">RECENT ACTIVITY</span>

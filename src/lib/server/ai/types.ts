@@ -66,7 +66,7 @@ export type ModelRoute = {
 
 export type SmartCompletionRequest = {
   requestId: string;
-  kind: "chat" | "image-description";
+  kind: "chat" | "image-description" | "admin-summary";
   messages: ChatMessage[];
   requiredCapabilities: readonly AiCapability[];
   inputChars?: number;
