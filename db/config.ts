@@ -1,4 +1,4 @@
-import { defineDb, defineTable, column } from 'astro:db';
+import { defineDb, defineTable, column } from "astro:db";
 
 const Guestbook = defineTable({
   columns: {
@@ -26,11 +26,31 @@ const BlogComment = defineTable({
   },
 });
 
+const AiRequestLog = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true, autoIncrement: true }),
+    requestId: column.text(),
+    kind: column.text(),
+    status: column.text(),
+    capabilities: column.text(),
+    attemptedProviders: column.text(),
+    attemptCount: column.number(),
+    usedFallback: column.number(),
+    inputChars: column.number(),
+    durationMs: column.number(),
+    provider: column.text({ optional: true }),
+    modelLabel: column.text({ optional: true }),
+    errorCode: column.text({ optional: true }),
+    errorStatus: column.number({ optional: true }),
+    createdAt: column.date(),
+  },
+});
+
 // https://astro.build/db/config
 export default defineDb({
   tables: {
     Guestbook,
     BlogComment,
+    AiRequestLog,
   },
 });
-
