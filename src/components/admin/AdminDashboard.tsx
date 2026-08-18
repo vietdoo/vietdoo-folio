@@ -254,9 +254,56 @@ export default function AdminDashboard() {
       <Show
         when={!checking()}
         fallback={
-          <div class="admin-loading">
-            <div class="admin-spinner" />
-            Preparing secure workspace
+          <div class="admin-loading-shell" role="status" aria-live="polite">
+            <aside class="admin-loading-sidebar" aria-hidden="true">
+              <div class="admin-loading-brand">
+                <span class="brand-mark small">V</span>
+                <span class="admin-loading-brand-lines">
+                  <i />
+                  <i />
+                </span>
+              </div>
+              <div class="admin-loading-nav-lines">
+                <i />
+                <i />
+                <i />
+              </div>
+              <div class="admin-loading-sidebar-footer">
+                <i />
+                <i />
+              </div>
+            </aside>
+            <main class="admin-loading-main">
+              <div class="admin-loading-header" aria-hidden="true">
+                <div>
+                  <i class="admin-loading-line eyebrow-line" />
+                  <i class="admin-loading-line title-line" />
+                </div>
+                <i class="admin-loading-avatar" />
+              </div>
+              <div class="admin-loading-content" aria-hidden="true">
+                <div class="admin-loading-hero">
+                  <i class="admin-loading-line hero-kicker" />
+                  <i class="admin-loading-line hero-title" />
+                  <i class="admin-loading-line hero-copy" />
+                </div>
+                <div class="admin-loading-metrics">
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </div>
+                <div class="admin-loading-table">
+                  <i />
+                  <i />
+                  <i />
+                </div>
+              </div>
+              <div class="admin-loading-message">
+                <span class="admin-spinner" />
+                <span>Preparing secure workspace</span>
+              </div>
+            </main>
           </div>
         }
       >
@@ -631,9 +678,32 @@ export default function AdminDashboard() {
                   </>
                 }
               >
-                <div class="dashboard-loading">
-                  <div class="admin-spinner" />
-                  Loading workspace data…
+                <div class="dashboard-loading-shell" role="status" aria-live="polite">
+                  <div class="dashboard-loading-heading">
+                    <div>
+                      <i class="admin-loading-line eyebrow-line" />
+                      <i class="admin-loading-line title-line" />
+                    </div>
+                    <i class="admin-loading-button" />
+                  </div>
+                  <div class="dashboard-loading-hero">
+                    <div>
+                      <i class="admin-loading-line hero-kicker" />
+                      <i class="admin-loading-line hero-title" />
+                      <i class="admin-loading-line hero-copy" />
+                    </div>
+                    <i class="admin-loading-status" />
+                  </div>
+                  <div class="admin-loading-metrics">
+                    <i />
+                    <i />
+                    <i />
+                    <i />
+                  </div>
+                  <div class="dashboard-loading-message">
+                    <span class="admin-spinner" />
+                    <span>Loading workspace data…</span>
+                  </div>
                 </div>
               </Show>
             </main>
