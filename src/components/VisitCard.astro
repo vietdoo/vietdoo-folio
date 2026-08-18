@@ -43,27 +43,27 @@ const textRow2 =
 >
   <div
     slot="background"
-    class="absolute inset-0 -z-10 overflow-hidden bg-darkslate-800 flex flex-col justify-center"
+    class="visit-card-bg absolute inset-0 -z-10 flex flex-col justify-center overflow-hidden bg-darkslate-800"
   >
     <!-- Vignette / Radial Gradient Overlay for depth -->
     <div
-      class="absolute inset-0 z-10 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_#17202d_85%)] pointer-events-none"
+      class="visit-card-vignette pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_#17202d_85%)]"
     >
     </div>
 
     <!-- Edge Fades -->
     <div
-      class="absolute inset-x-0 top-0 h-6 z-10 bg-gradient-to-b from-darkslate-800 to-transparent pointer-events-none"
+      class="visit-card-edge-fade pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-darkslate-800 to-transparent"
     >
     </div>
     <div
-      class="absolute inset-x-0 bottom-0 h-6 z-10 bg-gradient-to-t from-darkslate-800 to-transparent pointer-events-none"
+      class="visit-card-edge-fade pointer-events-none absolute inset-x-0 bottom-0 z-10 h-6 bg-gradient-to-t from-darkslate-800 to-transparent"
     >
     </div>
 
     <!-- Rotated Marquee Text Container (-rotate-12 for diagonal slant) -->
     <div
-      class="transform -rotate-12 scale-110 sm:scale-125 flex flex-col gap-2.5 sm:gap-3 opacity-20 group-hover:opacity-40 transition-opacity duration-500 select-none"
+      class="visit-card-marquee transform -rotate-12 scale-110 select-none flex flex-col gap-2.5 opacity-20 transition-opacity duration-500 group-hover:opacity-40 sm:scale-125 sm:gap-3"
     >
       <!-- Row 1: Left Scrolling -->
       <div
@@ -91,7 +91,7 @@ const textRow2 =
     </div>
   </div>
 
-  <span class="mt-auto text-[10px] sm:text-xs text-white/60">
+  <span class="visit-card-count mt-auto text-[10px] text-white/60 sm:text-xs">
     {SITE.visitedProvinces.length}
     {SITE.visitedProvinces.length === 1 ? "province" : "provinces"}
   </span>

@@ -1004,21 +1004,79 @@ html[data-ui-theme="light"] .blog-billboard-container .text-white\/40 {
   color: rgba(255, 250, 241, 0.58) !important;
 }
 
-/* The journey card remains an intentional dark editorial strip for marquee contrast. */
-html[data-ui-theme="light"] .card:has(.marquee-left) {
-  background: #5a4039 !important;
-  color: #fff9f0 !important;
-  border-color: #765247 !important;
-  box-shadow: 0 12px 28px rgba(76, 57, 51, 0.2) !important;
+/* Vietnam Journey: warm editorial travel card in light mode. */
+html[data-ui-theme="light"] .card:has(.visit-card-bg) {
+  background: var(--light-card) !important;
+  color: var(--light-ink-strong) !important;
+  border-color: var(--light-line-strong) !important;
+  box-shadow:
+    0 12px 28px rgba(76, 57, 51, 0.14),
+    inset 0 1px 0 rgba(255, 250, 241, 0.7) !important;
 }
 
-html[data-ui-theme="light"] .card:has(.marquee-left) .bg-darkslate-800 {
-  background: #5a4039 !important;
+html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-bg {
+  background:
+    radial-gradient(circle at 78% 20%, rgba(184, 117, 88, 0.24), transparent 34%),
+    linear-gradient(135deg, #e8d8c3 0%, #d7c0a7 54%, #c99f87 100%) !important;
 }
 
-html[data-ui-theme="light"] .card:has(.marquee-left) h2,
-html[data-ui-theme="light"] .card:has(.marquee-left) .text-white\/60 {
-  color: #fff9f0 !important;
+html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-vignette {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 249, 240, 0.12) 0%,
+    rgba(102, 67, 56, 0.18) 100%
+  ) !important;
+}
+
+html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-edge-fade {
+  background: linear-gradient(
+    to bottom,
+    rgba(118, 76, 60, 0.16),
+    transparent
+  ) !important;
+}
+
+html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-edge-fade.bottom-0 {
+  background: linear-gradient(
+    to top,
+    rgba(118, 76, 60, 0.16),
+    transparent
+  ) !important;
+}
+
+html[data-ui-theme="light"] .card:has(.visit-card-bg) h2 {
+  color: var(--light-ink-strong) !important;
+  text-shadow: 0 1px 0 rgba(255, 250, 241, 0.55);
+}
+
+html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-count {
+  color: var(--light-ink-strong) !important;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 0 rgba(255, 250, 241, 0.45);
+}
+
+html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-marquee {
+  opacity: 0.28;
+}
+
+html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-marquee .text-primary-400 {
+  color: var(--light-accent-strong) !important;
+}
+
+html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-marquee .text-white\/80 {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .card:has(.visit-card-bg) > a > svg {
+  color: var(--light-accent-strong) !important;
+}
+
+html[data-ui-theme="light"] .card:has(.visit-card-bg):hover {
+  border-color: var(--light-accent) !important;
+  box-shadow:
+    0 16px 30px rgba(76, 57, 51, 0.18),
+    inset 0 1px 0 rgba(255, 250, 241, 0.82) !important;
 }
 
 /* Header and search controls: dark ink pills against paper, not pale-on-pale controls. */
