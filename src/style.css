@@ -2545,3 +2545,12 @@ html[data-ui-theme="light"] .fingerprint-audit .fingerprint-inventory h2 {
     -apple-system,
     sans-serif !important;
 }
+
+/* Keep supporting copy readable against the charcoal playground surfaces. */
+.fingerprint-audit .text-darkslate-400 {
+  color: #c9c9c9 !important;
+}
+
+.fingerprint-audit .text-darkslate-500 {
+  color: #9a9a9a !important;
+}
