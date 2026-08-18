@@ -1,7 +1,9 @@
 import type { APIRoute } from "astro";
+import {
+  SmartRouterError,
+  smartComplete,
+} from "../../lib/server/ai/smart-router";
 
-const MODEL = "qwen/qwen3.8-27b-free";
-const ORCAROUTER_URL = "https://api.orcarouter.ai/v1/chat/completions";
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = new Set([
   "image/png",
@@ -27,6 +29,42 @@ function getImageSizeBytes(base64: string) {
       ? 1
       : 0;
   return Math.floor((normalized.length * 3) / 4) - padding;
+}
+
+function routerErrorResponse(error: SmartRouterError) {
+  if (error.failures.some((failure) => failure.code === "rate_limited")) {
+    return json(
+      {
+        error:
+          "vndo-ai is rate-limited right now. Please wait a moment and try again.",
+        code: "rate_limited",
+      },
+      429,
+    );
+  }
+  if (
+    error.failures.some(
+      (failure) =>
+        failure.code === "missing_configuration" ||
+        failure.code === "no_capable_route",
+    )
+  ) {
+    return json(
+      {
+        error:
+          "Image description is not configured yet. Add the server-side provider keys to the deployment environment.",
+        code: "missing_configuration",
+      },
+      503,
+    );
+  }
+  return json(
+    {
+      error: "vndo-ai could not complete the request. Please try again.",
+      code: "upstream_error",
+    },
+    502,
+  );
 }
 
 export const POST: APIRoute = async ({ request }) => {
@@ -59,81 +97,34 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ error: "Images must be 8 MB or smaller." }, 413);
   }
 
-  const apiKey =
-    import.meta.env.ORCAROUTER_API_KEY || process.env.ORCAROUTER_API_KEY;
-  if (!apiKey) {
-    return json(
-      {
-        error:
-          "Image description is not configured yet. Add ORCAROUTER_API_KEY to the deployment environment.",
-        code: "missing_configuration",
-      },
-      503,
-    );
-  }
-
   const customPrompt =
     typeof body.prompt === "string" ? body.prompt.trim().slice(0, 1000) : "";
   const prompt = customPrompt || DEFAULT_PROMPT;
 
   try {
-    const upstream = await fetch(ORCAROUTER_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [
-          {
-            role: "user",
-            content: [
-              { type: "text", text: prompt },
-              { type: "image_url", image_url: { url: body.image } },
-            ],
-          },
-        ],
-        temperature: 0.2,
-        max_tokens: 1000,
-        chat_template_kwargs: { enable_thinking: false },
-      }),
+    const result = await smartComplete({
+      messages: [
+        {
+          role: "user",
+          content: [
+            { type: "text", text: prompt },
+            { type: "image_url", image_url: { url: body.image } },
+          ],
+        },
+      ],
+      requiredCapabilities: ["text", "image"],
+      temperature: 0.2,
+      maxTokens: 1000,
     });
-
-    const payload = await upstream.json().catch(() => null);
-    if (!upstream.ok) {
-      const upstreamMessage =
-        payload?.error?.message ||
-        payload?.message ||
-        `vndo-ai returned HTTP ${upstream.status}.`;
-      return json(
-        {
-          error:
-            upstream.status === 429
-              ? "The free model is rate-limited right now. Please wait a moment and try again."
-              : upstreamMessage,
-          code: upstream.status === 429 ? "rate_limited" : "upstream_error",
-        },
-        upstream.status === 429 ? 429 : 502,
-      );
-    }
-
-    const description = payload?.choices?.[0]?.message?.content;
-    if (typeof description !== "string" || !description.trim()) {
-      return json(
-        {
-          error: "The model returned an empty description.",
-          code: "empty_response",
-        },
-        502,
-      );
-    }
 
     return json({
       success: true,
-      description: description.trim(),
+      description: result.content,
     });
   } catch (error) {
+    if (error instanceof SmartRouterError) {
+      return routerErrorResponse(error);
+    }
     console.error("Image description request failed", error);
     return json(
       {
