@@ -3,6 +3,11 @@ import {
   SmartRouterError,
   smartComplete,
 } from "../../lib/server/ai/smart-router";
+import {
+  createAiRequestId,
+  recordAiRequest,
+} from "../../lib/server/ai/audit-log";
+import { enableAiAuditPersistence } from "../../lib/server/ai/audit-log-persistence";
 
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = new Set([
@@ -14,10 +19,25 @@ const ALLOWED_IMAGE_TYPES = new Set([
 const DEFAULT_PROMPT =
   "Describe this image clearly for a human reader. Mention the main subject, setting, actions, notable visual details, any text that is visible, and meaningful uncertainty. Respond in the same language as this instruction.";
 
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json; charset=utf-8" },
+function json(data: unknown, status = 200, requestId?: string) {
+  const headers = new Headers({
+    "Content-Type": "application/json; charset=utf-8",
+  });
+  if (requestId) headers.set("X-AI-Request-ID", requestId);
+  return new Response(JSON.stringify(data), { status, headers });
+}
+
+async function recordInvalidRequest(requestId: string, errorCode: string) {
+  await recordAiRequest({
+    requestId,
+    kind: "image-description",
+    status: "invalid",
+    capabilities: ["text", "image"],
+    attemptedProviders: [],
+    attemptCount: 0,
+    inputChars: 0,
+    durationMs: 0,
+    errorCode,
   });
 }
 
@@ -31,7 +51,7 @@ function getImageSizeBytes(base64: string) {
   return Math.floor((normalized.length * 3) / 4) - padding;
 }
 
-function routerErrorResponse(error: SmartRouterError) {
+function routerErrorResponse(error: SmartRouterError, requestId?: string) {
   if (error.failures.some((failure) => failure.code === "rate_limited")) {
     return json(
       {
@@ -40,6 +60,7 @@ function routerErrorResponse(error: SmartRouterError) {
         code: "rate_limited",
       },
       429,
+      requestId,
     );
   }
   if (
@@ -56,6 +77,7 @@ function routerErrorResponse(error: SmartRouterError) {
         code: "missing_configuration",
       },
       503,
+      requestId,
     );
   }
   return json(
@@ -64,37 +86,50 @@ function routerErrorResponse(error: SmartRouterError) {
       code: "upstream_error",
     },
     502,
+    requestId,
   );
 }
 
 export const POST: APIRoute = async ({ request }) => {
+  enableAiAuditPersistence();
+  const requestId = createAiRequestId();
   if (!request.headers.get("content-type")?.includes("application/json")) {
-    return json({ error: "The request body must be JSON." }, 415);
+    await recordInvalidRequest(requestId, "invalid_content_type");
+    return json({ error: "The request body must be JSON." }, 415, requestId);
   }
 
   let body: { image?: unknown; prompt?: unknown };
   try {
     body = await request.json();
   } catch {
-    return json({ error: "The request body is not valid JSON." }, 400);
+    await recordInvalidRequest(requestId, "invalid_json");
+    return json(
+      { error: "The request body is not valid JSON." },
+      400,
+      requestId,
+    );
   }
 
   if (typeof body.image !== "string") {
-    return json({ error: "Please provide an image." }, 400);
+    await recordInvalidRequest(requestId, "missing_image");
+    return json({ error: "Please provide an image." }, 400, requestId);
   }
 
   const match = body.image.match(
     /^data:(image\/[^;]+);base64,([A-Za-z0-9+/=\s]+)$/,
   );
   if (!match || !ALLOWED_IMAGE_TYPES.has(match[1])) {
+    await recordInvalidRequest(requestId, "invalid_image_format");
     return json(
       { error: "Please upload a PNG, JPEG, WebP, or GIF image." },
       400,
+      requestId,
     );
   }
 
   if (getImageSizeBytes(match[2]) > MAX_IMAGE_BYTES) {
-    return json({ error: "Images must be 8 MB or smaller." }, 413);
+    await recordInvalidRequest(requestId, "image_too_large");
+    return json({ error: "Images must be 8 MB or smaller." }, 413, requestId);
   }
 
   const customPrompt =
@@ -103,6 +138,8 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     const result = await smartComplete({
+      requestId,
+      kind: "image-description",
       messages: [
         {
           role: "user",
@@ -113,25 +150,42 @@ export const POST: APIRoute = async ({ request }) => {
         },
       ],
       requiredCapabilities: ["text", "image"],
+      inputChars: prompt.length + 1,
       temperature: 0.2,
       maxTokens: 1000,
     });
 
-    return json({
-      success: true,
-      description: result.content,
-    });
+    return json(
+      {
+        success: true,
+        description: result.content,
+      },
+      200,
+      requestId,
+    );
   } catch (error) {
     if (error instanceof SmartRouterError) {
-      return routerErrorResponse(error);
+      return routerErrorResponse(error, requestId);
     }
     console.error("Image description request failed", error);
+    await recordAiRequest({
+      requestId,
+      kind: "image-description",
+      status: "failed",
+      capabilities: ["text", "image"],
+      attemptedProviders: [],
+      attemptCount: 0,
+      inputChars: prompt.length + 1,
+      durationMs: 0,
+      errorCode: "network_error",
+    });
     return json(
       {
         error: "Could not reach vndo-ai. Please try again.",
         code: "network_error",
       },
       502,
+      requestId,
     );
   }
 };

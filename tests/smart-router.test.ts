@@ -1,9 +1,13 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   inferCapabilities,
   resetRouterHealth,
   smartComplete,
 } from "../src/lib/server/ai/smart-router";
+import {
+  setAiAuditWriter,
+  type AiRequestAudit,
+} from "../src/lib/server/ai/audit-log";
 
 const successPayload = (content: string) =>
   new Response(
@@ -14,7 +18,17 @@ const successPayload = (content: string) =>
   );
 
 describe("smart router", () => {
+  let auditEvents: AiRequestAudit[];
+
+  beforeEach(() => {
+    auditEvents = [];
+    setAiAuditWriter(async (event) => {
+      auditEvents.push(event);
+    });
+  });
+
   afterEach(() => {
+    setAiAuditWriter();
     vi.unstubAllEnvs();
     vi.unstubAllGlobals();
     resetRouterHealth();
@@ -48,6 +62,8 @@ describe("smart router", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     const result = await smartComplete({
+      requestId: "test-priority-request",
+      kind: "chat",
       messages: [{ role: "user", content: "Hello" }],
       requiredCapabilities: ["text"],
     });
@@ -56,6 +72,33 @@ describe("smart router", () => {
     expect(result.usedFallback).toBe(false);
     expect(result.attemptedProviders).toEqual(["orcarouter"]);
     expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(auditEvents).toHaveLength(1);
+    expect(auditEvents[0]).toMatchObject({
+      requestId: "test-priority-request",
+      status: "success",
+      provider: "orcarouter",
+      usedFallback: false,
+    });
+  });
+
+  it("keeps the AI response available when audit persistence fails", async () => {
+    vi.stubEnv("ORCAROUTER_API_KEY", "test-orca");
+    setAiAuditWriter(async () => {
+      throw new Error("database unavailable");
+    });
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(successPayload("still-ok")),
+    );
+
+    const result = await smartComplete({
+      requestId: "audit-failure-request",
+      kind: "chat",
+      messages: [{ role: "user", content: "Hello" }],
+      requiredCapabilities: ["text"],
+    });
+
+    expect(result.content).toBe("still-ok");
   });
 
   it("fails over to OpenRouter after a retryable provider failure", async () => {
@@ -72,6 +115,8 @@ describe("smart router", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     const result = await smartComplete({
+      requestId: "test-priority-request",
+      kind: "chat",
       messages: [{ role: "user", content: "Hello" }],
       requiredCapabilities: ["text"],
     });
@@ -80,5 +125,13 @@ describe("smart router", () => {
     expect(result.usedFallback).toBe(true);
     expect(result.attemptedProviders).toEqual(["orcarouter", "openrouter"]);
     expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(auditEvents).toHaveLength(1);
+    expect(auditEvents[0]).toMatchObject({
+      requestId: "test-priority-request",
+      status: "success",
+      usedFallback: true,
+      attemptedProviders: ["orcarouter", "openrouter"],
+      attemptCount: 2,
+    });
   });
 });
