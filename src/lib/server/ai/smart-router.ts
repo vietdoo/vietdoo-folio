@@ -1,4 +1,4 @@
-import { MODEL_ROUTES } from "./model-catalog";
+import { isModelEnabled, MODEL_ROUTES } from "./model-catalog";
 import {
   createAiRequestId,
   getFailureSummary,
@@ -77,7 +77,7 @@ function supportsAll(route: ModelRoute, required: readonly AiCapability[]) {
 
 function eligibleRoutes(required: readonly AiCapability[]) {
   return MODEL_ROUTES.filter(
-    (route) => route.enabled() && supportsAll(route, required),
+    (route) => isModelEnabled(route) && supportsAll(route, required),
   ).sort((a, b) => b.priority - a.priority);
 }
 

@@ -4,6 +4,8 @@ const ORCAROUTER_TEXT_MODEL = "qwen/qwen3.8-27b-free";
 const OPENROUTER_TEXT_MODEL = "openrouter/free";
 const OPENROUTER_VISION_MODEL = "google/gemini-3.7-flash";
 
+const runtimeOverrides = new Map<string, boolean>();
+
 function env(name: string) {
   return import.meta.env[name] || process.env[name];
 }
@@ -52,6 +54,26 @@ export const MODEL_ROUTES: readonly ModelRoute[] = [
     enabled: () => hasKey("OPENROUTER_API_KEY"),
   },
 ];
+
+export function setModelOverride(modelId: string, enabled: boolean) {
+  runtimeOverrides.set(modelId, enabled);
+}
+
+export function isModelEnabled(route: ModelRoute) {
+  return runtimeOverrides.get(route.id) ?? route.enabled();
+}
+
+export function getPublicModelCatalog() {
+  return MODEL_ROUTES.map((route) => ({
+    id: route.id,
+    label: route.label,
+    provider: route.provider,
+    capabilities: route.capabilities,
+    priority: route.priority,
+    credentialConfigured: route.enabled(),
+    enabled: isModelEnabled(route),
+  }));
+}
 
 export function getEnvKey(provider: ModelRoute["provider"]) {
   return env(

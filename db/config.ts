@@ -26,6 +26,14 @@ const BlogComment = defineTable({
   },
 });
 
+const AiModelConfig = defineTable({
+  columns: {
+    modelId: column.text({ primaryKey: true }),
+    enabled: column.number(),
+    updatedAt: column.date(),
+  },
+});
+
 const AiRequestLog = defineTable({
   columns: {
     id: column.number({ primaryKey: true, autoIncrement: true }),
@@ -52,5 +60,6 @@ export default defineDb({
     Guestbook,
     BlogComment,
     AiRequestLog,
+    AiModelConfig,
   },
 });
