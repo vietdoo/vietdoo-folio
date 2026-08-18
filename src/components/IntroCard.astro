@@ -34,18 +34,18 @@ const socials = [
   {/* Bugs roam the whole card on desktop, but only a dedicated strip at the bottom on mobile. */}
   <div
     slot="background"
-    class="absolute inset-x-0 bottom-0 h-[136px] md:inset-0 md:h-auto pointer-events-auto"
+    class="absolute inset-x-0 bottom-0 h-[112px] md:inset-0 md:h-auto pointer-events-auto"
   >
     <CuteBugs />
   </div>
 
   {/* ---------- Mobile layout ---------- */}
-  <div class="flex flex-col gap-4 relative z-10 pb-[124px] md:hidden">
-    <div data-bug-safe-below class="flex flex-col gap-4">
+  <div class="flex flex-col gap-3 relative z-10 pb-[104px] md:hidden">
+    <div data-bug-safe-below class="flex flex-col gap-3">
       <div class="flex items-center gap-3">
         <img
           src="https://github.com/vietdoo.png"
-          class="h-12 w-12 shrink-0 rounded-full object-cover bg-darkslate-700 border border-darkslate-400 select-none"
+          class="h-11 w-11 shrink-0 rounded-full object-cover bg-darkslate-700 border border-darkslate-400 select-none"
           alt={`Avatar of ${SITE.author.fullNameVi}`}
           loading="eager"
           width="48"
@@ -88,7 +88,7 @@ const socials = [
         </Button>
       </a>
 
-      <div class="grid grid-cols-4 gap-2">
+      <div class="grid grid-cols-5 gap-2">
         {
           socials.map((social) => (
             <a href={social.href} aria-label={social.label} target="_blank" class="block">

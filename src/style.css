@@ -2554,3 +2554,41 @@ html[data-ui-theme="light"] .fingerprint-audit .fingerprint-inventory h2 {
 .fingerprint-audit .text-darkslate-500 {
   color: #9a9a9a !important;
 }
+
+/* ── Homepage mobile composition ─────────────────────────────────────────── */
+@media (max-width: 767px) {
+  main.home-page {
+    gap: 0.625rem;
+    padding-inline: 0.75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 1rem;
+  }
+
+  main.home-page > .card {
+    border-radius: 0.875rem;
+  }
+
+  main.home-page > .card > .card-content,
+  main.home-page > .card > a {
+    min-width: 0;
+  }
+
+  .intro-card-actions,
+  .intro-card-socials {
+    width: 100%;
+  }
+
+  main.home-page .blog-billboard-container {
+    height: clamp(10.5rem, 54vw, 13rem);
+  }
+}
+
+@media (max-width: 380px) {
+  main.home-page {
+    padding-inline: 0.625rem;
+  }
+
+  .intro-card-socials {
+    gap: 0.375rem;
+  }
+}
