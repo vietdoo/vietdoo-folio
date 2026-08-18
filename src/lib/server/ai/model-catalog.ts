@@ -1,6 +1,10 @@
 import type { AiCapability, ModelRoute } from "./types";
 
 const ORCAROUTER_MULTIMODAL_MODEL = "qwen/qwen3.8-27b-free";
+const ORCAROUTER_TEXT_REASONING_MODEL = "deepseek/deepseek-v4-pro-free";
+const ORCAROUTER_TEXT_FAST_MODEL = "deepseek/deepseek-v4-flash-free";
+const ORCAROUTER_TEXT_AGENT_MODEL = "tencent/hy3-free";
+const ORCAROUTER_DYNAMIC_FREE_MODEL = "orcarouter/free";
 
 const OPENROUTER_MULTIMODAL_MODEL =
   "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free";
@@ -34,6 +38,7 @@ const ORCAROUTER_CAPABILITIES: readonly AiCapability[] = [
   "image",
   "video",
 ];
+const ORCAROUTER_TEXT_CAPABILITIES: readonly AiCapability[] = ["text"];
 const OPENROUTER_MULTIMODAL_CAPABILITIES: readonly AiCapability[] = [
   "text",
   "image",
@@ -69,27 +74,51 @@ export const MODEL_ROUTES: readonly ModelRoute[] = [
     enabled: () => hasKey("OPENROUTER_API_KEY"),
   },
   {
-    id: OPENROUTER_VISION_PRIMARY_MODEL,
-    label: "vndo-ai vision primary",
-    provider: "openrouter",
-    capabilities: OPENROUTER_VISION_CAPABILITIES,
+    id: ORCAROUTER_TEXT_REASONING_MODEL,
+    label: "vndo-ai reasoning fallback",
+    provider: "orcarouter",
+    capabilities: ORCAROUTER_TEXT_CAPABILITIES,
     priority: 96,
-    enabled: () => hasKey("OPENROUTER_API_KEY"),
+    enabled: () => hasKey("ORCAROUTER_API_KEY"),
   },
   {
-    id: OPENROUTER_VISION_SECONDARY_MODEL,
-    label: "vndo-ai vision secondary",
+    id: OPENROUTER_VISION_PRIMARY_MODEL,
+    label: "vndo-ai vision primary",
     provider: "openrouter",
     capabilities: OPENROUTER_VISION_CAPABILITIES,
     priority: 94,
     enabled: () => hasKey("OPENROUTER_API_KEY"),
   },
   {
+    id: ORCAROUTER_TEXT_FAST_MODEL,
+    label: "vndo-ai fast text fallback",
+    provider: "orcarouter",
+    capabilities: ORCAROUTER_TEXT_CAPABILITIES,
+    priority: 92,
+    enabled: () => hasKey("ORCAROUTER_API_KEY"),
+  },
+  {
+    id: OPENROUTER_VISION_SECONDARY_MODEL,
+    label: "vndo-ai vision secondary",
+    provider: "openrouter",
+    capabilities: OPENROUTER_VISION_CAPABILITIES,
+    priority: 90,
+    enabled: () => hasKey("OPENROUTER_API_KEY"),
+  },
+  {
+    id: ORCAROUTER_TEXT_AGENT_MODEL,
+    label: "vndo-ai agent fallback",
+    provider: "orcarouter",
+    capabilities: ORCAROUTER_TEXT_CAPABILITIES,
+    priority: 88,
+    enabled: () => hasKey("ORCAROUTER_API_KEY"),
+  },
+  {
     id: OPENROUTER_DOCUMENT_MODEL,
     label: "vndo-ai document",
     provider: "openrouter",
     capabilities: OPENROUTER_DOCUMENT_CAPABILITIES,
-    priority: 92,
+    priority: 86,
     enabled: () => hasKey("OPENROUTER_API_KEY"),
   },
   {
@@ -97,7 +126,7 @@ export const MODEL_ROUTES: readonly ModelRoute[] = [
     label: "vndo-ai vision fallback",
     provider: "openrouter",
     capabilities: OPENROUTER_VISION_CAPABILITIES,
-    priority: 90,
+    priority: 84,
     enabled: () => hasKey("OPENROUTER_API_KEY"),
   },
   {
@@ -105,7 +134,7 @@ export const MODEL_ROUTES: readonly ModelRoute[] = [
     label: "vndo-ai long context",
     provider: "openrouter",
     capabilities: OPENROUTER_TEXT_CAPABILITIES,
-    priority: 86,
+    priority: 82,
     enabled: () => hasKey("OPENROUTER_API_KEY"),
   },
   {
@@ -113,7 +142,7 @@ export const MODEL_ROUTES: readonly ModelRoute[] = [
     label: "vndo-ai fast text",
     provider: "openrouter",
     capabilities: OPENROUTER_TEXT_CAPABILITIES,
-    priority: 84,
+    priority: 80,
     enabled: () => hasKey("OPENROUTER_API_KEY"),
   },
   {
@@ -121,7 +150,7 @@ export const MODEL_ROUTES: readonly ModelRoute[] = [
     label: "vndo-ai reasoning",
     provider: "openrouter",
     capabilities: OPENROUTER_TEXT_CAPABILITIES,
-    priority: 82,
+    priority: 78,
     enabled: () => hasKey("OPENROUTER_API_KEY"),
   },
   {
@@ -129,7 +158,7 @@ export const MODEL_ROUTES: readonly ModelRoute[] = [
     label: "vndo-ai text",
     provider: "openrouter",
     capabilities: OPENROUTER_TEXT_CAPABILITIES,
-    priority: 80,
+    priority: 76,
     enabled: () => hasKey("OPENROUTER_API_KEY"),
   },
   {
@@ -137,7 +166,7 @@ export const MODEL_ROUTES: readonly ModelRoute[] = [
     label: "vndo-ai coding",
     provider: "openrouter",
     capabilities: OPENROUTER_TEXT_CAPABILITIES,
-    priority: 78,
+    priority: 74,
     enabled: () => hasKey("OPENROUTER_API_KEY"),
   },
   {
@@ -147,6 +176,14 @@ export const MODEL_ROUTES: readonly ModelRoute[] = [
     capabilities: OPENROUTER_DOCUMENT_CAPABILITIES,
     priority: 70,
     enabled: () => hasKey("OPENROUTER_API_KEY"),
+  },
+  {
+    id: ORCAROUTER_DYNAMIC_FREE_MODEL,
+    label: "vndo-ai Orca dynamic fallback",
+    provider: "orcarouter",
+    capabilities: ORCAROUTER_TEXT_CAPABILITIES,
+    priority: 68,
+    enabled: () => hasKey("ORCAROUTER_API_KEY"),
   },
 ];
 
