@@ -348,7 +348,7 @@ export default function FingerprintAuditPlayground() {
     const result = snapshot();
     if (!result) return;
     const report = [
-      "VNDO-AI biết gì về bạn?",
+      "Browser Fingerprint Audit",
       `Local demo hash: ${result.localHash}`,
       `Exposure score: ${result.score}/100`,
       ...result.signals.map((signal) => `${signal.label}: ${signal.value}`),
@@ -386,7 +386,7 @@ export default function FingerprintAuditPlayground() {
             <span class="text-darkslate-400">No permission prompts</span>
           </div>
           <h1 class="text-3xl font-bold tracking-tight text-white md:text-4xl">
-            VNDO-AI biết gì về bạn?
+            Browser Fingerprint Audit
           </h1>
           <p class="max-w-3xl text-sm leading-7 text-darkslate-300 md:text-base">
             Một phòng thí nghiệm minh bạch về browser fingerprinting. Công cụ

@@ -95,7 +95,7 @@ const publicRoutes: SiteRoute[] = [
   {
     path: "/playground/fingerprint-audit/",
     url: toAbsoluteUrl("/playground/fingerprint-audit/"),
-    title: "Privacy-First Fingerprint Audit",
+    title: "Browser Fingerprint Audit",
     description: "Explore browser fingerprinting signals and privacy implications.",
     type: "tool",
     category: "privacy",
