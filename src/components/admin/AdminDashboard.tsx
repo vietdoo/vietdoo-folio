@@ -31,9 +31,9 @@ type AiLog = {
 type View = "overview" | "logs" | "models";
 
 const navItems: Array<{ id: View; label: string; short: string }> = [
-  { id: "overview", label: "Overview", short: "OV" },
-  { id: "logs", label: "AI request logs", short: "LG" },
-  { id: "models", label: "Model controls", short: "MD" },
+  { id: "overview", label: "Overview", short: "○" },
+  { id: "logs", label: "AI request logs", short: "≋" },
+  { id: "models", label: "Model controls", short: "◇" },
 ];
 
 function formatDate(value: string) {
@@ -216,9 +216,9 @@ export default function AdminDashboard() {
               <section class="login-card">
                 <div class="brand-mark">V</div>
                 <span class="eyebrow">VNDO / PRIVATE CONSOLE</span>
-                <h1>Welcome back.</h1>
+                <h1>Private workspace.</h1>
                 <p>
-                  Sign in to monitor AI traffic and manage your model fleet.
+                  Review request activity and keep the routing layer in order.
                 </p>
                 <form onSubmit={login} class="login-form">
                   <label for="admin-password">Admin password</label>
@@ -347,16 +347,10 @@ export default function AdminDashboard() {
                               and stay close to every request.
                             </p>
                           </div>
-                          <div class="hero-orbit">
-                            <span />
-                            <span />
-                            <span />
-                            <strong>{enabledModels()}</strong>
-                            <small>
-                              active
-                              <br />
-                              routes
-                            </small>
+                          <div class="hero-status-note">
+                            <span class="hero-status-label">ROUTING HEALTH</span>
+                            <strong><i class="status-dot" /> Operational</strong>
+                            <small>{enabledModels()} active routes</small>
                           </div>
                         </div>
                         <div class="metric-grid">
