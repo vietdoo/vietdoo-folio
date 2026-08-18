@@ -7,6 +7,7 @@ const liveBooks = await getLiveGoodreadsBooks();
 const booksData = liveBooks.length > 0 ? liveBooks : fallbackBooks;
 const currentlyReading = booksData.find((b) => b.status === "reading");
 const shelfBooks = booksData.slice(0, 8);
+const hasLiveBooks = liveBooks.length > 0;
 
 const spineVariants = [
   {
@@ -126,7 +127,11 @@ const spineVariants = [
                   title={`${book.title} — ${book.author}`}
                 >
                   <span class="book-top-rule" aria-hidden="true" />
-                  <span class="book-title">{book.title}</span>
+                  <span class="book-title">
+                    {book.title.length > 22
+                      ? `${book.title.slice(0, 20).trimEnd()}…`
+                      : book.title}
+                  </span>
                   <span class="book-author">{book.author}</span>
                   <span class="book-bottom-rule" aria-hidden="true" />
                 </div>
@@ -142,7 +147,12 @@ const spineVariants = [
     </div>
 
     <footer class="books-card-footer">
-      <span class="books-card-footer-label">Personal reading log</span>
+      <span class="books-card-footer-label">
+        <span
+          class:list={["books-live-dot", hasLiveBooks && "books-live-dot-on"]}
+        ></span>
+        {hasLiveBooks ? "Live Goodreads shelf" : "Saved reading log"}
+      </span>
       <span class="books-card-footer-link"
         >View bookshelf <span aria-hidden="true">↗</span></span
       >
@@ -418,12 +428,12 @@ const spineVariants = [
 
   .book-title {
     display: block;
-    max-height: 75px;
+    max-height: 98px;
     overflow: hidden;
-    color: rgba(255, 247, 219, 0.86) !important;
+    color: rgba(255, 247, 219, 0.95) !important;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 0.49rem;
-    font-weight: 600;
+    font-size: 0.54rem;
+    font-weight: 700;
     line-height: 1.08;
     text-align: center;
     text-overflow: clip;
@@ -432,7 +442,7 @@ const spineVariants = [
   }
 
   .book-author {
-    max-height: 33px;
+    max-height: 42px;
     overflow: hidden;
     color: color-mix(in srgb, var(--book-accent) 75%, #fff 25%) !important;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -505,9 +515,30 @@ const spineVariants = [
   }
 
   .books-card-footer-label {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .books-live-dot {
+    width: 5px;
+    height: 5px;
+    flex: 0 0 auto;
+    margin-right: 5px;
+    border: 1px solid rgba(216, 187, 122, 0.5);
+    border-radius: 999px;
+    background: rgba(216, 187, 122, 0.25);
+  }
+
+  .books-live-dot-on {
+    border-color: #8bc8a5;
+    background: #8bc8a5;
+    box-shadow:
+      0 0 0 2px rgba(139, 200, 165, 0.12),
+      0 0 6px rgba(139, 200, 165, 0.62);
   }
 
   .books-card-footer-link {
@@ -538,7 +569,7 @@ const spineVariants = [
       padding-inline: 10px;
     }
     .book-title {
-      font-size: 0.43rem;
+      font-size: 0.49rem;
     }
     .book-author {
       display: none;
