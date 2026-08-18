@@ -134,8 +134,7 @@ export default function ImageDescriptionPlayground() {
           Image describer
         </h1>
         <p class="text-xs text-darkslate-300">
-          Upload one image and get a clear description powered by
-          Qwen3.8-27B-Free.
+          Upload one image and get a clear description powered by vndo-ai.
         </p>
       </div>
 

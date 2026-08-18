@@ -105,7 +105,7 @@ export const POST: APIRoute = async ({ request }) => {
       const upstreamMessage =
         payload?.error?.message ||
         payload?.message ||
-        `OrcaRouter returned HTTP ${upstream.status}.`;
+        `vndo-ai returned HTTP ${upstream.status}.`;
       return json(
         {
           error:
@@ -132,14 +132,12 @@ export const POST: APIRoute = async ({ request }) => {
     return json({
       success: true,
       description: description.trim(),
-      model: MODEL,
     });
   } catch (error) {
     console.error("Image description request failed", error);
     return json(
       {
-        error:
-          "Could not reach the image description service. Please try again.",
+        error: "Could not reach vndo-ai. Please try again.",
         code: "network_error",
       },
       502,
