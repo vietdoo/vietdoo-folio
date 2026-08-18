@@ -71,13 +71,16 @@ export default function BlogComments(props: BlogCommentsProps) {
   const [replyContent, setReplyContent] = createSignal("");
 
   const fontStyle = {
-    "font-family": "var(--font-satoshi), system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
+    "font-family":
+      "var(--font-satoshi), system-ui, -apple-system, BlinkMacSystemFont, sans-serif",
   };
 
   const fetchComments = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/comments?slug=${encodeURIComponent(props.postSlug)}`);
+      const res = await fetch(
+        `/api/comments?slug=${encodeURIComponent(props.postSlug)}`,
+      );
       if (!res.ok) throw new Error("Failed to fetch comments");
       const data = await res.json();
       setComments(data.comments || []);
@@ -127,7 +130,9 @@ export default function BlogComments(props: BlogCommentsProps) {
       setMainContent("");
       setIsMainFormOpen(false);
     } catch (err: any) {
-      setError(err.message || (isVi() ? "Đã có lỗi xảy ra." : "An error occurred."));
+      setError(
+        err.message || (isVi() ? "Đã có lỗi xảy ra." : "An error occurred."),
+      );
     } finally {
       setSubmitting(false);
     }
@@ -169,7 +174,9 @@ export default function BlogComments(props: BlogCommentsProps) {
       setReplyContent("");
       setReplyingToId(null);
     } catch (err: any) {
-      setError(err.message || (isVi() ? "Đã có lỗi xảy ra." : "An error occurred."));
+      setError(
+        err.message || (isVi() ? "Đã có lỗi xảy ra." : "An error occurred."),
+      );
     } finally {
       setSubmitting(false);
     }
@@ -194,13 +201,19 @@ export default function BlogComments(props: BlogCommentsProps) {
   const rootComments = () =>
     comments()
       .filter((c) => !c.parentId)
-      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      );
 
   // Replies for a given parentId ordered by createdAt ASC (chronological order)
   const getReplies = (parentId: number) =>
     comments()
       .filter((c) => c.parentId === parentId)
-      .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+      .sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      );
 
   const getCommentById = (id: number) => comments().find((c) => c.id === id);
 
@@ -208,10 +221,16 @@ export default function BlogComments(props: BlogCommentsProps) {
     "w-full px-3.5 py-2.5 bg-neutral-950/80 border border-neutral-800 rounded-lg text-neutral-100 text-sm placeholder:text-neutral-500 focus:outline-none focus:border-primary-400 focus:ring-1 focus:ring-primary-400 transition-all font-sans";
 
   return (
-    <section class="mt-10 pt-8 border-t border-solid border-neutral-800 text-neutral-100 font-sans" style={fontStyle}>
+    <section
+      class="blog-comments mt-10 pt-8 border-t border-solid border-neutral-800 text-neutral-100 font-sans"
+      style={fontStyle}
+    >
       {/* Top Header & Toggle Button */}
       <div class="flex items-center justify-between mb-6">
-        <h3 class="text-xl font-bold tracking-tight text-neutral-100 m-0" style={fontStyle}>
+        <h3
+          class="text-xl font-bold tracking-tight text-neutral-100 m-0"
+          style={fontStyle}
+        >
           {isVi() ? "Bình luận" : "Comments"}{" "}
           <span class="text-xs font-normal text-neutral-400" style={fontStyle}>
             ({comments().length})
@@ -230,8 +249,18 @@ export default function BlogComments(props: BlogCommentsProps) {
               class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-neutral-700 bg-neutral-900/80 text-xs font-medium text-neutral-200 hover:text-white hover:border-neutral-500 hover:bg-neutral-800 transition-all cursor-pointer"
               style={fontStyle}
             >
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14M5 12h14" />
+              <svg
+                class="w-3.5 h-3.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 5v14M5 12h14"
+                />
               </svg>
               <span>{isVi() ? "Thêm bình luận" : "Add Comment"}</span>
             </button>
@@ -246,15 +275,28 @@ export default function BlogComments(props: BlogCommentsProps) {
             aria-label={isVi() ? "Thu gọn form" : "Collapse form"}
             style={fontStyle}
           >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </Show>
       </div>
 
       <Show when={error()}>
-        <div class="mb-4 text-xs text-red-400 bg-red-950/40 border border-red-800/40 rounded-lg p-3" style={fontStyle}>
+        <div
+          class="mb-4 text-xs text-red-400 bg-red-950/40 border border-red-800/40 rounded-lg p-3"
+          style={fontStyle}
+        >
           {error()}
         </div>
       </Show>
@@ -267,8 +309,12 @@ export default function BlogComments(props: BlogCommentsProps) {
           style={fontStyle}
         >
           <div>
-            <label class="block text-xs font-medium text-neutral-300 mb-1.5" style={fontStyle}>
-              {isVi() ? "Họ tên" : "Name"} <span class="text-primary-400">*</span>
+            <label
+              class="block text-xs font-medium text-neutral-300 mb-1.5"
+              style={fontStyle}
+            >
+              {isVi() ? "Họ tên" : "Name"}{" "}
+              <span class="text-primary-400">*</span>
             </label>
             <input
               type="text"
@@ -283,8 +329,12 @@ export default function BlogComments(props: BlogCommentsProps) {
           </div>
 
           <div>
-            <label class="block text-xs font-medium text-neutral-300 mb-1.5" style={fontStyle}>
-              {isVi() ? "Nội dung bình luận" : "Comment"} <span class="text-primary-400">*</span>
+            <label
+              class="block text-xs font-medium text-neutral-300 mb-1.5"
+              style={fontStyle}
+            >
+              {isVi() ? "Nội dung bình luận" : "Comment"}{" "}
+              <span class="text-primary-400">*</span>
             </label>
             <textarea
               required
@@ -312,8 +362,18 @@ export default function BlogComments(props: BlogCommentsProps) {
               aria-label={isVi() ? "Thu gọn form" : "Collapse form"}
               style={fontStyle}
             >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
             <button
@@ -322,7 +382,10 @@ export default function BlogComments(props: BlogCommentsProps) {
               class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-neutral-700 bg-neutral-900/90 text-xs font-medium text-neutral-200 hover:text-white hover:border-neutral-500 hover:bg-neutral-800 transition-all cursor-pointer disabled:opacity-50 font-sans"
               style={fontStyle}
             >
-              <Show when={submitting()} fallback={isVi() ? "Gửi bình luận" : "Post Comment"}>
+              <Show
+                when={submitting()}
+                fallback={isVi() ? "Gửi bình luận" : "Post Comment"}
+              >
                 {isVi() ? "Đang gửi..." : "Posting..."}
               </Show>
             </button>
@@ -332,13 +395,19 @@ export default function BlogComments(props: BlogCommentsProps) {
 
       {/* Danh sách Comment */}
       <Show when={loading()}>
-        <div class="text-center py-8 text-neutral-400 text-sm" style={fontStyle}>
+        <div
+          class="text-center py-8 text-neutral-400 text-sm"
+          style={fontStyle}
+        >
           {isVi() ? "Đang tải bình luận..." : "Loading comments..."}
         </div>
       </Show>
 
       <Show when={!loading() && comments().length === 0}>
-        <div class="text-center py-8 text-neutral-400 text-sm border border-dashed border-neutral-800 rounded-xl" style={fontStyle}>
+        <div
+          class="text-center py-8 text-neutral-400 text-sm border border-dashed border-neutral-800 rounded-xl"
+          style={fontStyle}
+        >
           {isVi()
             ? "Chưa có bình luận nào. Hãy là người đầu tiên để lại ý kiến!"
             : "No comments yet. Be the first to share your thoughts!"}
@@ -349,14 +418,18 @@ export default function BlogComments(props: BlogCommentsProps) {
       <div class="space-y-6" style={fontStyle}>
         <For each={rootComments()}>
           {(comment) => {
-            const avatarBg = () => getAvatarBgColor(comment.ipAddress || comment.name);
+            const avatarBg = () =>
+              getAvatarBgColor(comment.ipAddress || comment.name);
             const replies = () => getReplies(comment.id);
             const isReplyingThis = () => replyingToId() === comment.id;
 
             return (
               <div class="flex flex-col gap-3 font-sans">
                 {/* Root Comment Card */}
-                <div class="rounded-xl border border-solid border-neutral-800 bg-neutral-900/50 p-4 transition-colors shadow-sm" style={fontStyle}>
+                <div
+                  class="rounded-xl border border-solid border-neutral-800 bg-neutral-900/50 p-4 transition-colors shadow-sm"
+                  style={fontStyle}
+                >
                   <div class="flex items-center justify-between mb-2">
                     <div class="flex items-center gap-2.5">
                       <div
@@ -365,7 +438,10 @@ export default function BlogComments(props: BlogCommentsProps) {
                       >
                         {getInitials(comment.name)}
                       </div>
-                      <span class="font-semibold text-sm text-neutral-100" style={fontStyle}>
+                      <span
+                        class="font-semibold text-sm text-neutral-100"
+                        style={fontStyle}
+                      >
                         {comment.name}
                       </span>
                     </div>
@@ -387,18 +463,39 @@ export default function BlogComments(props: BlogCommentsProps) {
                           }
                         }}
                         class="inline-flex items-center justify-center p-1.5 rounded-md border border-neutral-700 bg-neutral-900/80 text-neutral-300 hover:text-white hover:border-neutral-500 hover:bg-neutral-800 transition-all cursor-pointer"
-                        title={isVi() ? "Trả lời bình luận này" : "Reply to this comment"}
-                        aria-label={isVi() ? "Trả lời bình luận này" : "Reply to this comment"}
+                        title={
+                          isVi()
+                            ? "Trả lời bình luận này"
+                            : "Reply to this comment"
+                        }
+                        aria-label={
+                          isVi()
+                            ? "Trả lời bình luận này"
+                            : "Reply to this comment"
+                        }
                         style={fontStyle}
                       >
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                        <svg
+                          class="w-3.5 h-3.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
+                          />
                         </svg>
                       </button>
                     </div>
                   </div>
 
-                  <p class="text-sm text-neutral-300 m-0 whitespace-pre-line leading-relaxed pl-10.5" style={fontStyle}>
+                  <p
+                    class="text-sm text-neutral-300 m-0 whitespace-pre-line leading-relaxed pl-10.5"
+                    style={fontStyle}
+                  >
                     {comment.content}
                   </p>
                 </div>
@@ -412,7 +509,8 @@ export default function BlogComments(props: BlogCommentsProps) {
                   >
                     <div class="flex items-center justify-between text-xs text-primary-400 font-medium">
                       <span>
-                        {isVi() ? "Trả lời bình luận của" : "Replying to"} <strong>@{comment.name}</strong>
+                        {isVi() ? "Trả lời bình luận của" : "Replying to"}{" "}
+                        <strong>@{comment.name}</strong>
                       </span>
                       {/* Icon close button */}
                       <button
@@ -422,15 +520,29 @@ export default function BlogComments(props: BlogCommentsProps) {
                         title={isVi() ? "Thu gọn" : "Collapse"}
                         aria-label={isVi() ? "Thu gọn" : "Collapse"}
                       >
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <svg
+                          class="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
                         </svg>
                       </button>
                     </div>
 
                     <div>
-                      <label class="block text-xs font-medium text-neutral-300 mb-1" style={fontStyle}>
-                        {isVi() ? "Họ tên" : "Name"} <span class="text-primary-400">*</span>
+                      <label
+                        class="block text-xs font-medium text-neutral-300 mb-1"
+                        style={fontStyle}
+                      >
+                        {isVi() ? "Họ tên" : "Name"}{" "}
+                        <span class="text-primary-400">*</span>
                       </label>
                       <input
                         type="text"
@@ -445,8 +557,12 @@ export default function BlogComments(props: BlogCommentsProps) {
                     </div>
 
                     <div>
-                      <label class="block text-xs font-medium text-neutral-300 mb-1" style={fontStyle}>
-                        {isVi() ? "Nội dung phản hồi" : "Reply"} <span class="text-primary-400">*</span>
+                      <label
+                        class="block text-xs font-medium text-neutral-300 mb-1"
+                        style={fontStyle}
+                      >
+                        {isVi() ? "Nội dung phản hồi" : "Reply"}{" "}
+                        <span class="text-primary-400">*</span>
                       </label>
                       <textarea
                         required
@@ -474,8 +590,18 @@ export default function BlogComments(props: BlogCommentsProps) {
                         aria-label={isVi() ? "Thu gọn form" : "Collapse form"}
                         style={fontStyle}
                       >
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <svg
+                          class="w-3.5 h-3.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
                         </svg>
                       </button>
                       <button
@@ -484,7 +610,10 @@ export default function BlogComments(props: BlogCommentsProps) {
                         class="inline-flex items-center justify-center px-3.5 py-1.5 rounded-lg border border-neutral-700 bg-neutral-900/90 text-xs font-medium text-neutral-200 hover:text-white hover:border-neutral-500 hover:bg-neutral-800 transition-all cursor-pointer disabled:opacity-50"
                         style={fontStyle}
                       >
-                        <Show when={submitting()} fallback={isVi() ? "Gửi phản hồi" : "Submit Reply"}>
+                        <Show
+                          when={submitting()}
+                          fallback={isVi() ? "Gửi phản hồi" : "Submit Reply"}
+                        >
                           {isVi() ? "Đang gửi..." : "Submitting..."}
                         </Show>
                       </button>
@@ -497,8 +626,10 @@ export default function BlogComments(props: BlogCommentsProps) {
                   <div class="relative pl-6 sm:pl-8 space-y-3 border-l-2 border-solid border-neutral-700/60 ml-4 mt-1">
                     <For each={replies()}>
                       {(reply) => {
-                        const replyAvatarBg = () => getAvatarBgColor(reply.ipAddress || reply.name);
-                        const parentComment = () => getCommentById(reply.parentId || 0);
+                        const replyAvatarBg = () =>
+                          getAvatarBgColor(reply.ipAddress || reply.name);
+                        const parentComment = () =>
+                          getCommentById(reply.parentId || 0);
                         const isReplyingSub = () => replyingToId() === reply.id;
 
                         return (
@@ -507,29 +638,44 @@ export default function BlogComments(props: BlogCommentsProps) {
                             <div class="absolute -left-[24px] sm:-left-[32px] top-5 w-4 h-[2px] bg-neutral-700/60" />
 
                             {/* Reply Card */}
-                            <div class="rounded-xl border border-solid border-neutral-800/80 bg-neutral-900/40 p-3.5 transition-colors shadow-xs" style={fontStyle}>
+                            <div
+                              class="rounded-xl border border-solid border-neutral-800/80 bg-neutral-900/40 p-3.5 transition-colors shadow-xs"
+                              style={fontStyle}
+                            >
                               <div class="flex items-center justify-between mb-2">
                                 <div class="flex items-center gap-2">
                                   <div
                                     class="flex-shrink-0 w-7 h-7 rounded-full text-white font-bold text-xs flex items-center justify-center select-none shadow-sm"
-                                    style={{ "background-color": replyAvatarBg(), ...fontStyle }}
+                                    style={{
+                                      "background-color": replyAvatarBg(),
+                                      ...fontStyle,
+                                    }}
                                   >
                                     {getInitials(reply.name)}
                                   </div>
                                   <div class="flex items-center gap-1.5 flex-wrap">
-                                    <span class="font-semibold text-sm text-neutral-100" style={fontStyle}>
+                                    <span
+                                      class="font-semibold text-sm text-neutral-100"
+                                      style={fontStyle}
+                                    >
                                       {reply.name}
                                     </span>
                                     <Show when={parentComment()}>
                                       <span class="text-xs text-neutral-500 font-normal">
-                                        ► <span class="text-primary-400 font-medium">@{parentComment()?.name}</span>
+                                        ►{" "}
+                                        <span class="text-primary-400 font-medium">
+                                          @{parentComment()?.name}
+                                        </span>
                                       </span>
                                     </Show>
                                   </div>
                                 </div>
 
                                 <div class="flex items-center gap-2.5">
-                                  <time class="text-xs text-neutral-400" style={fontStyle}>
+                                  <time
+                                    class="text-xs text-neutral-400"
+                                    style={fontStyle}
+                                  >
                                     {formatDate(reply.createdAt)}
                                   </time>
 
@@ -540,22 +686,44 @@ export default function BlogComments(props: BlogCommentsProps) {
                                         setReplyingToId(null);
                                       } else {
                                         setReplyingToId(reply.id);
-                                        if (!replyName()) setReplyName(mainName());
+                                        if (!replyName())
+                                          setReplyName(mainName());
                                       }
                                     }}
                                     class="inline-flex items-center justify-center p-1 rounded-md border border-neutral-800 bg-neutral-950/60 text-neutral-400 hover:text-white hover:border-neutral-600 transition-all cursor-pointer"
-                                    title={isVi() ? "Trả lời bình luận này" : "Reply to this comment"}
-                                    aria-label={isVi() ? "Trả lời bình luận này" : "Reply to this comment"}
+                                    title={
+                                      isVi()
+                                        ? "Trả lời bình luận này"
+                                        : "Reply to this comment"
+                                    }
+                                    aria-label={
+                                      isVi()
+                                        ? "Trả lời bình luận này"
+                                        : "Reply to this comment"
+                                    }
                                     style={fontStyle}
                                   >
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
+                                    <svg
+                                      class="w-3 h-3"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
+                                      />
                                     </svg>
                                   </button>
                                 </div>
                               </div>
 
-                              <p class="text-sm text-neutral-300 m-0 whitespace-pre-line leading-relaxed pl-9" style={fontStyle}>
+                              <p
+                                class="text-sm text-neutral-300 m-0 whitespace-pre-line leading-relaxed pl-9"
+                                style={fontStyle}
+                              >
                                 {reply.content}
                               </p>
                             </div>
@@ -563,13 +731,18 @@ export default function BlogComments(props: BlogCommentsProps) {
                             {/* Inline Reply Form for Sub-reply */}
                             <Show when={isReplyingSub()}>
                               <form
-                                onSubmit={(e) => handlePostInlineReply(e, reply.id)}
+                                onSubmit={(e) =>
+                                  handlePostInlineReply(e, reply.id)
+                                }
                                 class="ml-4 rounded-xl border border-solid border-neutral-800 bg-neutral-900/80 p-3.5 flex flex-col gap-3 font-sans transition-all"
                                 style={fontStyle}
                               >
                                 <div class="flex items-center justify-between text-xs text-primary-400 font-medium">
                                   <span>
-                                    {isVi() ? "Trả lời bình luận của" : "Replying to"} <strong>@{reply.name}</strong>
+                                    {isVi()
+                                      ? "Trả lời bình luận của"
+                                      : "Replying to"}{" "}
+                                    <strong>@{reply.name}</strong>
                                   </span>
                                   {/* Icon close button */}
                                   <button
@@ -579,31 +752,53 @@ export default function BlogComments(props: BlogCommentsProps) {
                                     title={isVi() ? "Thu gọn" : "Collapse"}
                                     aria-label={isVi() ? "Thu gọn" : "Collapse"}
                                   >
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    <svg
+                                      class="w-4 h-4"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                      />
                                     </svg>
                                   </button>
                                 </div>
 
                                 <div>
-                                  <label class="block text-xs font-medium text-neutral-300 mb-1" style={fontStyle}>
-                                    {isVi() ? "Họ tên" : "Name"} <span class="text-primary-400">*</span>
+                                  <label
+                                    class="block text-xs font-medium text-neutral-300 mb-1"
+                                    style={fontStyle}
+                                  >
+                                    {isVi() ? "Họ tên" : "Name"}{" "}
+                                    <span class="text-primary-400">*</span>
                                   </label>
                                   <input
                                     type="text"
                                     required
                                     maxLength={100}
-                                    placeholder={isVi() ? "Nguyễn Văn A" : "John Doe"}
+                                    placeholder={
+                                      isVi() ? "Nguyễn Văn A" : "John Doe"
+                                    }
                                     value={replyName()}
-                                    onInput={(e) => setReplyName(e.currentTarget.value)}
+                                    onInput={(e) =>
+                                      setReplyName(e.currentTarget.value)
+                                    }
                                     class={inputClasses}
                                     style={fontStyle}
                                   />
                                 </div>
 
                                 <div>
-                                  <label class="block text-xs font-medium text-neutral-300 mb-1" style={fontStyle}>
-                                    {isVi() ? "Nội dung phản hồi" : "Reply"} <span class="text-primary-400">*</span>
+                                  <label
+                                    class="block text-xs font-medium text-neutral-300 mb-1"
+                                    style={fontStyle}
+                                  >
+                                    {isVi() ? "Nội dung phản hồi" : "Reply"}{" "}
+                                    <span class="text-primary-400">*</span>
                                   </label>
                                   <textarea
                                     required
@@ -615,7 +810,9 @@ export default function BlogComments(props: BlogCommentsProps) {
                                         : `Replying to @${reply.name}...`
                                     }
                                     value={replyContent()}
-                                    onInput={(e) => setReplyContent(e.currentTarget.value)}
+                                    onInput={(e) =>
+                                      setReplyContent(e.currentTarget.value)
+                                    }
                                     class={`${inputClasses} resize-y min-h-[80px]`}
                                     style={fontStyle}
                                   />
@@ -627,12 +824,26 @@ export default function BlogComments(props: BlogCommentsProps) {
                                     type="button"
                                     onClick={() => setReplyingToId(null)}
                                     class="p-2 rounded-lg border border-neutral-800 bg-neutral-950/60 text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors cursor-pointer flex items-center justify-center"
-                                    title={isVi() ? "Thu gọn form" : "Collapse form"}
-                                    aria-label={isVi() ? "Thu gọn form" : "Collapse form"}
+                                    title={
+                                      isVi() ? "Thu gọn form" : "Collapse form"
+                                    }
+                                    aria-label={
+                                      isVi() ? "Thu gọn form" : "Collapse form"
+                                    }
                                     style={fontStyle}
                                   >
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    <svg
+                                      class="w-3.5 h-3.5"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"
+                                      />
                                     </svg>
                                   </button>
                                   <button
@@ -641,7 +852,12 @@ export default function BlogComments(props: BlogCommentsProps) {
                                     class="inline-flex items-center justify-center px-3.5 py-1.5 rounded-lg border border-neutral-700 bg-neutral-900/90 text-xs font-medium text-neutral-200 hover:text-white hover:border-neutral-500 hover:bg-neutral-800 transition-all cursor-pointer disabled:opacity-50"
                                     style={fontStyle}
                                   >
-                                    <Show when={submitting()} fallback={isVi() ? "Gửi phản hồi" : "Submit Reply"}>
+                                    <Show
+                                      when={submitting()}
+                                      fallback={
+                                        isVi() ? "Gửi phản hồi" : "Submit Reply"
+                                      }
+                                    >
                                       {isVi() ? "Đang gửi..." : "Submitting..."}
                                     </Show>
                                   </button>

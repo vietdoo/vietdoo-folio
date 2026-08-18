@@ -22,10 +22,10 @@ if (!id) {
 
 const posts = await getCollection("blog");
 const englishEntry = posts.find(
-  (post) => getCanonicalBlogId(post) === id && post.data.lang === "en"
+  (post) => getCanonicalBlogId(post) === id && post.data.lang === "en",
 );
 const vietnameseEntry = posts.find(
-  (post) => getCanonicalBlogId(post) === id && post.data.lang === "vi"
+  (post) => getCanonicalBlogId(post) === id && post.data.lang === "vi",
 );
 
 const primaryEntry = englishEntry ?? vietnameseEntry;
@@ -38,7 +38,9 @@ const hasEnglishTranslation = Boolean(englishEntry);
 const hasVietnameseTranslation = Boolean(vietnameseEntry);
 
 const englishRender = englishEntry ? await render(englishEntry) : undefined;
-const vietnameseRender = vietnameseEntry ? await render(vietnameseEntry) : undefined;
+const vietnameseRender = vietnameseEntry
+  ? await render(vietnameseEntry)
+  : undefined;
 
 const translations = [
   ...(englishEntry && englishRender
@@ -67,18 +69,14 @@ const translations = [
 <LayoutBlogPost
   description={primaryEntry.data.description!}
   image={primaryEntry.data.image}
-  enHref={
-    hasEnglishTranslation && hasVietnameseTranslation && englishEntry
-      ? getBlogPostHref(englishEntry, "en")
-      : undefined
-  }
+  enHref={hasEnglishTranslation && hasVietnameseTranslation && englishEntry
+    ? getBlogPostHref(englishEntry, "en")
+    : undefined}
   translations={translations}
   url={`blog/${getCanonicalBlogId(primaryEntry)}`}
-  viHref={
-    hasEnglishTranslation && hasVietnameseTranslation && vietnameseEntry
-      ? getBlogPostHref(vietnameseEntry, "vi")
-      : undefined
-  }
+  viHref={hasEnglishTranslation && hasVietnameseTranslation && vietnameseEntry
+    ? getBlogPostHref(vietnameseEntry, "vi")
+    : undefined}
 >
   {englishRender && <englishRender.Content slot="en" />}
   {vietnameseRender && <vietnameseRender.Content slot="vi" />}

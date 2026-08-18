@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap");
 
 :root {
   --darkslate-50: #f7f7f7;
@@ -22,8 +22,12 @@
   --primary-800: #1565c0;
   --primary-900: #0d47a1;
 
-  --font-cabinet-grotesk: "Plus Jakarta Sans", "Be Vietnam Pro", "CabinetGrotesk", "Cabinet Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-satoshi: "Inter", "Be Vietnam Pro", "Satoshi", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-cabinet-grotesk:
+    "Plus Jakarta Sans", "Be Vietnam Pro", "CabinetGrotesk", "Cabinet Grotesk",
+    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-satoshi:
+    "Inter", "Be Vietnam Pro", "Satoshi", system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .yellow-theme {
@@ -555,7 +559,9 @@ body::before {
 
 /* ── Language Toggle Buttons ── */
 [data-lang-toggle] [data-lang-option] {
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
   background-color: transparent !important;
   color: var(--darkslate-200, #c9c9c9) !important;
 }
@@ -575,7 +581,6 @@ body::before {
   color: var(--darkslate-300, #9a9a9a) !important;
   font-weight: 500 !important;
 }
-
 
 /* ── Chimes-inspired light UI mode ─────────────────────────── */
 html[data-ui-theme="light"] {
@@ -602,8 +607,10 @@ html[data-ui-theme="light"] body::before {
   --line-color: rgba(88, 66, 60, 0.075);
   --line-size: 52px;
   background:
-    linear-gradient(90deg, var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size),
-    linear-gradient(var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size);
+    linear-gradient(90deg, var(--line-color) 1px, transparent 1px) center /
+      var(--line-size) var(--line-size),
+    linear-gradient(var(--line-color) 1px, transparent 1px) center /
+      var(--line-size) var(--line-size);
   -webkit-mask: linear-gradient(-360deg, transparent 12%, white 85%);
   mask: linear-gradient(-360deg, transparent 12%, white 85%);
   opacity: 0.75;
@@ -664,7 +671,11 @@ html[data-ui-theme="light"] .bg-darkslate-950 {
 html[data-ui-theme="light"] .bg-darkslate-800,
 html[data-ui-theme="light"] .bg-darkslate-800\/80,
 html[data-ui-theme="light"] .bg-darkslate-800\/95 {
-  background-color: color-mix(in srgb, var(--light-surface) 92%, transparent) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--light-surface) 92%,
+    transparent
+  ) !important;
 }
 
 html[data-ui-theme="light"] .bg-darkslate-700,
@@ -723,7 +734,11 @@ html[data-ui-theme="light"] .hover\:border-primary-500:hover {
 
 html[data-ui-theme="light"] .folio-theme-toggle {
   color: var(--light-ink) !important;
-  background: color-mix(in srgb, var(--light-surface-strong) 84%, transparent) !important;
+  background: color-mix(
+    in srgb,
+    var(--light-surface-strong) 84%,
+    transparent
+  ) !important;
   border-color: var(--light-line) !important;
   box-shadow: 0 2px 10px rgba(88, 66, 60, 0.08);
 }
@@ -763,7 +778,6 @@ html[data-ui-theme="light"] .folio-theme-toggle:hover {
   }
 }
 
-
 /* ── Light UI refinement pass: editorial paper system ─────────── */
 html[data-ui-theme="light"] {
   --light-paper: #e9dfcf;
@@ -786,7 +800,12 @@ html[data-ui-theme="light"] {
 
 html[data-ui-theme="light"] body {
   color: var(--light-ink) !important;
-  font-family: "Be Vietnam Pro", "Inter", system-ui, -apple-system, sans-serif !important;
+  font-family:
+    "Be Vietnam Pro",
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif !important;
   font-size: 15px;
   line-height: 1.6;
 }
@@ -795,10 +814,20 @@ html[data-ui-theme="light"] body::before {
   --line-color: rgba(76, 57, 51, 0.065);
   --line-size: 56px;
   background:
-    radial-gradient(circle at 18% 8%, rgba(255, 250, 241, 0.48), transparent 34%),
-    radial-gradient(circle at 82% 22%, rgba(139, 73, 59, 0.055), transparent 30%),
-    linear-gradient(90deg, var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size),
-    linear-gradient(var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size);
+    radial-gradient(
+      circle at 18% 8%,
+      rgba(255, 250, 241, 0.48),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 82% 22%,
+      rgba(139, 73, 59, 0.055),
+      transparent 30%
+    ),
+    linear-gradient(90deg, var(--line-color) 1px, transparent 1px) center /
+      var(--line-size) var(--line-size),
+    linear-gradient(var(--line-color) 1px, transparent 1px) center /
+      var(--line-size) var(--line-size);
   opacity: 0.9;
 }
 
@@ -822,7 +851,12 @@ html[data-ui-theme="light"] dt,
 html[data-ui-theme="light"] label,
 html[data-ui-theme="light"] blockquote {
   color: var(--light-ink) !important;
-  font-family: "Be Vietnam Pro", "Inter", system-ui, -apple-system, sans-serif !important;
+  font-family:
+    "Be Vietnam Pro",
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif !important;
   line-height: 1.62;
 }
 
@@ -830,14 +864,20 @@ html[data-ui-theme="light"] code,
 html[data-ui-theme="light"] pre,
 html[data-ui-theme="light"] time,
 html[data-ui-theme="light"] .font-mono {
-  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace !important;
 }
 
 html[data-ui-theme="light"] button,
 html[data-ui-theme="light"] input,
 html[data-ui-theme="light"] textarea,
 html[data-ui-theme="light"] select {
-  font-family: "Be Vietnam Pro", "Inter", system-ui, -apple-system, sans-serif;
+  font-family:
+    "Be Vietnam Pro",
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 html[data-ui-theme="light"] a {
@@ -856,13 +896,17 @@ html[data-ui-theme="light"] .card {
   color: var(--light-ink) !important;
   border-color: var(--light-line) !important;
   border-radius: 14px !important;
-  box-shadow: 0 12px 28px var(--light-shadow), 0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
+  box-shadow:
+    0 12px 28px var(--light-shadow),
+    0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
 }
 
 html[data-ui-theme="light"] .card:hover {
   background: var(--light-card-hover) !important;
   border-color: var(--light-line-strong) !important;
-  box-shadow: 0 16px 34px rgba(76, 57, 51, 0.18), 0 1px 0 rgba(255, 255, 255, 0.7) inset !important;
+  box-shadow:
+    0 16px 34px rgba(76, 57, 51, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.7) inset !important;
 }
 
 html[data-ui-theme="light"] .card h2,
@@ -915,7 +959,9 @@ html[data-ui-theme="light"] .card:has(#memoji-avatar) .text-darkslate-300 {
   color: var(--light-ink-soft) !important;
 }
 
-html[data-ui-theme="light"] .card:has(#memoji-avatar) [class*="bg-darkslate-700"] {
+html[data-ui-theme="light"]
+  .card:has(#memoji-avatar)
+  [class*="bg-darkslate-700"] {
   background: var(--light-surface-strong) !important;
   border-color: var(--light-line-strong) !important;
 }
@@ -934,7 +980,10 @@ html[data-ui-theme="light"] .blog-card-shell .blog-recent-feed h4 {
   color: var(--light-ink-strong) !important;
 }
 
-html[data-ui-theme="light"] .blog-card-shell .blog-recent-feed .text-primary-400\/90 {
+html[data-ui-theme="light"]
+  .blog-card-shell
+  .blog-recent-feed
+  .text-primary-400\/90 {
   color: var(--light-accent-strong) !important;
 }
 
@@ -1012,12 +1061,16 @@ html[data-ui-theme="light"] #formatToggle {
   border-color: var(--light-line-strong) !important;
 }
 
-html[data-ui-theme="light"] [data-lang-toggle] [data-lang-option][data-active="true"] {
+html[data-ui-theme="light"]
+  [data-lang-toggle]
+  [data-lang-option][data-active="true"] {
   background: var(--light-accent) !important;
   color: #fff9f0 !important;
 }
 
-html[data-ui-theme="light"] [data-lang-toggle] [data-lang-option][data-active="false"] {
+html[data-ui-theme="light"]
+  [data-lang-toggle]
+  [data-lang-option][data-active="false"] {
   color: var(--light-ink-soft) !important;
 }
 
@@ -1028,7 +1081,9 @@ html[data-ui-theme="light"] [data-lang-toggle] [data-lang-option][data-active="f
 
   html[data-ui-theme="light"] .card {
     border-radius: 12px !important;
-    box-shadow: 0 8px 20px rgba(76, 57, 51, 0.13), 0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
+    box-shadow:
+      0 8px 20px rgba(76, 57, 51, 0.13),
+      0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
   }
 }
 
@@ -1038,7 +1093,6 @@ html[data-ui-theme="light"] [data-lang-toggle] [data-lang-option][data-active="f
     display: none !important;
   }
 }
-
 
 /* ── Inner-page reading refinement ───────────────────────────── */
 html[data-ui-theme="light"] .blog-meta-panel {
@@ -1095,7 +1149,9 @@ html[data-ui-theme="light"] .blog-reading-content :where(blockquote) {
   padding: 0.8rem 1rem;
 }
 
-html[data-ui-theme="light"] .blog-reading-content :where(code):not(:where([class~="not-prose"] *)) {
+html[data-ui-theme="light"]
+  .blog-reading-content
+  :where(code):not(:where([class~="not-prose"] *)) {
   background: rgba(139, 73, 59, 0.1);
   border-radius: 4px;
   padding: 0.12em 0.3em;
@@ -1108,4 +1164,239 @@ html[data-ui-theme="light"] .mobile-search-panel input::placeholder {
 
 html[data-ui-theme="light"] .desktop-search-form input {
   color: #fff9f0 !important;
+}
+
+/* ── Light-mode readability pass: feed, reading surfaces, forms ───── */
+html[data-ui-theme="light"] .blog-post-row-shell {
+  background: var(--light-card) !important;
+  border-color: var(--light-line) !important;
+  color: var(--light-ink) !important;
+  box-shadow: 0 5px 14px rgba(76, 57, 51, 0.08) !important;
+}
+
+html[data-ui-theme="light"] .blog-post-row-shell:hover {
+  background: var(--light-card-hover) !important;
+  border-color: var(--light-line-strong) !important;
+  box-shadow: 0 9px 20px rgba(76, 57, 51, 0.12) !important;
+}
+
+html[data-ui-theme="light"] .blog-post-row-meta,
+html[data-ui-theme="light"] .blog-post-row-meta time {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .blog-post-row-category {
+  background: #e6d9c8 !important;
+  border-color: rgba(76, 57, 51, 0.2) !important;
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .blog-post-row-title {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .blog-post-row-shell:hover .blog-post-row-title {
+  color: var(--light-accent-strong) !important;
+}
+
+html[data-ui-theme="light"] .blog-post-row-description {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .blog-post-row-thumbnail {
+  background: var(--light-surface-strong) !important;
+  border-color: var(--light-line) !important;
+}
+
+html[data-ui-theme="light"] .blog-meta-panel {
+  background: var(--light-surface-strong) !important;
+  border-color: var(--light-line) !important;
+  color: var(--light-ink) !important;
+  box-shadow: 0 6px 16px rgba(76, 57, 51, 0.07) !important;
+}
+
+html[data-ui-theme="light"] .blog-meta-panel .text-neutral-100,
+html[data-ui-theme="light"] .blog-meta-panel .text-neutral-200,
+html[data-ui-theme="light"] .blog-meta-panel .text-neutral-300 {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .blog-meta-panel .text-neutral-400,
+html[data-ui-theme="light"] .blog-meta-panel .text-neutral-500 {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .blog-reading-content {
+  color: var(--light-ink) !important;
+}
+
+html[data-ui-theme="light"] .blog-reading-content a {
+  color: var(--light-accent-strong) !important;
+  text-decoration-color: color-mix(
+    in srgb,
+    var(--light-accent) 52%,
+    transparent
+  ) !important;
+}
+
+html[data-ui-theme="light"] .blog-reading-content blockquote {
+  border-left-color: var(--light-accent) !important;
+  background: #f0e6d8 !important;
+  color: var(--light-ink) !important;
+  padding: 0.85rem 1rem !important;
+  border-radius: 0 0.55rem 0.55rem 0;
+}
+
+html[data-ui-theme="light"] .blog-reading-content pre {
+  border: 1px solid rgba(54, 45, 42, 0.18) !important;
+  background: #2b2928 !important;
+  color: #fbf4e9 !important;
+  box-shadow: 0 8px 18px rgba(54, 45, 42, 0.13) !important;
+}
+
+html[data-ui-theme="light"] .blog-reading-content pre code {
+  background: transparent !important;
+  color: #fbf4e9 !important;
+}
+
+html[data-ui-theme="light"] .blog-reading-content :not(pre) > code {
+  background: #eadfce !important;
+  color: var(--light-accent-strong) !important;
+  border: 1px solid rgba(122, 63, 52, 0.16);
+  border-radius: 0.3rem;
+}
+
+html[data-ui-theme="light"] .blog-reading-content table,
+html[data-ui-theme="light"] .blog-reading-content th,
+html[data-ui-theme="light"] .blog-reading-content td {
+  border-color: var(--light-line) !important;
+}
+
+html[data-ui-theme="light"] .blog-reading-content th {
+  background: #e8dccb !important;
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .blog-reading-content td {
+  background: rgba(255, 253, 248, 0.42) !important;
+  color: var(--light-ink) !important;
+}
+
+html[data-ui-theme="light"] [data-lang-toggle] {
+  background: var(--light-surface-strong) !important;
+  border-color: var(--light-line) !important;
+  box-shadow: 0 3px 10px rgba(76, 57, 51, 0.08);
+}
+
+html[data-ui-theme="light"] [data-lang-toggle] [data-lang-option] {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] [data-lang-toggle] [data-lang-option]:hover,
+html[data-ui-theme="light"]
+  [data-lang-toggle]
+  [data-lang-option][data-active="true"] {
+  background: var(--light-accent) !important;
+  color: #fffaf3 !important;
+}
+
+html[data-ui-theme="light"]
+  [data-lang-toggle]
+  [data-lang-option][data-active="false"] {
+  background: transparent !important;
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .blog-comments {
+  color: var(--light-ink) !important;
+  border-color: var(--light-line) !important;
+}
+
+html[data-ui-theme="light"] .blog-comments [class*="bg-neutral-950"],
+html[data-ui-theme="light"] .blog-comments [class*="bg-neutral-900"],
+html[data-ui-theme="light"] .blog-comments [class*="bg-neutral-800"] {
+  background: var(--light-surface-strong) !important;
+}
+
+html[data-ui-theme="light"] .blog-comments [class*="border-neutral-"] {
+  border-color: var(--light-line) !important;
+}
+
+html[data-ui-theme="light"] .blog-comments [class*="text-neutral-100"],
+html[data-ui-theme="light"] .blog-comments [class*="text-neutral-200"] {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .blog-comments [class*="text-neutral-300"],
+html[data-ui-theme="light"] .blog-comments [class*="text-neutral-400"],
+html[data-ui-theme="light"] .blog-comments [class*="text-neutral-500"] {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .blog-comments [class*="text-red-4"] {
+  color: #98453b !important;
+}
+
+html[data-ui-theme="light"] .blog-comments [class*="bg-red-950"] {
+  background: #f5dfda !important;
+  border-color: #d9a69b !important;
+}
+
+html[data-ui-theme="light"] .guestbook-form [class*="bg-darkslate-"],
+html[data-ui-theme="light"] .guestbook-entry {
+  background: var(--light-surface-strong) !important;
+  border-color: var(--light-line) !important;
+  color: var(--light-ink) !important;
+}
+
+html[data-ui-theme="light"] .guestbook-form [class*="text-darkslate-"],
+html[data-ui-theme="light"] .guestbook-entry [class*="text-darkslate-"] {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .guestbook-form [class*="text-white"],
+html[data-ui-theme="light"] .guestbook-entry [class*="text-white"] {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .guestbook-form input,
+html[data-ui-theme="light"] .guestbook-form textarea {
+  background: var(--light-surface-strong) !important;
+  border-color: var(--light-line) !important;
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .guestbook-form input::placeholder,
+html[data-ui-theme="light"] .guestbook-form textarea::placeholder {
+  color: var(--light-ink-faint) !important;
+}
+
+html[data-ui-theme="light"] .guestbook-form button[type="submit"] {
+  background: var(--light-accent) !important;
+  color: #fffaf3 !important;
+}
+
+html[data-ui-theme="light"] .guestbook-form button[type="submit"]:hover {
+  background: var(--light-accent-strong) !important;
+}
+
+@media (max-width: 767px) {
+  html[data-ui-theme="light"] .blog-post-row-shell {
+    border-radius: 12px !important;
+    padding: 0.72rem !important;
+  }
+
+  html[data-ui-theme="light"] .blog-post-row-title {
+    font-size: 0.92rem !important;
+    line-height: 1.25 !important;
+  }
+
+  html[data-ui-theme="light"] .blog-post-row-description {
+    color: var(--light-ink-soft) !important;
+  }
+
+  html[data-ui-theme="light"] .blog-post-row-thumbnail {
+    width: 5.7rem !important;
+    height: 4rem !important;
+  }
 }
