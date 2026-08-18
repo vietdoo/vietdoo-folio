@@ -81,7 +81,9 @@ const spineVariants = [
   colSpan="md:col-span-1"
   rowSpan="md:row-span-2"
   href="/books"
-  padding="p-4 sm:p-5"
+  height="min-h-[298px] sm:min-h-[330px] md:h-full"
+  padding="p-3 sm:p-5"
+  arrowCorner
 >
   <div class="books-card-inner relative z-10 flex h-full select-none flex-col">
     <header class="books-card-header">
@@ -183,7 +185,7 @@ const spineVariants = [
   }
 
   .books-card-subtitle {
-    max-width: 190px;
+    max-width: min(190px, 72vw);
     margin: 6px 0 0;
     overflow: hidden;
     color: rgba(232, 226, 213, 0.61) !important;
@@ -560,19 +562,76 @@ const spineVariants = [
   }
 
   @media (max-width: 420px) {
+    .books-card-inner {
+      min-height: 270px;
+    }
+
+    .books-card-header {
+      gap: 8px;
+    }
+
+    .books-card-title {
+      font-size: 1.05rem;
+    }
+
+    .books-card-subtitle {
+      max-width: 68vw;
+      margin-top: 4px;
+      font-size: 0.64rem;
+    }
+
+    .books-card-count {
+      padding-top: 0;
+      font-size: 0.56rem;
+    }
+
+    .books-card-count strong {
+      font-size: 0.9rem;
+    }
+
     .bookshelf-scene {
-      margin-inline: -7px;
-      padding-inline: 3px;
+      min-height: 162px;
+      margin: 12px -5px 10px;
+      padding-inline: 2px;
     }
+
+    .bookshelf-crown {
+      top: 5px;
+      right: 8px;
+      left: 8px;
+    }
+
+    .bookshelf-cabinet {
+      min-height: 143px;
+    }
+
+    .bookshelf-back {
+      inset: 8px 6px 17px;
+    }
+
     .book-row {
+      min-height: 130px;
       gap: 2px;
-      padding-inline: 10px;
+      padding: 16px 8px 0;
     }
+
+    .book-spine {
+      max-width: 29px;
+      padding: 6px 2px 5px;
+    }
+
     .book-title {
-      font-size: 0.49rem;
+      font-size: 0.47rem;
     }
+
     .book-author {
       display: none;
+    }
+
+    .books-card-footer {
+      gap: 6px;
+      padding-top: 8px;
+      font-size: 0.59rem;
     }
   }
 

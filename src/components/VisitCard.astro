@@ -8,15 +8,37 @@ interface Props {
 
 const { colSpan = "md:col-span-1 lg:col-span-2" } = Astro.props;
 
-const visitedNames = ["HÀ NỘI", "ĐÀ NẴNG", "TP. HỒ CHÍ MINH", "HẢI PHÒNG", "LÂM ĐỒNG", "ĐỒNG NAI", "TÂY NINH", "KHÁNH HOÀ", "THANH HOÁ", "NINH BÌNH"];
-const textRow1 = [...visitedNames, ...visitedNames, ...visitedNames, ...visitedNames].join(" • ") + " • ";
-const textRow2 = [...visitedNames].reverse().concat([...visitedNames].reverse()).concat([...visitedNames].reverse()).join(" • ") + " • ";
+const visitedNames = [
+  "HÀ NỘI",
+  "ĐÀ NẴNG",
+  "TP. HỒ CHÍ MINH",
+  "HẢI PHÒNG",
+  "LÂM ĐỒNG",
+  "ĐỒNG NAI",
+  "TÂY NINH",
+  "KHÁNH HOÀ",
+  "THANH HOÁ",
+  "NINH BÌNH",
+];
+const textRow1 =
+  [...visitedNames, ...visitedNames, ...visitedNames, ...visitedNames].join(
+    " • ",
+  ) + " • ";
+const textRow2 =
+  [...visitedNames]
+    .reverse()
+    .concat([...visitedNames].reverse())
+    .concat([...visitedNames].reverse())
+    .join(" • ") + " • ";
 ---
 
 <Card
   colSpan={colSpan}
   href="visit"
   rowSpan="md:row-span-1"
+  height="h-[92px] sm:h-[108px]"
+  padding="p-3 sm:p-4"
+  arrowCorner
   title="Vietnam Journey"
 >
   <div
@@ -30,35 +52,48 @@ const textRow2 = [...visitedNames].reverse().concat([...visitedNames].reverse())
     </div>
 
     <!-- Edge Fades -->
-    <div class="absolute inset-x-0 top-0 h-6 z-10 bg-gradient-to-b from-darkslate-800 to-transparent pointer-events-none" />
-    <div class="absolute inset-x-0 bottom-0 h-6 z-10 bg-gradient-to-t from-darkslate-800 to-transparent pointer-events-none" />
+    <div
+      class="absolute inset-x-0 top-0 h-6 z-10 bg-gradient-to-b from-darkslate-800 to-transparent pointer-events-none"
+    >
+    </div>
+    <div
+      class="absolute inset-x-0 bottom-0 h-6 z-10 bg-gradient-to-t from-darkslate-800 to-transparent pointer-events-none"
+    >
+    </div>
 
     <!-- Rotated Marquee Text Container (-rotate-12 for diagonal slant) -->
     <div
-      class="transform -rotate-12 scale-125 flex flex-col gap-3 opacity-20 group-hover:opacity-40 transition-opacity duration-500 select-none"
+      class="transform -rotate-12 scale-110 sm:scale-125 flex flex-col gap-2.5 sm:gap-3 opacity-20 group-hover:opacity-40 transition-opacity duration-500 select-none"
     >
       <!-- Row 1: Left Scrolling -->
-      <div class="flex whitespace-nowrap gap-4 marquee-left text-xs font-extrabold uppercase tracking-widest text-primary-400">
+      <div
+        class="flex whitespace-nowrap gap-3 sm:gap-4 marquee-left text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-primary-400"
+      >
         <span>{textRow1}</span>
         <span>{textRow1}</span>
       </div>
 
       <!-- Row 2: Right Scrolling -->
-      <div class="flex whitespace-nowrap gap-4 marquee-right text-xs font-bold uppercase tracking-widest text-white/80">
+      <div
+        class="flex whitespace-nowrap gap-3 sm:gap-4 marquee-right text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/80"
+      >
         <span>{textRow2}</span>
         <span>{textRow2}</span>
       </div>
 
       <!-- Row 3: Left Scrolling -->
-      <div class="flex whitespace-nowrap gap-4 marquee-left text-xs font-extrabold uppercase tracking-widest text-primary-400">
+      <div
+        class="flex whitespace-nowrap gap-3 sm:gap-4 marquee-left text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-primary-400"
+      >
         <span>{textRow1}</span>
         <span>{textRow1}</span>
       </div>
     </div>
   </div>
 
-  <span class="text-xs text-white/60">
-    {SITE.visitedProvinces.length} {SITE.visitedProvinces.length === 1 ? "province" : "provinces"}
+  <span class="mt-auto text-[10px] sm:text-xs text-white/60">
+    {SITE.visitedProvinces.length}
+    {SITE.visitedProvinces.length === 1 ? "province" : "provinces"}
   </span>
 </Card>
 
@@ -84,5 +119,14 @@ const textRow2 = [...visitedNames].reverse().concat([...visitedNames].reverse())
   }
   .marquee-right {
     animation: marquee-right 18s linear infinite;
+  }
+
+  @media (max-width: 420px) {
+    .marquee-left {
+      animation-duration: 30s;
+    }
+    .marquee-right {
+      animation-duration: 26s;
+    }
   }
 </style>

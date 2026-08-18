@@ -6,26 +6,47 @@ import Card from "./Card/index.astro";
   href="/playground"
   colSpan="md:col-span-1"
   rowSpan="md:row-span-1"
+  height="h-[76px] sm:h-[92px]"
+  padding="p-3 sm:p-4"
+  arrowCorner
 >
-  <div slot="background" class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-    <div class="playground-grid-container w-full h-full grid grid-cols-8 grid-rows-4 p-2 gap-1.5 opacity-90">
-      {Array.from({ length: 32 }).map((_, i) => (
-        <div
-          class="pg-tile rounded-[3px] border border-white/5 bg-neutral-900/60 transition-all duration-300 ease-out"
-          data-index={i}
-        />
-      ))}
+  <div
+    slot="background"
+    class="absolute inset-0 overflow-hidden pointer-events-none"
+    aria-hidden="true"
+  >
+    <div
+      class="playground-grid-container w-full h-full grid grid-cols-8 grid-rows-4 p-3 sm:p-2 gap-1.5 opacity-90"
+    >
+      {
+        Array.from({ length: 32 }).map((_, i) => (
+          <div
+            class="pg-tile rounded-[3px] border border-white/5 bg-neutral-900/60 transition-all duration-300 ease-out"
+            data-index={i}
+          />
+        ))
+      }
     </div>
   </div>
-  <div class="flex-1 flex items-end pb-1">
-    <h2 class="text-base sm:text-lg md:text-xl font-bold m-0 text-white">Playground</h2>
+  <div class="flex-1 flex items-start">
+    <h2 class="text-[15px] sm:text-lg md:text-xl font-bold m-0 text-white">
+      Playground
+    </h2>
   </div>
 </Card>
 
 <style>
   .pg-tile.active {
-    background-color: color-mix(in srgb, var(--primary-500) 30%, transparent) !important;
-    border-color: color-mix(in srgb, var(--primary-500) 80%, transparent) !important;
+    background-color: color-mix(
+      in srgb,
+      var(--primary-500) 30%,
+      transparent
+    ) !important;
+    border-color: color-mix(
+      in srgb,
+      var(--primary-500) 80%,
+      transparent
+    ) !important;
     box-shadow: 0 0 8px color-mix(in srgb, var(--primary-500) 40%, transparent) !important;
     opacity: 1 !important;
   }
@@ -34,15 +55,15 @@ import Card from "./Card/index.astro";
 <script is:inline>
   (function setupPlayground() {
     function startAnimation() {
-      const container = document.querySelector('.playground-grid-container');
+      const container = document.querySelector(".playground-grid-container");
       if (!container) return;
-      const tiles = container.querySelectorAll('.pg-tile');
+      const tiles = container.querySelectorAll(".pg-tile");
       if (!tiles.length) return;
 
-      const card = container.closest('.card') || container.parentElement;
+      const card = container.closest(".card") || container.parentElement;
 
-      if (container.dataset.animated === 'true') return;
-      container.dataset.animated = 'true';
+      if (container.dataset.animated === "true") return;
+      container.dataset.animated = "true";
 
       // 1. Random ambient pulse: chỉ 1-2 ô ngẫu nhiên
       function pulse() {
@@ -52,10 +73,10 @@ import Card from "./Card/index.astro";
           const tile = tiles[randomIndex];
           if (!tile) continue;
 
-          tile.classList.add('active');
+          tile.classList.add("active");
           const duration = 600 + Math.random() * 600;
           setTimeout(() => {
-            tile.classList.remove('active');
+            tile.classList.remove("active");
           }, duration);
         }
       }
@@ -65,7 +86,7 @@ import Card from "./Card/index.astro";
 
       // 2. Interactive Mouse Trail: di chuột tới đâu các ô sáng lan theo tới đó
       if (card) {
-        card.addEventListener('mousemove', (e) => {
+        card.addEventListener("mousemove", (e) => {
           const rect = container.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
@@ -79,9 +100,9 @@ import Card from "./Card/index.astro";
 
             // Ô nằm trong bán kính 45px của con trỏ chuột sẽ sáng lan lên
             if (dist < 45) {
-              tile.classList.add('active');
+              tile.classList.add("active");
               setTimeout(() => {
-                tile.classList.remove('active');
+                tile.classList.remove("active");
               }, 400);
             }
           });
@@ -89,14 +110,14 @@ import Card from "./Card/index.astro";
       }
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', startAnimation);
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", startAnimation);
     } else {
       startAnimation();
     }
-    document.addEventListener('astro:page-load', () => {
-      const container = document.querySelector('.playground-grid-container');
-      if (container) container.dataset.animated = 'false';
+    document.addEventListener("astro:page-load", () => {
+      const container = document.querySelector(".playground-grid-container");
+      if (container) container.dataset.animated = "false";
       startAnimation();
     });
   })();
