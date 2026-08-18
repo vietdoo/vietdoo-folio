@@ -257,14 +257,14 @@ const jsonLdGraph = {
     <title>{title}</title>
     <meta content={description} name="description" />
     <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots" />
-    <meta name="theme-color" content="#171717" />
+    <meta name="theme-color" content="#141210" />
     <script is:inline>
       (() => {
         try {
           const theme = localStorage.getItem("portfolio:ui-mode") === "light" ? "light" : "dark";
           document.documentElement.dataset.uiTheme = theme;
           document.documentElement.style.colorScheme = theme;
-          document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "light" ? "#e8dfd0" : "#171717");
+          document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "light" ? "#eee7dc" : "#141210");
         } catch {
           document.documentElement.dataset.uiTheme = "dark";
         }
@@ -535,7 +535,7 @@ const jsonLdGraph = {
       const uiTheme = localStorage.getItem("portfolio:ui-mode") === "light" ? "light" : "dark";
       document.documentElement.dataset.uiTheme = uiTheme;
       document.documentElement.style.colorScheme = uiTheme;
-      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", uiTheme === "light" ? "#e8dfd0" : "#171717");
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", uiTheme === "light" ? "#eee7dc" : "#141210");
 
       const theme = localStorage.getItem("theme");
       if (theme && theme !== "default") {
