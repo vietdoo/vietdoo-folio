@@ -70,6 +70,7 @@ function titleCase(value: string) {
 export default function AdminDashboard() {
   const [authenticated, setAuthenticated] = createSignal(false);
   const [checking, setChecking] = createSignal(true);
+  const [username, setUsername] = createSignal("");
   const [password, setPassword] = createSignal("");
   const [passwordVisible, setPasswordVisible] = createSignal(false);
   const [loginError, setLoginError] = createSignal("");
@@ -176,12 +177,16 @@ export default function AdminDashboard() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "same-origin",
-        body: JSON.stringify({ password: password() }),
+        body: JSON.stringify({
+          username: username().trim(),
+          password: password(),
+        }),
       });
       if (!response.ok) {
         const body = await response.json().catch(() => ({}));
-        throw new Error(body.error ?? "Invalid password.");
+        throw new Error(body.error ?? "Invalid username or password.");
       }
+      setUsername("");
       setPassword("");
       setPasswordVisible(false);
       await loadData();
@@ -269,10 +274,23 @@ export default function AdminDashboard() {
                   Review request activity and keep the routing layer in order.
                 </p>
                 <form onSubmit={login} class="login-form">
-                  <label for="admin-password">Admin password</label>
+                  <label for="admin-username">Username</label>
+                  <input
+                    id="admin-username"
+                    name="username"
+                    type="text"
+                    value={username()}
+                    onInput={(event) => setUsername(event.currentTarget.value)}
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                    spellcheck={false}
+                    required
+                  />
+                  <label for="admin-password">Password</label>
                   <div class="password-field">
                     <input
                       id="admin-password"
+                      name="password"
                       type={passwordVisible() ? "text" : "password"}
                       value={password()}
                       onInput={(event) => setPassword(event.currentTarget.value)}
