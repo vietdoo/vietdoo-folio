@@ -71,6 +71,7 @@ export default function AdminDashboard() {
   const [authenticated, setAuthenticated] = createSignal(false);
   const [checking, setChecking] = createSignal(true);
   const [password, setPassword] = createSignal("");
+  const [passwordVisible, setPasswordVisible] = createSignal(false);
   const [loginError, setLoginError] = createSignal("");
   const [loginLoading, setLoginLoading] = createSignal(false);
   const [view, setView] = createSignal<View>("overview");
@@ -120,6 +121,7 @@ export default function AdminDashboard() {
       if (!response.ok) throw new Error("Summary is temporarily unavailable.");
       const body = await response.json();
       setAiSummary(body.summary ?? null);
+      if (body.warning) setDataError(body.warning);
     } catch (error) {
       setAiSummaryError(
         error instanceof Error
@@ -152,6 +154,7 @@ export default function AdminDashboard() {
       setModels(modelsBody.models ?? []);
       setLogs(logsBody.logs ?? []);
       setTotalLogs(logsBody.total ?? 0);
+      setDataError(logsBody.warning ?? "");
       setAuthenticated(true);
       void loadAiSummary();
     } catch (error) {
@@ -180,6 +183,7 @@ export default function AdminDashboard() {
         throw new Error(body.error ?? "Invalid password.");
       }
       setPassword("");
+      setPasswordVisible(false);
       await loadData();
     } catch (error) {
       setLoginError(
@@ -266,15 +270,26 @@ export default function AdminDashboard() {
                 </p>
                 <form onSubmit={login} class="login-form">
                   <label for="admin-password">Admin password</label>
-                  <input
-                    id="admin-password"
-                    type="password"
-                    value={password()}
-                    onInput={(event) => setPassword(event.currentTarget.value)}
-                    placeholder="Enter your password"
-                    autocomplete="current-password"
-                    required
-                  />
+                  <div class="password-field">
+                    <input
+                      id="admin-password"
+                      type={passwordVisible() ? "text" : "password"}
+                      value={password()}
+                      onInput={(event) => setPassword(event.currentTarget.value)}
+                      placeholder="Enter your password"
+                      autocomplete="current-password"
+                      spellcheck={false}
+                      required
+                    />
+                    <button
+                      class="password-visibility"
+                      type="button"
+                      onClick={() => setPasswordVisible((visible) => !visible)}
+                      aria-label={passwordVisible() ? "Hide password" : "Show password"}
+                    >
+                      {passwordVisible() ? "Hide" : "Show"}
+                    </button>
+                  </div>
                   <Show when={loginError()}>
                     <div class="form-error">{loginError()}</div>
                   </Show>
