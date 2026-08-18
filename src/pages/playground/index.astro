@@ -32,20 +32,29 @@ const projects = [
   },
   {
     title: "Color contrast checker",
-    description: "WCAG accessibility contrast ratio calculator for text and background colors",
+    description:
+      "WCAG accessibility contrast ratio calculator for text and background colors",
     slug: "/color-contrast",
     tags: ["SolidJS", "Design"],
   },
   {
     title: "Meta tag generator",
-    description: "Generate SEO and Open Graph meta tags with social card live previews",
+    description:
+      "Generate SEO and Open Graph meta tags with social card live previews",
     slug: "/meta-tag-generator",
     tags: ["SolidJS", "SEO"],
   },
   {
     title: "Task agent",
-    description: "AI chat assistant with task assignment, action approval, and feedback flows",
+    description:
+      "AI chat assistant with task assignment, action approval, and feedback flows",
     slug: "/task-agent",
+    tags: ["SolidJS", "AI"],
+  },
+  {
+    title: "Image describer",
+    description: "Upload an image and generate a clear visual description",
+    slug: "/image-description",
     tags: ["SolidJS", "AI"],
   },
   {
@@ -62,12 +71,19 @@ const projects = [
 <Layout
   title={`${SITE.author.fullNameVi} (${SITE.author.shortName}) — Playground`}
   description={`Interactive web utilities, SolidJS components, tools, and creative engineering experiments by ${SITE.author.fullNameVi} (${SITE.author.shortName}), Software Engineer @ ${SITE.author.companyVi}.`}
-  keywords={["Do Quoc Viet playground", "vietdoo playground", "vietdoo web tools", "vietdoo solidjs experiments"]}
+  keywords={[
+    "Do Quoc Viet playground",
+    "vietdoo playground",
+    "vietdoo web tools",
+    "vietdoo solidjs experiments",
+  ]}
 >
   <main
     class="w-full min-h-screen flex flex-col justify-start items-start max-w-3xl mx-auto px-3.5 sm:px-8 py-6 sm:py-8 text-white"
   >
-    <h1 class="text-2xl sm:text-4xl font-bold mb-4 text-neutral-100">Playground</h1>
+    <h1 class="text-2xl sm:text-4xl font-bold mb-4 text-neutral-100">
+      Playground
+    </h1>
     <div class="grid grid-cols-2 gap-4 w-full" id="playground-grid">
       {
         projects.map((project, i) => (
@@ -107,7 +123,10 @@ const projects = [
         ))
       }
     </div>
-    <div id="playground-empty" class="hidden text-neutral-400 text-sm py-12 w-full text-center font-mono">
+    <div
+      id="playground-empty"
+      class="hidden text-neutral-400 text-sm py-12 w-full text-center font-mono"
+    >
       No playground tools match your search query.
     </div>
   </main>
@@ -133,7 +152,10 @@ const projects = [
       });
 
       if (emptyMsg) {
-        emptyMsg.classList.toggle("hidden", matchCount > 0 || cards.length === 0);
+        emptyMsg.classList.toggle(
+          "hidden",
+          matchCount > 0 || cards.length === 0,
+        );
       }
     }
 
@@ -149,4 +171,3 @@ const projects = [
   document.addEventListener("astro:page-load", setupPlaygroundSearch);
   setupPlaygroundSearch();
 </script>
-
