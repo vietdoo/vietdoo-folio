@@ -1,41 +1,29 @@
-@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
 
 :root {
-  /* Warm editorial neutrals: softer than pure black/white, still high-contrast. */
-  --darkslate-50: #f8f4ee;
-  --darkslate-100: #e8e1d8;
-  --darkslate-200: #c9c0b6;
-  --darkslate-300: #9d9389;
-  --darkslate-400: #6e655d;
-  --darkslate-500: #433d38;
-  --darkslate-600: #302a26;
-  --darkslate-700: #25211e;
-  --darkslate-800: #1b1816;
-  --darkslate-900: #141210;
+  --darkslate-50: #f7f7f7;
+  --darkslate-100: #e3e3e3;
+  --darkslate-200: #c9c9c9;
+  --darkslate-300: #9a9a9a;
+  --darkslate-400: #383838;
+  --darkslate-500: #171717;
+  --darkslate-600: #141414;
+  --darkslate-700: #111111;
+  --darkslate-800: #0e0e0e;
+  --darkslate-900: #0b0b0b;
 
-  /* Restrained terracotta accent: warmer and less electric than the old blue. */
-  --primary-100: #f5dfd7;
-  --primary-200: #eac1b2;
-  --primary-300: #d99b84;
-  --primary-400: #c57a63;
-  --primary-500: #a85e4c;
-  --primary-600: #8e4c3d;
-  --primary-700: #743b31;
-  --primary-800: #5a2d27;
-  --primary-900: #3d1e1b;
+  --primary-100: #bbdefb;
+  --primary-200: #90caf9;
+  --primary-300: #64b5f6;
+  --primary-400: #42a5f5;
+  --primary-500: #2196f3;
+  --primary-600: #1e88e5;
+  --primary-700: #1976d2;
+  --primary-800: #1565c0;
+  --primary-900: #0d47a1;
 
-  --accent-cool: #86a8a8;
-  --accent-success: #83a486;
-  --accent-warning: #c49a64;
-  --accent-danger: #b9695f;
-  --on-accent: #fff8f1;
-
-  --font-cabinet-grotesk:
-    "Plus Jakarta Sans", "Be Vietnam Pro", "CabinetGrotesk", "Cabinet Grotesk",
-    system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-satoshi:
-    "Inter", "Be Vietnam Pro", "Satoshi", system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-cabinet-grotesk: "Plus Jakarta Sans", "Be Vietnam Pro", "CabinetGrotesk", "Cabinet Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-satoshi: "Inter", "Be Vietnam Pro", "Satoshi", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .yellow-theme {
@@ -318,15 +306,11 @@
 
 /* ── Paper style ──────────────────────────────────────────── */
 .style-paper {
-  background: var(--light-paper, #eee7dc) !important;
+  background: #f0ebe0 !important;
 }
 
 .style-paper::before {
-  --line-color: color-mix(
-    in srgb,
-    var(--light-ink, #51433d) 10%,
-    transparent
-  ) !important;
+  --line-color: rgba(0, 0, 0, 0.06) !important;
   --line-size: 32px !important;
   background:
     linear-gradient(90deg, var(--line-color) 1px, transparent 1px) center / 32px
@@ -337,8 +321,8 @@
 }
 
 .style-paper .card {
-  background: var(--light-card, #faf5ec) !important;
-  border: 1px solid var(--light-line, rgba(81, 67, 61, 0.18)) !important;
+  background: #faf7f2 !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
   border-radius: 6px !important;
   box-shadow:
     2px 2px 0 rgba(0, 0, 0, 0.06),
@@ -367,42 +351,38 @@
 .style-paper span,
 .style-paper time,
 .style-paper a {
-  color: var(--light-ink-strong, #2f2522) !important;
+  color: #1a1208 !important;
 }
 
 .style-paper #sound-toggle,
 .style-paper .style-btn-panel {
-  background: var(--light-card, #faf5ec) !important;
-  border-color: var(--light-line, rgba(81, 67, 61, 0.18)) !important;
-  box-shadow: 0 8px 20px var(--light-shadow, rgba(81, 67, 61, 0.12)) !important;
+  background: #faf7f2 !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.06) !important;
 }
 
 .style-paper #sound-toggle {
-  color: var(--light-ink-strong, #2f2522) !important;
+  color: #1a1208 !important;
 }
 .style-paper .style-btn {
-  color: color-mix(
-    in srgb,
-    var(--light-ink, #51433d) 42%,
-    transparent
-  ) !important;
+  color: rgba(26, 18, 8, 0.4) !important;
 }
 .style-paper .style-btn:hover {
-  color: var(--light-ink-strong, #2f2522) !important;
+  color: rgba(26, 18, 8, 0.9) !important;
 }
 
 .style-paper .card button:not(.theme-btn) {
-  background: var(--light-card, #faf5ec) !important;
-  border-color: var(--light-line, rgba(81, 67, 61, 0.18)) !important;
+  background: #faf7f2 !important;
+  border-color: rgba(26, 18, 8, 0.2) !important;
   border-radius: 6px !important;
-  color: var(--light-ink-strong, #2f2522) !important;
-  box-shadow: 0 6px 16px var(--light-shadow, rgba(81, 67, 61, 0.12)) !important;
+  color: #1a1208 !important;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.08) !important;
   font-family: var(--font-satoshi), "Satoshi", sans-serif !important;
 }
 .style-paper .card button:not(.theme-btn):hover {
-  background: var(--light-paper-deep, #e2d7c7) !important;
-  border-color: var(--light-line-strong, rgba(81, 67, 61, 0.32)) !important;
-  box-shadow: 0 10px 22px var(--light-shadow, rgba(81, 67, 61, 0.16)) !important;
+  background: #f0ebe0 !important;
+  border-color: rgba(26, 18, 8, 0.35) !important;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.12) !important;
 }
 
 /* ── Globe per-style filters ─────────────────────────────── */
@@ -483,17 +463,17 @@
 }
 
 .style-paper .bg-neutral-900 {
-  background: var(--light-card, #faf5ec) !important;
-  color: var(--light-ink-strong, #2f2522) !important;
-  border-color: var(--light-line, rgba(81, 67, 61, 0.18)) !important;
+  background: #faf7f2 !important;
+  color: #1a1208 !important;
+  border-color: rgba(26, 18, 8, 0.2) !important;
   border-radius: 6px !important;
   box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.08) !important;
   font-family: var(--font-satoshi), "Satoshi", sans-serif !important;
 }
 .style-paper .bg-neutral-900:hover {
-  background: var(--light-paper-deep, #e2d7c7) !important;
-  border-color: var(--light-line-strong, rgba(81, 67, 61, 0.32)) !important;
-  box-shadow: 0 10px 22px var(--light-shadow, rgba(81, 67, 61, 0.16)) !important;
+  background: #f0ebe0 !important;
+  border-color: rgba(26, 18, 8, 0.35) !important;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.12) !important;
 }
 
 html {
@@ -575,9 +555,7 @@ body::before {
 
 /* ── Language Toggle Buttons ── */
 [data-lang-toggle] [data-lang-option] {
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
   background-color: transparent !important;
   color: var(--darkslate-200, #c9c9c9) !important;
 }
@@ -598,19 +576,20 @@ body::before {
   font-weight: 500 !important;
 }
 
+
 /* ── Chimes-inspired light UI mode ─────────────────────────── */
 html[data-ui-theme="light"] {
   color-scheme: light;
-  --light-paper: #eee7dc;
-  --light-paper-deep: #e2d7c7;
-  --light-surface: #f6f0e7;
-  --light-surface-strong: #fcf9f4;
-  --light-ink: #51433d;
-  --light-ink-strong: #2f2522;
-  --light-ink-soft: #76665f;
-  --light-line: rgba(81, 67, 61, 0.18);
-  --light-accent: #a85e4c;
-  --light-accent-strong: #824536;
+  --light-paper: #e8dfd0;
+  --light-paper-deep: #ddd0bd;
+  --light-surface: #f5efe5;
+  --light-surface-strong: #fbf7f0;
+  --light-ink: #58423c;
+  --light-ink-strong: #3a2d2a;
+  --light-ink-soft: #806a5d;
+  --light-line: rgba(88, 66, 60, 0.2);
+  --light-accent: #8d4e3f;
+  --light-accent-strong: #733a30;
 }
 
 html[data-ui-theme="light"] body {
@@ -620,13 +599,11 @@ html[data-ui-theme="light"] body {
 }
 
 html[data-ui-theme="light"] body::before {
-  --line-color: color-mix(in srgb, var(--light-ink) 10%, transparent);
+  --line-color: rgba(88, 66, 60, 0.075);
   --line-size: 52px;
   background:
-    linear-gradient(90deg, var(--line-color) 1px, transparent 1px) center /
-      var(--line-size) var(--line-size),
-    linear-gradient(var(--line-color) 1px, transparent 1px) center /
-      var(--line-size) var(--line-size);
+    linear-gradient(90deg, var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size),
+    linear-gradient(var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size);
   -webkit-mask: linear-gradient(-360deg, transparent 12%, white 85%);
   mask: linear-gradient(-360deg, transparent 12%, white 85%);
   opacity: 0.75;
@@ -687,11 +664,7 @@ html[data-ui-theme="light"] .bg-darkslate-950 {
 html[data-ui-theme="light"] .bg-darkslate-800,
 html[data-ui-theme="light"] .bg-darkslate-800\/80,
 html[data-ui-theme="light"] .bg-darkslate-800\/95 {
-  background-color: color-mix(
-    in srgb,
-    var(--light-surface) 92%,
-    transparent
-  ) !important;
+  background-color: color-mix(in srgb, var(--light-surface) 92%, transparent) !important;
 }
 
 html[data-ui-theme="light"] .bg-darkslate-700,
@@ -750,11 +723,7 @@ html[data-ui-theme="light"] .hover\:border-primary-500:hover {
 
 html[data-ui-theme="light"] .folio-theme-toggle {
   color: var(--light-ink) !important;
-  background: color-mix(
-    in srgb,
-    var(--light-surface-strong) 84%,
-    transparent
-  ) !important;
+  background: color-mix(in srgb, var(--light-surface-strong) 84%, transparent) !important;
   border-color: var(--light-line) !important;
   box-shadow: 0 2px 10px rgba(88, 66, 60, 0.08);
 }
@@ -794,60 +763,42 @@ html[data-ui-theme="light"] .folio-theme-toggle:hover {
   }
 }
 
+
 /* ── Light UI refinement pass: editorial paper system ─────────── */
 html[data-ui-theme="light"] {
-  --light-paper: #eee7dc;
-  --light-paper-deep: #e2d7c7;
-  --light-surface: #f6f0e7;
-  --light-surface-strong: #fcf9f4;
-  --light-card: #faf5ec;
-  --light-card-hover: #fffaf4;
-  --light-ink: #51433d;
-  --light-ink-strong: #2f2522;
-  --light-ink-soft: #76665f;
-  --light-ink-faint: #96857c;
-  --light-line: rgba(81, 67, 61, 0.18);
-  --light-line-strong: rgba(81, 67, 61, 0.32);
-  --light-accent: #a85e4c;
-  --light-accent-strong: #824536;
-  --light-accent-soft: #d18a72;
-  --light-info: #6f9293;
-  --light-success: #708e77;
-  --light-warning: #b88954;
-  --light-danger: #a85c54;
-  --light-shadow: rgba(81, 67, 61, 0.12);
+  --light-paper: #e9dfcf;
+  --light-paper-deep: #dfd1bd;
+  --light-surface: #f2eadc;
+  --light-surface-strong: #fbf7ef;
+  --light-card: #f7f0e4;
+  --light-card-hover: #fffaf2;
+  --light-ink: #4c3933;
+  --light-ink-strong: #2f2421;
+  --light-ink-soft: #756158;
+  --light-ink-faint: #927f74;
+  --light-line: rgba(76, 57, 51, 0.22);
+  --light-line-strong: rgba(76, 57, 51, 0.38);
+  --light-accent: #8b493b;
+  --light-accent-strong: #6f342c;
+  --light-accent-soft: #c48169;
+  --light-shadow: rgba(76, 57, 51, 0.14);
 }
 
 html[data-ui-theme="light"] body {
   color: var(--light-ink) !important;
-  font-family:
-    "Be Vietnam Pro",
-    "Inter",
-    system-ui,
-    -apple-system,
-    sans-serif !important;
+  font-family: "Be Vietnam Pro", "Inter", system-ui, -apple-system, sans-serif !important;
   font-size: 15px;
   line-height: 1.6;
 }
 
 html[data-ui-theme="light"] body::before {
-  --line-color: color-mix(in srgb, var(--light-ink) 8%, transparent);
+  --line-color: rgba(76, 57, 51, 0.065);
   --line-size: 56px;
   background:
-    radial-gradient(
-      circle at 18% 8%,
-      rgba(255, 250, 241, 0.48),
-      transparent 34%
-    ),
-    radial-gradient(
-      circle at 82% 22%,
-      rgba(139, 73, 59, 0.055),
-      transparent 30%
-    ),
-    linear-gradient(90deg, var(--line-color) 1px, transparent 1px) center /
-      var(--line-size) var(--line-size),
-    linear-gradient(var(--line-color) 1px, transparent 1px) center /
-      var(--line-size) var(--line-size);
+    radial-gradient(circle at 18% 8%, rgba(255, 250, 241, 0.48), transparent 34%),
+    radial-gradient(circle at 82% 22%, rgba(139, 73, 59, 0.055), transparent 30%),
+    linear-gradient(90deg, var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size),
+    linear-gradient(var(--line-color) 1px, transparent 1px) center / var(--line-size) var(--line-size);
   opacity: 0.9;
 }
 
@@ -871,12 +822,7 @@ html[data-ui-theme="light"] dt,
 html[data-ui-theme="light"] label,
 html[data-ui-theme="light"] blockquote {
   color: var(--light-ink) !important;
-  font-family:
-    "Be Vietnam Pro",
-    "Inter",
-    system-ui,
-    -apple-system,
-    sans-serif !important;
+  font-family: "Be Vietnam Pro", "Inter", system-ui, -apple-system, sans-serif !important;
   line-height: 1.62;
 }
 
@@ -884,20 +830,14 @@ html[data-ui-theme="light"] code,
 html[data-ui-theme="light"] pre,
 html[data-ui-theme="light"] time,
 html[data-ui-theme="light"] .font-mono {
-  font-family:
-    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace !important;
 }
 
 html[data-ui-theme="light"] button,
 html[data-ui-theme="light"] input,
 html[data-ui-theme="light"] textarea,
 html[data-ui-theme="light"] select {
-  font-family:
-    "Be Vietnam Pro",
-    "Inter",
-    system-ui,
-    -apple-system,
-    sans-serif;
+  font-family: "Be Vietnam Pro", "Inter", system-ui, -apple-system, sans-serif;
 }
 
 html[data-ui-theme="light"] a {
@@ -916,17 +856,13 @@ html[data-ui-theme="light"] .card {
   color: var(--light-ink) !important;
   border-color: var(--light-line) !important;
   border-radius: 14px !important;
-  box-shadow:
-    0 12px 28px var(--light-shadow),
-    0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
+  box-shadow: 0 12px 28px var(--light-shadow), 0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
 }
 
 html[data-ui-theme="light"] .card:hover {
   background: var(--light-card-hover) !important;
   border-color: var(--light-line-strong) !important;
-  box-shadow:
-    0 16px 34px rgba(76, 57, 51, 0.18),
-    0 1px 0 rgba(255, 255, 255, 0.7) inset !important;
+  box-shadow: 0 16px 34px rgba(76, 57, 51, 0.18), 0 1px 0 rgba(255, 255, 255, 0.7) inset !important;
 }
 
 html[data-ui-theme="light"] .card h2,
@@ -979,9 +915,7 @@ html[data-ui-theme="light"] .card:has(#memoji-avatar) .text-darkslate-300 {
   color: var(--light-ink-soft) !important;
 }
 
-html[data-ui-theme="light"]
-  .card:has(#memoji-avatar)
-  [class*="bg-darkslate-700"] {
+html[data-ui-theme="light"] .card:has(#memoji-avatar) [class*="bg-darkslate-700"] {
   background: var(--light-surface-strong) !important;
   border-color: var(--light-line-strong) !important;
 }
@@ -1000,17 +934,14 @@ html[data-ui-theme="light"] .blog-card-shell .blog-recent-feed h4 {
   color: var(--light-ink-strong) !important;
 }
 
-html[data-ui-theme="light"]
-  .blog-card-shell
-  .blog-recent-feed
-  .text-primary-400\/90 {
+html[data-ui-theme="light"] .blog-card-shell .blog-recent-feed .text-primary-400\/90 {
   color: var(--light-accent-strong) !important;
 }
 
 html[data-ui-theme="light"] .blog-billboard-container {
-  background: var(--light-ink-strong) !important;
+  background: #5a4039 !important;
   border-color: var(--light-line-strong) !important;
-  box-shadow: 0 10px 22px var(--light-shadow) !important;
+  box-shadow: 0 10px 22px rgba(76, 57, 51, 0.16) !important;
 }
 
 html[data-ui-theme="light"] .blog-billboard-container .text-white\/70 {
@@ -1023,23 +954,19 @@ html[data-ui-theme="light"] .blog-billboard-container .text-white\/40 {
 
 /* The journey card remains an intentional dark editorial strip for marquee contrast. */
 html[data-ui-theme="light"] .card:has(.marquee-left) {
-  background: var(--light-ink-strong) !important;
-  color: var(--on-accent) !important;
-  border-color: color-mix(
-    in srgb,
-    var(--light-accent) 52%,
-    var(--light-ink-strong)
-  ) !important;
-  box-shadow: 0 12px 28px var(--light-shadow) !important;
+  background: #5a4039 !important;
+  color: #fff9f0 !important;
+  border-color: #765247 !important;
+  box-shadow: 0 12px 28px rgba(76, 57, 51, 0.2) !important;
 }
 
 html[data-ui-theme="light"] .card:has(.marquee-left) .bg-darkslate-800 {
-  background: var(--light-ink-strong) !important;
+  background: #5a4039 !important;
 }
 
 html[data-ui-theme="light"] .card:has(.marquee-left) h2,
 html[data-ui-theme="light"] .card:has(.marquee-left) .text-white\/60 {
-  color: var(--on-accent) !important;
+  color: #fff9f0 !important;
 }
 
 /* Header and search controls: dark ink pills against paper, not pale-on-pale controls. */
@@ -1085,16 +1012,12 @@ html[data-ui-theme="light"] #formatToggle {
   border-color: var(--light-line-strong) !important;
 }
 
-html[data-ui-theme="light"]
-  [data-lang-toggle]
-  [data-lang-option][data-active="true"] {
+html[data-ui-theme="light"] [data-lang-toggle] [data-lang-option][data-active="true"] {
   background: var(--light-accent) !important;
   color: #fff9f0 !important;
 }
 
-html[data-ui-theme="light"]
-  [data-lang-toggle]
-  [data-lang-option][data-active="false"] {
+html[data-ui-theme="light"] [data-lang-toggle] [data-lang-option][data-active="false"] {
   color: var(--light-ink-soft) !important;
 }
 
@@ -1105,9 +1028,7 @@ html[data-ui-theme="light"]
 
   html[data-ui-theme="light"] .card {
     border-radius: 12px !important;
-    box-shadow:
-      0 8px 20px rgba(76, 57, 51, 0.13),
-      0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
+    box-shadow: 0 8px 20px rgba(76, 57, 51, 0.13), 0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
   }
 }
 
@@ -1117,6 +1038,7 @@ html[data-ui-theme="light"]
     display: none !important;
   }
 }
+
 
 /* ── Inner-page reading refinement ───────────────────────────── */
 html[data-ui-theme="light"] .blog-meta-panel {
@@ -1173,9 +1095,7 @@ html[data-ui-theme="light"] .blog-reading-content :where(blockquote) {
   padding: 0.8rem 1rem;
 }
 
-html[data-ui-theme="light"]
-  .blog-reading-content
-  :where(code):not(:where([class~="not-prose"] *)) {
+html[data-ui-theme="light"] .blog-reading-content :where(code):not(:where([class~="not-prose"] *)) {
   background: rgba(139, 73, 59, 0.1);
   border-radius: 4px;
   padding: 0.12em 0.3em;
@@ -1188,94 +1108,4 @@ html[data-ui-theme="light"] .mobile-search-panel input::placeholder {
 
 html[data-ui-theme="light"] .desktop-search-form input {
   color: #fff9f0 !important;
-}
-
-/* ── Harmonized editorial palette ─────────────────────────────── */
-html[data-ui-theme="light"] header nav.bg-transparent {
-  background: color-mix(
-    in srgb,
-    var(--light-surface-strong) 88%,
-    transparent
-  ) !important;
-  border: 1px solid var(--light-line) !important;
-  border-radius: 1.25rem;
-  box-shadow: 0 8px 24px var(--light-shadow) !important;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-}
-
-html[data-ui-theme="light"] nav a.text-white,
-html[data-ui-theme="light"] nav span.text-white {
-  color: var(--light-ink-strong) !important;
-}
-
-html[data-ui-theme="light"] nav .text-darkslate-200,
-html[data-ui-theme="light"] nav .text-darkslate-300 {
-  color: var(--light-ink-soft) !important;
-}
-
-html[data-ui-theme="light"] .card:not(:has(.marquee-left)) {
-  background-color: var(--light-card) !important;
-  border-color: var(--light-line) !important;
-  box-shadow:
-    0 8px 20px var(--light-shadow),
-    0 1px 0 rgba(255, 255, 255, 0.58) inset !important;
-}
-
-html[data-ui-theme="light"] .card:not(:has(.marquee-left)):hover {
-  border-color: var(--light-line-strong) !important;
-  box-shadow:
-    0 12px 28px var(--light-shadow),
-    0 1px 0 rgba(255, 255, 255, 0.7) inset !important;
-}
-
-html[data-ui-theme="light"] nav a.bg-primary-500,
-html[data-ui-theme="light"] a.bg-primary-500,
-html[data-ui-theme="light"] button.bg-primary-500,
-html[data-ui-theme="light"]
-  [data-lang-toggle]
-  [data-lang-option][data-active="true"] {
-  color: var(--on-accent) !important;
-}
-
-html[data-ui-theme="light"] .blog-reading-content {
-  --tw-prose-pre-code: var(--on-accent);
-  --tw-prose-pre-bg: var(--light-ink-strong);
-}
-
-html[data-ui-theme="light"] .blog-reading-content :where(blockquote) {
-  background: color-mix(
-    in srgb,
-    var(--light-accent-soft) 10%,
-    var(--light-surface-strong)
-  );
-}
-
-html[data-ui-theme="light"]
-  .blog-reading-content
-  :where(code):not(:where([class~="not-prose"] *)) {
-  background: color-mix(
-    in srgb,
-    var(--light-accent) 12%,
-    var(--light-surface-strong)
-  );
-}
-
-html[data-ui-theme="dark"] body,
-html:not([data-ui-theme="light"]) body {
-  background-color: var(--darkslate-900) !important;
-}
-
-html[data-ui-theme="dark"] body::before,
-html:not([data-ui-theme="light"]) body::before {
-  opacity: 0.7;
-}
-
-html[data-ui-theme="dark"] .card,
-html:not([data-ui-theme="light"]) .card {
-  border-color: color-mix(
-    in srgb,
-    var(--darkslate-100) 14%,
-    transparent
-  ) !important;
 }
