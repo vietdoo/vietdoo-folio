@@ -742,10 +742,86 @@ import AdminDashboard from "../../components/admin/AdminDashboard";
     align-items: center;
     gap: 8px;
   }
+  .provider-sessions {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .provider-session {
+    overflow: hidden;
+    border: 1px solid #202b37;
+    border-radius: 16px;
+    background: #10161d;
+  }
+  .provider-session-header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 17px 19px;
+    border-bottom: 1px solid #202b37;
+  }
+  .provider-session-mark {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 auto;
+    border: 1px solid #34506a;
+    border-radius: 10px;
+    color: #72bfff;
+    font-size: 10px;
+    font-weight: 900;
+  }
+  .provider-session-copy {
+    min-width: 0;
+    flex: 1;
+  }
+  .provider-session-copy .eyebrow {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .provider-session-copy h3 {
+    margin: 0;
+    color: #eaf0f7;
+    font-size: 15px;
+    letter-spacing: -0.025em;
+  }
+  .provider-session-copy p {
+    display: flex;
+    gap: 7px;
+    margin: 4px 0 0;
+    color: #69788a;
+    font-size: 10px;
+  }
+  .provider-session-health {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #69788a;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  .session-health-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #72dda0;
+    box-shadow: 0 0 0 4px rgba(104, 219, 151, 0.1);
+  }
+  .session-health-dot.offline {
+    background: #cf8d74;
+    box-shadow: 0 0 0 4px rgba(207, 141, 116, 0.1);
+  }
+  .provider-model-grid {
+    padding: 13px;
+  }
   .model-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 13px;
+  }
+  .provider-model-grid.model-grid {
+    margin: 0;
   }
   .model-card {
     min-height: 208px;
@@ -796,17 +872,36 @@ import AdminDashboard from "../../components/admin/AdminDashboard";
     color: #72dda0;
   }
   .model-card-title {
-    margin: 22px 0 12px;
+    min-width: 0;
+    margin: 18px 0 12px;
+  }
+  .model-id-label {
+    display: block;
+    margin-bottom: 5px;
+    color: #69788a;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.13em;
   }
   .model-card-title h3 {
+    display: -webkit-box;
+    overflow: hidden;
     margin: 0 0 5px;
     color: #eaf0f7;
-    font-size: 14px;
-    letter-spacing: -0.025em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
-  .model-card-title span {
+  .model-card-title p {
+    overflow: hidden;
+    margin: 0;
     color: #69788a;
     font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .card-capabilities {
     min-height: 30px;
@@ -1129,7 +1224,12 @@ import AdminDashboard from "../../components/admin/AdminDashboard";
     border-top-color: var(--admin-accent);
   }
   .admin-login-page {
-    background: radial-gradient(circle at 50% 0%, #eee8df 0, #f6f4ef 55%, #f1eee8 100%);
+    background: radial-gradient(
+      circle at 50% 0%,
+      #eee8df 0,
+      #f6f4ef 55%,
+      #f1eee8 100%
+    );
   }
   .login-glow {
     display: none;
@@ -1513,6 +1613,39 @@ import AdminDashboard from "../../components/admin/AdminDashboard";
   .log-summary {
     color: var(--admin-muted);
   }
+  .provider-session {
+    border-color: var(--admin-border-soft);
+    border-radius: 14px;
+    background: #faf8f4;
+    box-shadow: 0 8px 24px rgba(76, 65, 53, 0.035);
+  }
+  .provider-session-header {
+    border-bottom-color: var(--admin-border-soft);
+    background: #f7f3ee;
+  }
+  .provider-session-mark {
+    border-color: #d7c1b2;
+    color: var(--admin-accent-dark);
+    background: #faf1ea;
+  }
+  .provider-session-copy h3 {
+    color: var(--admin-ink);
+  }
+  .provider-session-copy p,
+  .provider-session-health {
+    color: var(--admin-muted);
+  }
+  .session-health-dot {
+    background: var(--admin-success);
+    box-shadow: 0 0 0 4px rgba(93, 132, 103, 0.1);
+  }
+  .session-health-dot.offline {
+    background: var(--admin-danger);
+    box-shadow: 0 0 0 4px rgba(174, 91, 72, 0.1);
+  }
+  .provider-model-grid {
+    background: #fdfbf8;
+  }
   .model-card {
     border-color: var(--admin-border-soft);
     border-radius: 12px;
@@ -1543,7 +1676,10 @@ import AdminDashboard from "../../components/admin/AdminDashboard";
   .model-card-title h3 {
     color: var(--admin-ink);
   }
-  .model-card-title span,
+  .model-id-label {
+    color: #a18d7d;
+  }
+  .model-card-title p,
   .model-card-footer,
   .model-card-footer strong {
     color: var(--admin-muted);
@@ -1837,7 +1973,12 @@ import AdminDashboard from "../../components/admin/AdminDashboard";
     border-radius: 999px;
     background: #e9e1d7;
     animation: admin-loading-shimmer 1.8s ease-in-out infinite;
-    background-image: linear-gradient(100deg, #e9e1d7 20%, #f8f4ee 42%, #e9e1d7 64%);
+    background-image: linear-gradient(
+      100deg,
+      #e9e1d7 20%,
+      #f8f4ee 42%,
+      #e9e1d7 64%
+    );
     background-size: 220% 100%;
   }
   .admin-loading-avatar {
@@ -1970,6 +2111,30 @@ import AdminDashboard from "../../components/admin/AdminDashboard";
     }
   }
 
+  @media (max-width: 720px) {
+    .provider-session-header {
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .provider-session-health {
+      width: 100%;
+      padding-left: 51px;
+    }
+    .provider-model-grid {
+      padding: 10px;
+    }
+  }
+  @media (max-width: 560px) {
+    .provider-session-copy h3 {
+      font-size: 14px;
+    }
+    .provider-session-copy p {
+      flex-wrap: wrap;
+    }
+    .model-card-title h3 {
+      -webkit-line-clamp: 3;
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     .admin-app *,
     .admin-app *::before,

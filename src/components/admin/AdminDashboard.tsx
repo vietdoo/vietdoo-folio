@@ -340,7 +340,9 @@ export default function AdminDashboard() {
                       name="password"
                       type={passwordVisible() ? "text" : "password"}
                       value={password()}
-                      onInput={(event) => setPassword(event.currentTarget.value)}
+                      onInput={(event) =>
+                        setPassword(event.currentTarget.value)
+                      }
                       placeholder="Enter your password"
                       autocomplete="current-password"
                       spellcheck={false}
@@ -350,7 +352,9 @@ export default function AdminDashboard() {
                       class="password-visibility"
                       type="button"
                       onClick={() => setPasswordVisible((visible) => !visible)}
-                      aria-label={passwordVisible() ? "Hide password" : "Show password"}
+                      aria-label={
+                        passwordVisible() ? "Hide password" : "Show password"
+                      }
                     >
                       {passwordVisible() ? "Hide" : "Show"}
                     </button>
@@ -472,8 +476,12 @@ export default function AdminDashboard() {
                             </p>
                           </div>
                           <div class="hero-status-note">
-                            <span class="hero-status-label">ROUTING HEALTH</span>
-                            <strong><i class="status-dot" /> Operational</strong>
+                            <span class="hero-status-label">
+                              ROUTING HEALTH
+                            </span>
+                            <strong>
+                              <i class="status-dot" /> Operational
+                            </strong>
                             <small>{enabledModels()} active routes</small>
                           </div>
                         </div>
@@ -522,7 +530,8 @@ export default function AdminDashboard() {
                               <h3>
                                 {aiSummaryLoading()
                                   ? "Reading current activity…"
-                                  : aiSummary()?.headline ?? "Summary unavailable"}
+                                  : (aiSummary()?.headline ??
+                                    "Summary unavailable")}
                               </h3>
                             </div>
                             <span class="ai-summary-badge">
@@ -570,7 +579,8 @@ export default function AdminDashboard() {
                                 </ul>
                                 <div class="ai-summary-footer">
                                   <span>
-                                    Based on latest {currentSummary().sourceWindow} requests
+                                    Based on latest{" "}
+                                    {currentSummary().sourceWindow} requests
                                   </span>
                                   <Show when={currentSummary().degraded}>
                                     <span>Deterministic fallback</span>
@@ -678,7 +688,11 @@ export default function AdminDashboard() {
                   </>
                 }
               >
-                <div class="dashboard-loading-shell" role="status" aria-live="polite">
+                <div
+                  class="dashboard-loading-shell"
+                  role="status"
+                  aria-live="polite"
+                >
                   <div class="dashboard-loading-heading">
                     <div>
                       <i class="admin-loading-line eyebrow-line" />
@@ -860,66 +874,141 @@ function LogTable(props: {
   );
 }
 
+function providerName(provider: string) {
+  if (provider === "openrouter") return "OpenRouter";
+  if (provider === "orcarouter") return "OrcaRouter";
+  return titleCase(provider);
+}
+
+function providerMark(provider: string) {
+  if (provider === "openrouter") return "OR";
+  if (provider === "orcarouter") return "O";
+  return provider.slice(0, 2).toUpperCase();
+}
+
+function groupModelsByProvider(models: Model[]) {
+  const grouped = new Map<string, Model[]>();
+  for (const model of models) {
+    const current = grouped.get(model.provider) ?? [];
+    current.push(model);
+    grouped.set(model.provider, current);
+  }
+  return Array.from(grouped.entries())
+    .map(([provider, providerModels]) => ({
+      provider,
+      models: providerModels.toSorted((a, b) => b.priority - a.priority),
+    }))
+    .sort((a, b) => a.provider.localeCompare(b.provider));
+}
+
 function ModelGrid(props: {
   models: Model[];
   onToggle: (model: Model) => void;
   toggleLoading: string;
 }) {
   return (
-    <div class="model-grid">
-      <For each={props.models}>
-        {(model) => (
-          <article
-            classList={{ "model-card": true, "is-disabled": !model.enabled }}
-          >
-            <div class="model-card-top">
-              <div class="model-logo">
-                {model.provider === "openrouter" ? "OR" : "O"}
+    <div class="provider-sessions">
+      <For each={groupModelsByProvider(props.models)}>
+        {(group) => (
+          <section class="provider-session">
+            <header class="provider-session-header">
+              <div class="provider-session-mark">
+                {providerMark(group.provider)}
               </div>
-              <span
-                classList={{
-                  "model-status": true,
-                  online: model.enabled && model.credentialConfigured,
-                }}
-              >
-                {model.enabled ? "Enabled" : "Disabled"}
-              </span>
-            </div>
-            <div class="model-card-title">
-              <h3>{model.label}</h3>
-              <span>{model.provider}</span>
-            </div>
-            <div class="capability-list card-capabilities">
-              <For each={model.capabilities}>
-                {(capability) => <span>{capability}</span>}
+              <div class="provider-session-copy">
+                <span class="eyebrow">PROVIDER SESSION</span>
+                <h3>{providerName(group.provider)}</h3>
+                <p>
+                  {group.models.filter((model) => model.enabled).length} active
+                  routes
+                  <span>·</span> {group.models.length} registered models
+                </p>
+              </div>
+              <div class="provider-session-health">
+                <i
+                  classList={{
+                    "session-health-dot": true,
+                    offline: !group.models.some(
+                      (model) => model.credentialConfigured,
+                    ),
+                  }}
+                />
+                <span>
+                  {group.models.some((model) => model.credentialConfigured)
+                    ? "Credential ready"
+                    : "Credential missing"}
+                </span>
+              </div>
+            </header>
+            <div class="model-grid provider-model-grid">
+              <For each={group.models}>
+                {(model) => (
+                  <article
+                    classList={{
+                      "model-card": true,
+                      "is-disabled": !model.enabled,
+                    }}
+                  >
+                    <div class="model-card-top">
+                      <div class="model-logo">
+                        {providerMark(model.provider)}
+                      </div>
+                      <span
+                        classList={{
+                          "model-status": true,
+                          online: model.enabled && model.credentialConfigured,
+                        }}
+                      >
+                        {!model.credentialConfigured
+                          ? "Unconfigured"
+                          : model.enabled
+                            ? "Enabled"
+                            : "Disabled"}
+                      </span>
+                    </div>
+                    <div class="model-card-title">
+                      <span class="model-id-label">ORIGINAL MODEL ID</span>
+                      <h3 title={model.id}>{model.id}</h3>
+                      <p>{model.label}</p>
+                    </div>
+                    <div class="capability-list card-capabilities">
+                      <For each={model.capabilities}>
+                        {(capability) => <span>{capability}</span>}
+                      </For>
+                    </div>
+                    <div class="model-card-footer">
+                      <span>
+                        Priority <strong>{model.priority}</strong>
+                      </span>
+                      <button
+                        classList={{ "switch-button": true, on: model.enabled }}
+                        onClick={() => props.onToggle(model)}
+                        disabled={
+                          props.toggleLoading === model.id ||
+                          !model.credentialConfigured
+                        }
+                        role="switch"
+                        aria-checked={model.enabled}
+                        aria-label={`${model.enabled ? "Disable" : "Enable"} ${model.id}`}
+                        title={
+                          !model.credentialConfigured
+                            ? "Provider credential is not configured"
+                            : undefined
+                        }
+                      >
+                        <i />
+                      </button>
+                    </div>
+                    <Show when={!model.credentialConfigured}>
+                      <small class="missing-key">
+                        Provider key not configured
+                      </small>
+                    </Show>
+                  </article>
+                )}
               </For>
             </div>
-            <div class="model-card-footer">
-              <span>
-                Priority <strong>{model.priority}</strong>
-              </span>
-              <button
-                classList={{ "switch-button": true, on: model.enabled }}
-                onClick={() => props.onToggle(model)}
-                disabled={
-                  props.toggleLoading === model.id ||
-                  !model.credentialConfigured
-                }
-                role="switch"
-                aria-checked={model.enabled}
-                title={
-                  !model.credentialConfigured
-                    ? "Provider credential is not configured"
-                    : undefined
-                }
-              >
-                <i />
-              </button>
-            </div>
-            <Show when={!model.credentialConfigured}>
-              <small class="missing-key">Provider key not configured</small>
-            </Show>
-          </article>
+          </section>
         )}
       </For>
     </div>
