@@ -376,9 +376,9 @@ export default function FingerprintAuditPlayground() {
   });
 
   return (
-    <div class="w-full max-w-5xl mx-auto flex flex-col gap-5 p-2 md:p-4 text-darkslate-100 font-sans">
-      <section class="rounded-2xl border border-primary-400/30 bg-gradient-to-br from-primary-500/15 via-darkslate-700/40 to-darkslate-900/70 p-5 md:p-7 shadow-2xl shadow-black/20">
-        <div class="flex flex-col gap-3">
+    <div class="fingerprint-audit w-full max-w-5xl mx-auto flex flex-col gap-5 p-2 md:p-4 text-darkslate-100 font-sans">
+      <section class="fingerprint-hero rounded-2xl border border-primary-400/30 bg-gradient-to-br from-primary-500/15 via-darkslate-700/40 to-darkslate-900/70 p-5 md:p-7 shadow-2xl shadow-black/20">
+        <div class="fingerprint-hero-intro flex flex-col gap-3">
           <div class="flex flex-wrap items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-primary-200">
             <span class="rounded-full border border-primary-300/40 bg-primary-300/10 px-2.5 py-1">
               Privacy-first audit
@@ -396,7 +396,7 @@ export default function FingerprintAuditPlayground() {
           </p>
         </div>
 
-        <div class="mt-6 rounded-xl border border-darkslate-400/50 bg-darkslate-950/50 p-4 md:p-5">
+        <div class="fingerprint-ai-summary mt-6 rounded-xl border border-darkslate-400/50 bg-darkslate-950/50 p-4 md:p-5">
           <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-5">
             <div class="max-w-2xl">
               <h2 class="text-xs font-semibold uppercase tracking-[0.16em] text-primary-200">
@@ -430,7 +430,7 @@ export default function FingerprintAuditPlayground() {
         </div>
 
         <div class="mt-5 flex flex-col gap-3 rounded-xl border border-darkslate-400/40 bg-darkslate-900/45 p-4 md:flex-row md:items-center md:justify-between">
-          <label class="flex items-start gap-3 text-xs leading-6 text-darkslate-200">
+          <label class="fingerprint-consent flex items-start gap-3 text-xs leading-6 text-darkslate-200">
             <input
               type="checkbox"
               checked={consented()}
@@ -461,7 +461,7 @@ export default function FingerprintAuditPlayground() {
       <Show when={snapshot()}>
         {(result) => (
           <>
-            <section class="grid grid-cols-2 gap-3 md:grid-cols-4">
+            <section class="fingerprint-stats grid grid-cols-2 gap-3 md:grid-cols-4">
               <div class="rounded-xl border border-darkslate-500 bg-darkslate-700/30 p-3">
                 <div class="text-[10px] uppercase tracking-widest text-darkslate-400">
                   Signals
@@ -494,7 +494,7 @@ export default function FingerprintAuditPlayground() {
               </div>
             </section>
 
-            <section class="overflow-hidden rounded-2xl border border-darkslate-500 bg-darkslate-800/35">
+            <section class="fingerprint-inventory overflow-hidden rounded-2xl border border-darkslate-500 bg-darkslate-800/35">
               <div class="flex flex-col gap-3 border-b border-darkslate-500 px-4 py-4 md:flex-row md:items-center md:justify-between md:px-5">
                 <div>
                   <h2 class="text-sm font-semibold text-white">
