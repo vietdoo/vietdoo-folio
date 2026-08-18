@@ -51,14 +51,14 @@ The case is intentionally more precise than a prompt test. It specifies the init
 
 The first golden set should include more than happy paths. A useful distribution is a mixture of common tasks, high-risk tasks, ambiguous language, missing data, stale data, tool failures, and adversarial or policy-sensitive requests. The exact percentages are less important than the conversation they force the team to have.
 
-| Case family | What it reveals | Example |
-|---|---|---|
-| Common path | Whether the core capability works | Find a paid invoice and summarize it |
-| Ambiguity | Whether the system asks instead of guessing | “Cancel the old subscription” when two subscriptions exist |
-| Missing evidence | Whether uncertainty is visible | The ledger has no matching payment |
-| Tool failure | Whether the system recovers safely | Payment service returns a timeout |
-| Authorization boundary | Whether capability is narrower than intent | User can inspect but cannot refund |
-| Regression seed | Whether a previously fixed bug returns | A tool is called before its required lookup |
+| Case family            | What it reveals                             | Example                                                    |
+| ---------------------- | ------------------------------------------- | ---------------------------------------------------------- |
+| Common path            | Whether the core capability works           | Find a paid invoice and summarize it                       |
+| Ambiguity              | Whether the system asks instead of guessing | “Cancel the old subscription” when two subscriptions exist |
+| Missing evidence       | Whether uncertainty is visible              | The ledger has no matching payment                         |
+| Tool failure           | Whether the system recovers safely          | Payment service returns a timeout                          |
+| Authorization boundary | Whether capability is narrower than intent  | User can inspect but cannot refund                         |
+| Regression seed        | Whether a previously fixed bug returns      | A tool is called before its required lookup                |
 
 The set is not a museum exhibit. It is a living map of risk. Every escaped defect should either become a new case or cause an existing case to become more precise.
 
@@ -76,12 +76,12 @@ This distinction is particularly important for agentic systems. A model upgrade 
 
 The release suite should therefore have at least two lanes:
 
-| Lane | Primary question | Typical gate |
-|---|---|---|
-| Capability | Can the system solve harder or broader tasks? | Trend and error-budget review |
-| Regression | Did committed behavior remain intact? | Zero critical violations; minimum pass rate for soft quality |
-| Safety | Did the system preserve authority, privacy, and policy boundaries? | Hard fail on forbidden action, data leak, or unapproved mutation |
-| Operations | Did it stay within latency, cost, and retry budgets? | Threshold by risk tier and traffic class |
+| Lane       | Primary question                                                   | Typical gate                                                     |
+| ---------- | ------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| Capability | Can the system solve harder or broader tasks?                      | Trend and error-budget review                                    |
+| Regression | Did committed behavior remain intact?                              | Zero critical violations; minimum pass rate for soft quality     |
+| Safety     | Did the system preserve authority, privacy, and policy boundaries? | Hard fail on forbidden action, data leak, or unapproved mutation |
+| Operations | Did it stay within latency, cost, and retry budgets?               | Threshold by risk tier and traffic class                         |
 
 A regression suite becomes useful when an engineer can look at a red case and know whether to inspect the prompt, the model, the tool schema, the fixture, the evaluator, or the product contract.
 
@@ -91,11 +91,11 @@ The final answer is only one surface of an AI system. For a tool-using agent, a 
 
 A run is one model call or tool invocation. It is where schema validity, token budgets, provider errors, and local tool decisions can be checked cheaply. A trace is the complete execution path for one user task: model calls, retrievals, tool invocations, guardrails, retries, and final response. The outcome is the state of the world after execution: a database row, a generated file, a ticket transition, or the deliberate absence of any mutation.
 
-| Surface | Grade deterministically | Grade semantically |
-|---|---|---|
-| Run | JSON schema, allowed tool, argument shape, token count | Whether a local decision was reasonable |
-| Trace | Call sequence constraints, forbidden tools, retry count | Groundedness, completeness, clarity of uncertainty |
-| Outcome | State diff, emitted event, approval status | Human usefulness and business acceptability |
+| Surface | Grade deterministically                                 | Grade semantically                                 |
+| ------- | ------------------------------------------------------- | -------------------------------------------------- |
+| Run     | JSON schema, allowed tool, argument shape, token count  | Whether a local decision was reasonable            |
+| Trace   | Call sequence constraints, forbidden tools, retry count | Groundedness, completeness, clarity of uncertainty |
+| Outcome | State diff, emitted event, approval status              | Human usefulness and business acceptability        |
 
 This separation prevents a common mistake: asking a language model to grade facts that a program can check exactly. If the database changed, compare the database. If the tool was forbidden, match the tool name. If a response must contain a policy version, assert it. Reserve model-based judges for qualities that genuinely require interpretation.
 
@@ -137,13 +137,13 @@ The technical graders can check citation coverage, policy compliance, and tool b
 
 ![A hand-drawn bridge from model traces to reviewer actions, operational metrics, and business outcomes](/blog/eval-driven-ai-system-design/kpi-bridge.png)
 
-| Technical signal | Operational signal | Business question |
-|---|---|---|
-| Groundedness score | Reviewer edit rate | Are people correcting the same factual gaps? |
-| Tool-contract pass rate | Escalation rate | Is the agent safe enough to handle the intended tier? |
-| Median and p95 latency | Handle time | Does the system make work faster, not merely smarter? |
-| Cost per successful task | Cost per resolved case | Is the capability economically sustainable? |
-| Regression failures | Rollback or hotfix count | Is release quality improving over time? |
+| Technical signal         | Operational signal       | Business question                                     |
+| ------------------------ | ------------------------ | ----------------------------------------------------- |
+| Groundedness score       | Reviewer edit rate       | Are people correcting the same factual gaps?          |
+| Tool-contract pass rate  | Escalation rate          | Is the agent safe enough to handle the intended tier? |
+| Median and p95 latency   | Handle time              | Does the system make work faster, not merely smarter? |
+| Cost per successful task | Cost per resolved case   | Is the capability economically sustainable?           |
+| Regression failures      | Rollback or hotfix count | Is release quality improving over time?               |
 
 There are two traps here. The first is optimizing a proxy because it is easy to measure. The second is waiting for perfect attribution before instrumenting anything. Start with a narrow, decision-relevant cohort and document what the metric can and cannot claim.
 
@@ -155,12 +155,12 @@ Use hard gates for properties that are non-negotiable. Use soft thresholds for q
 
 ![A hand-drawn release-gate matrix mapping risk tiers to deterministic failures, quality thresholds, and review paths](/blog/eval-driven-ai-system-design/release-gate-matrix.png)
 
-| Risk tier | Hard gate | Soft gate | Promotion policy |
-|---|---|---|---|
-| Low | No schema or privacy violations | Helpful score above baseline | Automatic if cost and latency are stable |
-| Medium | No forbidden tool or unsupported claim | Quality not below agreed floor | Canary with sampled review |
-| High | No unauthorized mutation, leak, or policy bypass | Domain score and human review threshold | Manual approval and rollback plan |
-| Critical | Zero critical failures in protected cases | N/A for hard safety properties | Do not promote on aggregate score alone |
+| Risk tier | Hard gate                                        | Soft gate                               | Promotion policy                         |
+| --------- | ------------------------------------------------ | --------------------------------------- | ---------------------------------------- |
+| Low       | No schema or privacy violations                  | Helpful score above baseline            | Automatic if cost and latency are stable |
+| Medium    | No forbidden tool or unsupported claim           | Quality not below agreed floor          | Canary with sampled review               |
+| High      | No unauthorized mutation, leak, or policy bypass | Domain score and human review threshold | Manual approval and rollback plan        |
+| Critical  | Zero critical failures in protected cases        | N/A for hard safety properties          | Do not promote on aggregate score alone  |
 
 A gate should also specify the comparison baseline. “The new model is better” is not a test. “The new model has no critical regression, improves accepted-draft rate by at least three points on the same cohort, and stays within the cost envelope” is a decision rule.
 
@@ -170,12 +170,12 @@ A perfect evaluation suite that takes six hours will be bypassed. The practical 
 
 The pull-request lane should run deterministic, low-cost cases: schema validation, tool allowlists, state invariants, prompt-injection fixtures, and a small set of golden traces. The pre-release lane can run broader replay with multiple trials per case and selected judge-based graders. The post-deployment lane should sample real traffic with privacy controls, compare cohorts, and watch for drift.
 
-| Lane | Frequency | Cases | Main purpose |
-|---|---|---|---|
-| PR | Every change | Small, deterministic, high-risk regressions | Stop obvious breakage early |
-| Release | Model/prompt/tool/index change | Full golden set with repeated trials | Decide promotion |
-| Production | Continuous sampling | Sanitized real traces and business cohorts | Detect drift and hidden cost |
-| Incident | On demand | Replayed failure plus neighboring cases | Prevent recurrence |
+| Lane       | Frequency                      | Cases                                       | Main purpose                 |
+| ---------- | ------------------------------ | ------------------------------------------- | ---------------------------- |
+| PR         | Every change                   | Small, deterministic, high-risk regressions | Stop obvious breakage early  |
+| Release    | Model/prompt/tool/index change | Full golden set with repeated trials        | Decide promotion             |
+| Production | Continuous sampling            | Sanitized real traces and business cohorts  | Detect drift and hidden cost |
+| Incident   | On demand                      | Replayed failure plus neighboring cases     | Prevent recurrence           |
 
 The cost of a case is not just model tokens. It includes fixture maintenance, grader maintenance, review time, and the cognitive cost of interpreting a failure. Keep the suite small enough that ownership is explicit. Delete cases only when the underlying contract is no longer meaningful, not because a red test is inconvenient.
 

@@ -51,14 +51,14 @@ Case này chính xác hơn một prompt test thông thường. Nó mô tả worl
 
 Golden set đầu tiên cần có nhiều hơn happy path. Nên trộn các task phổ biến, task rủi ro cao, câu nói mơ hồ, dữ liệu thiếu, dữ liệu stale, tool failure và request có tính adversarial hoặc nhạy cảm về policy. Tỷ lệ chính xác bao nhiêu không quan trọng bằng việc nó buộc team phải nói chuyện với nhau về failure mode.
 
-| Nhóm case | Nó giúp phát hiện gì? | Ví dụ |
-|---|---|---|
-| Common path | Core capability có hoạt động không | Tìm invoice đã trả và tóm tắt |
-| Ambiguity | System có hỏi lại thay vì đoán không | “Hủy subscription cũ” trong khi có hai subscription |
-| Missing evidence | Uncertainty có được nói rõ không | Ledger không có payment tương ứng |
-| Tool failure | System có recover an toàn không | Payment service trả timeout |
-| Authorization boundary | Capability có hẹp hơn intent không | User được xem nhưng không được refund |
-| Regression seed | Bug đã sửa có quay lại không | Tool bị gọi trước lookup bắt buộc |
+| Nhóm case              | Nó giúp phát hiện gì?                | Ví dụ                                               |
+| ---------------------- | ------------------------------------ | --------------------------------------------------- |
+| Common path            | Core capability có hoạt động không   | Tìm invoice đã trả và tóm tắt                       |
+| Ambiguity              | System có hỏi lại thay vì đoán không | “Hủy subscription cũ” trong khi có hai subscription |
+| Missing evidence       | Uncertainty có được nói rõ không     | Ledger không có payment tương ứng                   |
+| Tool failure           | System có recover an toàn không      | Payment service trả timeout                         |
+| Authorization boundary | Capability có hẹp hơn intent không   | User được xem nhưng không được refund               |
+| Regression seed        | Bug đã sửa có quay lại không         | Tool bị gọi trước lookup bắt buộc                   |
 
 Golden set không phải bảo tàng. Nó là bản đồ rủi ro sống. Mỗi defect lọt ra production nên trở thành một case mới hoặc khiến một case cũ được mô tả chính xác hơn.
 
@@ -76,12 +76,12 @@ Hai team có thể chạy cùng một tập case nhưng đi đến hai kết lu�
 
 Release suite nên có ít nhất các lane sau:
 
-| Lane | Câu hỏi chính | Gate điển hình |
-|---|---|---|
-| Capability | System có giải được task khó hoặc rộng hơn không? | Theo dõi trend và error budget |
-| Regression | Behavior đã cam kết có còn nguyên không? | Zero critical violation; soft quality có floor |
-| Safety | Authority, privacy và policy boundary có còn được giữ không? | Forbidden action, data leak hoặc unapproved mutation là hard fail |
-| Operations | Latency, cost và retry có nằm trong budget không? | Threshold theo risk tier và traffic class |
+| Lane       | Câu hỏi chính                                                | Gate điển hình                                                    |
+| ---------- | ------------------------------------------------------------ | ----------------------------------------------------------------- |
+| Capability | System có giải được task khó hoặc rộng hơn không?            | Theo dõi trend và error budget                                    |
+| Regression | Behavior đã cam kết có còn nguyên không?                     | Zero critical violation; soft quality có floor                    |
+| Safety     | Authority, privacy và policy boundary có còn được giữ không? | Forbidden action, data leak hoặc unapproved mutation là hard fail |
+| Operations | Latency, cost và retry có nằm trong budget không?            | Threshold theo risk tier và traffic class                         |
 
 Regression suite chỉ thật sự hữu ích khi engineer nhìn thấy case đỏ và biết cần kiểm tra prompt, model, tool schema, fixture, evaluator hay product contract.
 
@@ -91,11 +91,11 @@ Final answer chỉ là một bề mặt của AI system. Với tool-using agent,
 
 Run là một model call hoặc tool invocation. Đây là nơi kiểm tra schema, token budget, provider error và quyết định cục bộ một cách rẻ. Trace là toàn bộ đường đi của một task: model call, retrieval, tool call, guardrail, retry và response cuối. Outcome là trạng thái thật của thế giới sau khi chạy: một database row, file được tạo, ticket được chuyển trạng thái, hoặc chủ đích không có mutation nào.
 
-| Bề mặt | Nên chấm deterministic | Nên chấm semantic |
-|---|---|---|
-| Run | JSON schema, tool được phép, argument shape, token count | Một quyết định cục bộ có hợp lý không |
-| Trace | Constraint về thứ tự, forbidden tool, retry count | Groundedness, độ đầy đủ, cách nói uncertainty |
-| Outcome | State diff, event phát ra, approval status | Tính hữu ích và mức chấp nhận của business |
+| Bề mặt  | Nên chấm deterministic                                   | Nên chấm semantic                             |
+| ------- | -------------------------------------------------------- | --------------------------------------------- |
+| Run     | JSON schema, tool được phép, argument shape, token count | Một quyết định cục bộ có hợp lý không         |
+| Trace   | Constraint về thứ tự, forbidden tool, retry count        | Groundedness, độ đầy đủ, cách nói uncertainty |
+| Outcome | State diff, event phát ra, approval status               | Tính hữu ích và mức chấp nhận của business    |
 
 Tách như vậy giúp tránh một lỗi phổ biến: dùng LLM để chấm những fact mà code có thể kiểm tra chính xác. Nếu database đã thay đổi, hãy so sánh database. Nếu tool bị cấm, hãy match tool name. Nếu response phải có policy version, hãy assert trực tiếp. Chỉ dùng model-based judge cho những phẩm chất thật sự cần diễn giải.
 
@@ -137,13 +137,13 @@ Technical grader kiểm tra citation coverage, policy compliance và tool behavi
 
 ![Minh họa nét vẽ tay nối model trace với reviewer action, operational metric và business outcome](/blog/eval-driven-ai-system-design/kpi-bridge.png)
 
-| Technical signal | Operational signal | Câu hỏi business |
-|---|---|---|
-| Groundedness score | Reviewer edit rate | Người dùng có đang sửa cùng một factual gap không? |
-| Tool-contract pass rate | Escalation rate | Agent đã đủ an toàn để xử lý tier dự kiến chưa? |
-| Median và p95 latency | Handle time | System có làm công việc nhanh hơn không? |
-| Cost trên successful task | Cost trên resolved case | Capability có bền vững về kinh tế không? |
-| Regression failure | Rollback hoặc hotfix count | Chất lượng release có cải thiện theo thời gian không? |
+| Technical signal          | Operational signal         | Câu hỏi business                                      |
+| ------------------------- | -------------------------- | ----------------------------------------------------- |
+| Groundedness score        | Reviewer edit rate         | Người dùng có đang sửa cùng một factual gap không?    |
+| Tool-contract pass rate   | Escalation rate            | Agent đã đủ an toàn để xử lý tier dự kiến chưa?       |
+| Median và p95 latency     | Handle time                | System có làm công việc nhanh hơn không?              |
+| Cost trên successful task | Cost trên resolved case    | Capability có bền vững về kinh tế không?              |
+| Regression failure        | Rollback hoặc hotfix count | Chất lượng release có cải thiện theo thời gian không? |
 
 Có hai cái bẫy. Một là tối ưu proxy chỉ vì nó dễ đo. Hai là chờ attribution hoàn hảo rồi mới instrument. Hãy bắt đầu với một cohort hẹp, liên quan đến quyết định thật, và ghi rõ metric có thể cũng như không thể kết luận điều gì.
 
@@ -155,12 +155,12 @@ Dùng hard gate cho property không thể thương lượng. Dùng soft threshol
 
 ![Minh họa nét vẽ tay về release-gate matrix nối risk tier với hard failure, quality threshold và review path](/blog/eval-driven-ai-system-design/release-gate-matrix.png)
 
-| Risk tier | Hard gate | Soft gate | Promotion policy |
-|---|---|---|---|
-| Low | Không schema hoặc privacy violation | Helpful score cao hơn baseline | Tự động nếu cost và latency ổn định |
-| Medium | Không forbidden tool hoặc unsupported claim | Quality không thấp hơn floor | Canary kèm sampled review |
-| High | Không unauthorized mutation, leak hoặc policy bypass | Domain score và human review đạt ngưỡng | Manual approval và rollback plan |
-| Critical | Zero critical failure trong protected cases | Không thay thế hard safety bằng điểm mềm | Không promote chỉ dựa aggregate score |
+| Risk tier | Hard gate                                            | Soft gate                                | Promotion policy                      |
+| --------- | ---------------------------------------------------- | ---------------------------------------- | ------------------------------------- |
+| Low       | Không schema hoặc privacy violation                  | Helpful score cao hơn baseline           | Tự động nếu cost và latency ổn định   |
+| Medium    | Không forbidden tool hoặc unsupported claim          | Quality không thấp hơn floor             | Canary kèm sampled review             |
+| High      | Không unauthorized mutation, leak hoặc policy bypass | Domain score và human review đạt ngưỡng  | Manual approval và rollback plan      |
+| Critical  | Zero critical failure trong protected cases          | Không thay thế hard safety bằng điểm mềm | Không promote chỉ dựa aggregate score |
 
 Gate cũng phải nói rõ baseline so sánh. “Model mới tốt hơn” không phải test. “Model mới không có critical regression, tăng accepted-draft rate ít nhất ba điểm trên cùng cohort và vẫn nằm trong cost envelope” mới là decision rule.
 
@@ -170,12 +170,12 @@ Một evaluation suite hoàn hảo nhưng chạy mất sáu tiếng sẽ bị by
 
 Pull-request lane nên chạy deterministic case giá rẻ: schema validation, tool allowlist, state invariant, prompt-injection fixture và một tập golden trace nhỏ. Pre-release lane chạy replay rộng hơn, nhiều trial cho mỗi case và một số judge-based grader. Post-deployment lane sample traffic thật với privacy control, so sánh cohort và theo dõi drift.
 
-| Lane | Tần suất | Case | Mục đích |
-|---|---|---|---|
-| PR | Mỗi thay đổi | Regression nhỏ, deterministic, risk cao | Chặn breakage rõ ràng từ sớm |
-| Release | Khi đổi model, prompt, tool hoặc index | Full golden set với nhiều trial | Quyết định promotion |
-| Production | Sample liên tục | Trace thật đã sanitize và business cohort | Phát hiện drift và cost ẩn |
-| Incident | Khi cần | Failure đã replay cùng case lân cận | Ngăn lỗi tái diễn |
+| Lane       | Tần suất                               | Case                                      | Mục đích                     |
+| ---------- | -------------------------------------- | ----------------------------------------- | ---------------------------- |
+| PR         | Mỗi thay đổi                           | Regression nhỏ, deterministic, risk cao   | Chặn breakage rõ ràng từ sớm |
+| Release    | Khi đổi model, prompt, tool hoặc index | Full golden set với nhiều trial           | Quyết định promotion         |
+| Production | Sample liên tục                        | Trace thật đã sanitize và business cohort | Phát hiện drift và cost ẩn   |
+| Incident   | Khi cần                                | Failure đã replay cùng case lân cận       | Ngăn lỗi tái diễn            |
 
 Chi phí của một case không chỉ là token. Nó còn là công sức bảo trì fixture, grader, thời gian review và cognitive cost để hiểu failure. Giữ suite đủ nhỏ để có owner rõ ràng. Chỉ xóa case khi contract bên dưới không còn ý nghĩa, đừng xóa chỉ vì test đỏ gây khó chịu.
 
