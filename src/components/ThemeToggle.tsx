@@ -46,7 +46,7 @@ export function ThemeToggle(props: { compact?: boolean }) {
   return (
     <button
       type="button"
-      class={`folio-theme-toggle inline-flex items-center justify-center gap-2 rounded-full border transition-all duration-200 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400/70 ${props.compact ? "h-9 w-9" : "h-9 px-3"}`}
+      class="folio-theme-toggle inline-flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-200 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400/70"
       onClick={toggleTheme}
       aria-label={isLight() ? "Chuyển sang giao diện tối" : "Chuyển sang giao diện sáng"}
       aria-pressed={isLight()}
@@ -62,7 +62,6 @@ export function ThemeToggle(props: { compact?: boolean }) {
           <path stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42" />
         </svg>
       )}
-      {!props.compact && <span class="hidden lg:inline text-[11px] font-semibold uppercase tracking-[0.12em]">{isLight() ? "Tối" : "Sáng"}</span>}
       <span class="sr-only">{isLight() ? "Đang dùng giao diện sáng" : "Đang dùng giao diện tối"}</span>
     </button>
   );
