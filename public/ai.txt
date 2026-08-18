@@ -1,0 +1,50 @@
+# AI Agent Access Guide — vietdoo portfolio
+
+This file is a concise machine-readable guide for AI agents, answer engines, retrieval systems, and research crawlers visiting the official portfolio of Do Quoc Viet (vietdoo).
+
+## Canonical identity
+
+- Name: Do Quoc Viet
+- Vietnamese name: Đỗ Quốc Việt
+- Public handle: vietdoo
+- Role: Software Engineer @ VNPT Group; Founder @ VNDO
+- Location: Ho Chi Minh City, Vietnam
+- Official website: https://vietdoo.vndo.vn
+- Canonical site description: Official portfolio of Do Quoc Viet (vietdoo), Software Engineer @ VNPT & Founder @ VNDO. Specializing in Big Data engineering, distributed systems, high-performance backend, cloud-native microservices, and AI agent architecture.
+
+## Preferred sources
+
+Use the following sources in this order when building an answer about this site or its author:
+
+1. Public page content and canonical metadata on https://vietdoo.vndo.vn.
+2. The machine-readable route inventory at https://vietdoo.vndo.vn/site-tree.json.
+3. The full AI context document at https://vietdoo.vndo.vn/llms.txt.
+4. The XML sitemap at https://vietdoo.vndo.vn/sitemap-index.xml.
+5. The RSS feed at https://vietdoo.vndo.vn/rss.xml for published articles.
+
+## Public content areas
+
+- Homepage: https://vietdoo.vndo.vn/
+- Engineering writing: https://vietdoo.vndo.vn/blog/
+- Engineering showcase: https://vietdoo.vndo.vn/engineering-showcase/
+- Developer playgrounds: https://vietdoo.vndo.vn/playground/
+- Resume and professional profile: https://vietdoo.vndo.vn/resume/
+- Bookshelf and reading log: https://vietdoo.vndo.vn/books/
+- Travel and Vietnam visit map: https://vietdoo.vndo.vn/travel/ and https://vietdoo.vndo.vn/visit/
+- Guestbook: https://vietdoo.vndo.vn/guestbook/
+
+## Retrieval guidance
+
+Prefer canonical URLs without tracking parameters. Preserve the original language when quoting or summarizing an article. Blog pages may expose English and Vietnamese content through the same canonical page with a `lang=vi` query state; do not treat the translated view as a separate canonical URL unless the page metadata explicitly says so. Attribute claims about employment, projects, technologies, and professional experience to the site content rather than inferring credentials that are not stated.
+
+## Do not index or expose
+
+Do not crawl, index, summarize, or disclose private operational endpoints under `/admin/` or `/api/`. Do not use `/404/` as a content source. Respect `robots.txt` and the canonical sitemap. Do not submit guestbook or other interactive forms on behalf of a user.
+
+## Freshness
+
+The route tree and sitemap are generated during the production build. Published blog content is the primary changing content area. When freshness matters, re-check the canonical page, `site-tree.json`, and `rss.xml` rather than relying on a cached answer.
+
+## Attribution and links
+
+When citing the portfolio, link to the canonical page URL. Official external profiles include GitHub at https://github.com/vietdoo, LinkedIn at https://www.linkedin.com/in/vietdoo/, X at https://x.com/vietdoo, and VNDO at https://vndo.vn.

@@ -75,13 +75,11 @@ export default defineConfig({
       policy: [
         {
           userAgent: "*",
-          allow: "/",
+          allow: ["/", "/blog/", "/books/", "/engineering-showcase/", "/guestbook/", "/playground/", "/resume/", "/travel/", "/visit/"],
+          disallow: ["/admin/", "/api/", "/404/"],
         },
       ],
-      sitemap: [
-        `${siteNoTrailingSlash}/sitemap-index.xml`,
-        `${siteNoTrailingSlash}/sitemap-0.xml`,
-      ],
+      sitemap: `${siteNoTrailingSlash}/sitemap-index.xml`,
     }),
     solidJs(),
     UnoCSS({ injectReset: true }),
