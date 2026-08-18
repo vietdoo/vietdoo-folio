@@ -43,14 +43,14 @@ Dashboard chỉ hiện “LLM latency” không thể trả lời các câu đó
 
 ![Minh họa nét vẽ tay về execution graph tách model, retrieval, MCP, tool, policy và outcome span](/blog/genai-telemetry-opentelemetry-mcp/execution-graph.png)
 
-| Boundary | Câu hỏi cốt lõi | Signal hữu ích |
-|---|---|---|
-| Model | Inference decision nào đã xảy ra? | Provider, model, operation, token usage, finish reason |
-| Retrieval | Evidence nào được đưa vào? | Index, query hash, result count, document ID, score |
+| Boundary    | Câu hỏi cốt lõi                      | Signal hữu ích                                         |
+| ----------- | ------------------------------------ | ------------------------------------------------------ |
+| Model       | Inference decision nào đã xảy ra?    | Provider, model, operation, token usage, finish reason |
+| Retrieval   | Evidence nào được đưa vào?           | Index, query hash, result count, document ID, score    |
 | MCP session | Protocol context nào được negotiate? | Server identity, protocol version, capability, outcome |
-| Tool | Authority nào đã được sử dụng? | Tool name, schema version, approval, mutation class |
-| Policy | Guardrail nào đã quyết định? | Policy ID, decision, reason code, redaction count |
-| Outcome | Thế giới bên ngoài đã thay đổi gì? | State diff, event ID, external request status |
+| Tool        | Authority nào đã được sử dụng?       | Tool name, schema version, approval, mutation class    |
+| Policy      | Guardrail nào đã quyết định?         | Policy ID, decision, reason code, redaction count      |
+| Outcome     | Thế giới bên ngoài đã thay đổi gì?   | State diff, event ID, external request status          |
 
 Boundary map nên tồn tại trước instrumented code. Nó là architecture artifact, không phải việc phụ thêm cho SRE dashboard.
 
@@ -77,13 +77,13 @@ Tên attribute cụ thể nên theo OpenTelemetry convention đã được platf
 
 Đừng đưa unbounded user text, full prompt hay toàn bộ retrieved document vào low-cardinality metric label. Prompt hash, template ID, content classification và redaction count thường hữu ích cho vận hành hơn raw prompt. Chỉ lưu evidence phong phú trong controlled trace store khi policy cho phép.
 
-| Loại signal | Phù hợp với | Lỗi phổ biến |
-|---|---|---|
-| Span attribute | Structured context của một operation | Đưa full prompt vào indexed attribute |
-| Span event | Event có ý nghĩa tại một thời điểm | Emit từng token thành high-volume event |
-| Metric | Aggregated trend và alerting | Label bằng user ID, prompt hoặc document text |
-| Log | Diagnostic detail cho người đọc | Lặp lại secret đã có trong trace |
-| Link | Nối asynchronous work liên quan | Ép queue và child span thành một trace |
+| Loại signal    | Phù hợp với                          | Lỗi phổ biến                                  |
+| -------------- | ------------------------------------ | --------------------------------------------- |
+| Span attribute | Structured context của một operation | Đưa full prompt vào indexed attribute         |
+| Span event     | Event có ý nghĩa tại một thời điểm   | Emit từng token thành high-volume event       |
+| Metric         | Aggregated trend và alerting         | Label bằng user ID, prompt hoặc document text |
+| Log            | Diagnostic detail cho người đọc      | Lặp lại secret đã có trong trace              |
+| Link           | Nối asynchronous work liên quan      | Ép queue và child span thành một trace        |
 
 Observability schema nên có sensitivity classification. Field an toàn trong local debug trace có thể không an toàn trong metrics backend dùng chung.
 
@@ -117,7 +117,11 @@ Thiết kế an toàn hơn là lưu **retrieval manifest** trong trace và giữ
   "retrieval.query_hash": "sha256:9a1...",
   "retrieval.result_count": 6,
   "retrieval.documents": [
-    { "id": "policy-v2-section-03", "score": 0.84, "classification": "internal" }
+    {
+      "id": "policy-v2-section-03",
+      "score": 0.84,
+      "classification": "internal"
+    }
   ],
   "retrieval.redacted": true
 }
@@ -151,13 +155,13 @@ Một workflow-level cost record có thể như sau:
 
 Câu hỏi hữu ích không phải “model nào dùng nhiều token nhất?” mà là “một safe outcome thành công của workflow và tenant này tốn bao nhiêu?” Muốn trả lời phải có correlation ID ổn định và định nghĩa success độc lập với response của model.
 
-| Metric | Nối với | Quyết định hỗ trợ |
-|---|---|---|
-| Cost mỗi trace | Outcome và tenant | Budget, showback, route selection |
-| p95 model latency | Tool và queue span | Timeout và UX policy |
-| Retry rate | Error class và provider | Backoff, failover, chọn provider |
-| Citation coverage | Retrieved document manifest | Thay đổi retrieval và prompt |
-| Unauthorized-action attempt | Policy decision | Safety hardening và release gate |
+| Metric                      | Nối với                     | Quyết định hỗ trợ                 |
+| --------------------------- | --------------------------- | --------------------------------- |
+| Cost mỗi trace              | Outcome và tenant           | Budget, showback, route selection |
+| p95 model latency           | Tool và queue span          | Timeout và UX policy              |
+| Retry rate                  | Error class và provider     | Backoff, failover, chọn provider  |
+| Citation coverage           | Retrieved document manifest | Thay đổi retrieval và prompt      |
+| Unauthorized-action attempt | Policy decision             | Safety hardening và release gate  |
 
 ## Privacy là một phần của telemetry design
 

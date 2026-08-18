@@ -43,14 +43,14 @@ A dashboard that shows only “LLM latency” cannot answer those questions. A t
 
 ![A hand-drawn execution graph separating model, retrieval, MCP, tool, policy, and outcome spans](/blog/genai-telemetry-opentelemetry-mcp/execution-graph.png)
 
-| Boundary | Core question | Useful signal |
-|---|---|---|
-| Model | Which inference decision occurred? | Provider, model, operation, token usage, finish reason |
-| Retrieval | What evidence was made available? | Index, query hash, result count, document IDs, scores |
+| Boundary    | Core question                         | Useful signal                                            |
+| ----------- | ------------------------------------- | -------------------------------------------------------- |
+| Model       | Which inference decision occurred?    | Provider, model, operation, token usage, finish reason   |
+| Retrieval   | What evidence was made available?     | Index, query hash, result count, document IDs, scores    |
 | MCP session | What protocol context was negotiated? | Server identity, protocol version, capabilities, outcome |
-| Tool | What authority was exercised? | Tool name, schema version, approval, mutation class |
-| Policy | Which guardrail decided? | Policy ID, decision, reason code, redaction count |
-| Outcome | What changed in the world? | State diff, event ID, external request status |
+| Tool        | What authority was exercised?         | Tool name, schema version, approval, mutation class      |
+| Policy      | Which guardrail decided?              | Policy ID, decision, reason code, redaction count        |
+| Outcome     | What changed in the world?            | State diff, event ID, external request status            |
 
 The boundary map should exist before the instrumented code. It is an architecture artifact, not an afterthought for the SRE dashboard.
 
@@ -77,13 +77,13 @@ The exact attribute names should follow the adopted OpenTelemetry convention and
 
 Do not put unbounded user text, full prompts, or entire retrieved documents into low-cardinality metric labels. A prompt hash, template ID, content classification, and redaction count are often more operationally useful than a raw prompt. Store richer evidence in a controlled trace store only when policy allows it.
 
-| Signal type | Good for | Common mistake |
-|---|---|---|
+| Signal type    | Good for                           | Common mistake                              |
+| -------------- | ---------------------------------- | ------------------------------------------- |
 | Span attribute | One operation’s structured context | Put a full prompt into an indexed attribute |
-| Span event | A meaningful point-in-time event | Emit every token as a high-volume event |
-| Metric | Aggregated trend and alerting | Label by user ID, prompt, or document text |
-| Log | Human-readable diagnostic detail | Duplicate secrets already present in traces |
-| Link | Connect related asynchronous work | Force queue and child spans into one trace |
+| Span event     | A meaningful point-in-time event   | Emit every token as a high-volume event     |
+| Metric         | Aggregated trend and alerting      | Label by user ID, prompt, or document text  |
+| Log            | Human-readable diagnostic detail   | Duplicate secrets already present in traces |
+| Link           | Connect related asynchronous work  | Force queue and child spans into one trace  |
 
 The observability schema should include a sensitivity classification. A field that is safe in a local debug trace may be unsafe in a shared metrics backend.
 
@@ -117,7 +117,11 @@ A safer design stores a **retrieval manifest** in the trace and keeps content un
   "retrieval.query_hash": "sha256:9a1...",
   "retrieval.result_count": 6,
   "retrieval.documents": [
-    { "id": "policy-v2-section-03", "score": 0.84, "classification": "internal" }
+    {
+      "id": "policy-v2-section-03",
+      "score": 0.84,
+      "classification": "internal"
+    }
   ],
   "retrieval.redacted": true
 }
@@ -151,13 +155,13 @@ A workflow-level cost record can look like:
 
 The useful question is not “which model used the most tokens?” It is “what did a successful, safe outcome cost for this workflow and tenant?” That requires stable correlation IDs and a definition of success independent from the model response.
 
-| Metric | Join with | Decision it supports |
-|---|---|---|
-| Cost per trace | Outcome and tenant | Budget, showback, route selection |
-| p95 model latency | Tool and queue spans | Timeout and UX policy |
-| Retry rate | Error class and provider | Backoff, failover, provider choice |
-| Citation coverage | Retrieved document manifest | Retrieval and prompt changes |
-| Unauthorized-action attempts | Policy decision | Safety hardening and release gate |
+| Metric                       | Join with                   | Decision it supports               |
+| ---------------------------- | --------------------------- | ---------------------------------- |
+| Cost per trace               | Outcome and tenant          | Budget, showback, route selection  |
+| p95 model latency            | Tool and queue spans        | Timeout and UX policy              |
+| Retry rate                   | Error class and provider    | Backoff, failover, provider choice |
+| Citation coverage            | Retrieved document manifest | Retrieval and prompt changes       |
+| Unauthorized-action attempts | Policy decision             | Safety hardening and release gate  |
 
 ## Privacy is part of telemetry design
 
