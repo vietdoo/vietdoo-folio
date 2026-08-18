@@ -1,7 +1,18 @@
+import MarkdownIt from "markdown-it";
 import { createSignal, Show } from "solid-js";
 
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 const ACCEPTED_TYPES = ["image/png", "image/jpeg", "image/webp", "image/gif"];
+const markdown = new MarkdownIt({
+  html: false,
+  breaks: true,
+  linkify: false,
+  typographer: true,
+});
+
+function renderMarkdown(value: string) {
+  return markdown.render(value);
+}
 
 function formatBytes(bytes: number) {
   if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
@@ -261,9 +272,10 @@ export default function ImageDescriptionPlayground() {
               </div>
             }
           >
-            <p class="whitespace-pre-wrap pt-4 text-sm leading-7 text-darkslate-100">
-              {description()}
-            </p>
+            <article
+              class="markdown-result pt-4 text-sm leading-7 text-darkslate-100"
+              innerHTML={renderMarkdown(description())}
+            />
           </Show>
         </section>
       </div>
@@ -277,11 +289,88 @@ export default function ImageDescriptionPlayground() {
         </div>
       </Show>
 
-      <p class="text-[11px] leading-relaxed text-darkslate-400">
-        Model:{" "}
-        <span class="font-mono text-darkslate-300">qwen/qwen3.8-27b-free</span>.
-        Free access may be rate-limited by the provider.
-      </p>
+      <style>
+        {`
+          .markdown-result p {
+            margin: 0 0 1rem;
+          }
+          .markdown-result p:last-child {
+            margin-bottom: 0;
+          }
+          .markdown-result h1,
+          .markdown-result h2,
+          .markdown-result h3 {
+            color: white;
+            font-weight: 700;
+            line-height: 1.35;
+            margin: 1.25rem 0 0.6rem;
+          }
+          .markdown-result h1:first-child,
+          .markdown-result h2:first-child,
+          .markdown-result h3:first-child {
+            margin-top: 0;
+          }
+          .markdown-result h1 { font-size: 1.15rem; }
+          .markdown-result h2 { font-size: 1.05rem; }
+          .markdown-result h3 { font-size: 0.98rem; }
+          .markdown-result strong {
+            color: white;
+            font-weight: 700;
+          }
+          .markdown-result em {
+            color: rgb(203 213 225);
+          }
+          .markdown-result ul,
+          .markdown-result ol {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            margin: 0 0 1rem;
+            padding-left: 1.25rem;
+          }
+          .markdown-result ul { list-style: disc; }
+          .markdown-result ol { list-style: decimal; }
+          .markdown-result li { padding-left: 0.2rem; }
+          .markdown-result blockquote {
+            border-left: 2px solid rgb(96 165 250 / 0.75);
+            color: rgb(203 213 225);
+            margin: 0 0 1rem;
+            padding-left: 0.85rem;
+          }
+          .markdown-result code {
+            border: 1px solid rgb(100 116 139 / 0.5);
+            border-radius: 0.3rem;
+            background: rgb(15 23 42 / 0.75);
+            color: rgb(191 219 254);
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 0.82em;
+            padding: 0.12rem 0.3rem;
+          }
+          .markdown-result pre {
+            overflow-x: auto;
+            border: 1px solid rgb(100 116 139 / 0.45);
+            border-radius: 0.55rem;
+            background: rgb(15 23 42 / 0.78);
+            margin: 0 0 1rem;
+            padding: 0.8rem;
+          }
+          .markdown-result :global(pre code) {
+            border: 0;
+            background: transparent;
+            padding: 0;
+          }
+          .markdown-result a {
+            color: rgb(147 197 253);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+          }
+          .markdown-result hr {
+            border: 0;
+            border-top: 1px solid rgb(100 116 139 / 0.45);
+            margin: 1.25rem 0;
+          }
+        `}
+      </style>
     </div>
   );
 }
