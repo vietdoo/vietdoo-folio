@@ -13,7 +13,7 @@ draft: false
 
 A normal RAG system answers the question, “Which documents are semantically similar to this query?” A production knowledge system often needs to answer a harder question: **which documents were true at the time the user means?**
 
-That distinction is easy to miss because vector search feels intelligent. Give it a query such as “What was our refund policy in March?” and it can retrieve documents containing the words *refund* and *March*. But semantic similarity does not understand that a policy published in June superseded a policy that was valid in March. It can return a newer, more polished answer that is historically wrong.
+That distinction is easy to miss because vector search feels intelligent. Give it a query such as “What was our refund policy in March?” and it can retrieve documents containing the words _refund_ and _March_. But semantic similarity does not understand that a policy published in June superseded a policy that was valid in March. It can return a newer, more polished answer that is historically wrong.
 
 This is the core problem of **Temporal Retrieval-Augmented Generation**. The challenge is not adding a `published_at` field to a chunk and hoping the model notices it. The system needs an explicit temporal model, retrieval rules, evidence display, and evaluation cases that distinguish “true now” from “true then.” Recent work on diachronic question answering treats time-aware retrieval as a problem in its own right rather than a small variation of ordinary semantic search.[1]
 
@@ -23,21 +23,21 @@ This is the core problem of **Temporal Retrieval-Augmented Generation**. The cha
 
 Consider a simple policy timeline:
 
-| Document | Published | Valid from | Valid until | Statement |
-|---|---:|---:|---:|---|
-| Refund Policy v1 | Jan 8 | Jan 8 | Apr 30 | Refunds allowed within 14 days |
-| Refund Policy v2 | May 1 | May 1 | Aug 31 | Refunds allowed within 30 days |
-| Refund Policy v3 | Sep 1 | Sep 1 | Open | Refunds allowed within 7 days |
+| Document         | Published | Valid from | Valid until | Statement                      |
+| ---------------- | --------: | ---------: | ----------: | ------------------------------ |
+| Refund Policy v1 |     Jan 8 |      Jan 8 |      Apr 30 | Refunds allowed within 14 days |
+| Refund Policy v2 |     May 1 |      May 1 |      Aug 31 | Refunds allowed within 30 days |
+| Refund Policy v3 |     Sep 1 |      Sep 1 |        Open | Refunds allowed within 7 days  |
 
 A user asks, “Could a customer request a refund on April 20 under the policy we used then?” The most recent document is authoritative for today but wrong for the question. A semantic retriever may rank v3 highly because it contains the same product terms and a concise explanation. A keyword filter may also fail if the question says “back then” rather than naming a date.
 
 Temporal correctness has at least three dimensions:
 
-| Dimension | Question | Failure example |
-|---|---|---|
-| Valid time | When was the fact true in the modeled world? | A 30-day policy is applied to an April transaction |
-| Transaction time | When did our system learn or record the fact? | A late-arriving correction overwrites a prior record |
-| Reference time | Which time does the user’s question intend? | “At the time of the incident” is interpreted as today |
+| Dimension        | Question                                      | Failure example                                       |
+| ---------------- | --------------------------------------------- | ----------------------------------------------------- |
+| Valid time       | When was the fact true in the modeled world?  | A 30-day policy is applied to an April transaction    |
+| Transaction time | When did our system learn or record the fact? | A late-arriving correction overwrites a prior record  |
+| Reference time   | Which time does the user’s question intend?   | “At the time of the incident” is interpreted as today |
 
 These clocks are not interchangeable. A document can be written in June about an event that happened in April. A database can ingest an old contract in September. A support agent can ask about the policy “when the customer signed up,” which is neither the publication date nor the current date.
 
@@ -117,13 +117,13 @@ The second stage ranks the temporally valid candidates by semantic relevance, so
 
 ![A hand-drawn pipeline filtering evidence by time before semantic ranking and contradiction review](/blog/temporal-rag-time-aware-retrieval/pipeline.png)
 
-| Stage | Input | Output | Main failure it prevents |
-|---|---|---|---|
-| Temporal planner | User query and context | Reference interval and relation | Answering the wrong time |
-| Candidate filter | Source metadata | Temporally eligible chunks | Newer documents dominating history |
-| Semantic ranker | Eligible chunks | Relevant evidence set | Returning valid but irrelevant text |
-| Contradiction checker | Evidence set and lineage | Conflict/gap signal | Blending incompatible versions |
-| Generator | Evidence plus temporal contract | Cited answer with scope | Presenting uncertainty as certainty |
+| Stage                 | Input                           | Output                          | Main failure it prevents            |
+| --------------------- | ------------------------------- | ------------------------------- | ----------------------------------- |
+| Temporal planner      | User query and context          | Reference interval and relation | Answering the wrong time            |
+| Candidate filter      | Source metadata                 | Temporally eligible chunks      | Newer documents dominating history  |
+| Semantic ranker       | Eligible chunks                 | Relevant evidence set           | Returning valid but irrelevant text |
+| Contradiction checker | Evidence set and lineage        | Conflict/gap signal             | Blending incompatible versions      |
+| Generator             | Evidence plus temporal contract | Cited answer with scope         | Presenting uncertainty as certainty |
 
 This sequence is not universal. In some domains, semantic retrieval first can help identify the event that defines the time interval. The engineering principle is to make the ordering explicit and testable.
 
@@ -147,13 +147,13 @@ These statements are not necessarily contradictory. They may describe different 
 
 A contradiction layer should classify the relationship: supersedes, narrows scope, expands scope, corrects, coexists, or unresolved. Keep the classification close to evidence so the generator can explain why one source wins.
 
-| Conflict type | Resolution | Answer behavior |
-|---|---|---|
-| Supersession | Pick source valid at reference time | Cite the applicable version |
-| Scope difference | Filter by tenant, product, or population | State the scope explicitly |
-| Correction | Prefer the corrected record for its effective interval | Mention correction when material |
-| Overlap | Apply domain precedence or ask | Do not blend silently |
-| Unresolved | Escalate or qualify | Say that evidence conflicts |
+| Conflict type    | Resolution                                             | Answer behavior                  |
+| ---------------- | ------------------------------------------------------ | -------------------------------- |
+| Supersession     | Pick source valid at reference time                    | Cite the applicable version      |
+| Scope difference | Filter by tenant, product, or population               | State the scope explicitly       |
+| Correction       | Prefer the corrected record for its effective interval | Mention correction when material |
+| Overlap          | Apply domain precedence or ask                         | Do not blend silently            |
+| Unresolved       | Escalate or qualify                                    | Say that evidence conflicts      |
 
 The generator should be prohibited from saying “the policy is X” when the evidence only supports “the policy was X between April 1 and April 30.” Temporal qualifiers are part of correctness.
 
@@ -169,14 +169,14 @@ An ordinary RAG benchmark can grade relevance, groundedness, and answer correctn
 
 A small test matrix can cover most high-risk bugs:
 
-| Test | Query | Expected behavior |
-|---|---|---|
-| Point lookup | “What rule applied on April 20?” | Return the version valid on April 20 |
-| Before/after | “What changed after the migration?” | Compare two intervals and cite both |
-| Late ingestion | An April document arrives in June | Preserve valid time; record ingestion time |
-| Contradiction | Two overlapping policies | Surface conflict or apply explicit precedence |
-| Current fallback | “What is the rule now?” | Use currentness policy and current clock |
-| Missing time | “What was the old rule?” | Ask or qualify rather than choose arbitrarily |
+| Test             | Query                               | Expected behavior                             |
+| ---------------- | ----------------------------------- | --------------------------------------------- |
+| Point lookup     | “What rule applied on April 20?”    | Return the version valid on April 20          |
+| Before/after     | “What changed after the migration?” | Compare two intervals and cite both           |
+| Late ingestion   | An April document arrives in June   | Preserve valid time; record ingestion time    |
+| Contradiction    | Two overlapping policies            | Surface conflict or apply explicit precedence |
+| Current fallback | “What is the rule now?”             | Use currentness policy and current clock      |
+| Missing time     | “What was the old rule?”            | Ask or qualify rather than choose arbitrarily |
 
 This is where temporal RAG connects naturally to eval-driven system design. Each temporal case should capture not only the final prose but also the selected interval, source versions, and evidence chain.
 

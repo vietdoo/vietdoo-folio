@@ -13,7 +13,7 @@ draft: false
 
 Một hệ thống RAG thông thường trả lời câu hỏi: “Tài liệu nào có ngữ nghĩa giống query này nhất?” Nhưng một knowledge system production thường phải trả lời câu hỏi khó hơn: **tài liệu nào đúng tại thời điểm mà user đang nói đến?**
 
-Khác biệt này rất dễ bị bỏ qua vì vector search tạo cảm giác thông minh. Đưa vào query “Chính sách hoàn tiền của chúng ta vào tháng 3 là gì?”, hệ thống có thể tìm ra những tài liệu chứa từ *refund* và *March*. Nhưng semantic similarity không tự hiểu rằng policy phát hành tháng 6 đã thay thế policy từng có hiệu lực tháng 3. Nó có thể trả về câu trả lời mới hơn, trau chuốt hơn nhưng sai về lịch sử.
+Khác biệt này rất dễ bị bỏ qua vì vector search tạo cảm giác thông minh. Đưa vào query “Chính sách hoàn tiền của chúng ta vào tháng 3 là gì?”, hệ thống có thể tìm ra những tài liệu chứa từ _refund_ và _March_. Nhưng semantic similarity không tự hiểu rằng policy phát hành tháng 6 đã thay thế policy từng có hiệu lực tháng 3. Nó có thể trả về câu trả lời mới hơn, trau chuốt hơn nhưng sai về lịch sử.
 
 Đây là bài toán của **Temporal Retrieval-Augmented Generation**. Thách thức không phải thêm một trường `published_at` vào chunk rồi hy vọng model tự chú ý. System cần temporal model rõ ràng, luật retrieval, cách hiển thị bằng chứng và bộ eval phân biệt “đúng bây giờ” với “đúng vào lúc đó”. Nghiên cứu gần đây về diachronic question answering cũng xem time-aware retrieval là một bài toán riêng, không chỉ là biến thể nhỏ của semantic search thông thường.[1]
 
@@ -23,21 +23,21 @@ Khác biệt này rất dễ bị bỏ qua vì vector search tạo cảm giác t
 
 Hãy xem một timeline policy đơn giản:
 
-| Tài liệu | Published | Valid from | Valid until | Nội dung |
-|---|---:|---:|---:|---|
-| Refund Policy v1 | 08/01 | 08/01 | 30/04 | Cho phép hoàn tiền trong 14 ngày |
-| Refund Policy v2 | 01/05 | 01/05 | 31/08 | Cho phép hoàn tiền trong 30 ngày |
-| Refund Policy v3 | 01/09 | 01/09 | Mở | Cho phép hoàn tiền trong 7 ngày |
+| Tài liệu         | Published | Valid from | Valid until | Nội dung                         |
+| ---------------- | --------: | ---------: | ----------: | -------------------------------- |
+| Refund Policy v1 |     08/01 |      08/01 |       30/04 | Cho phép hoàn tiền trong 14 ngày |
+| Refund Policy v2 |     01/05 |      01/05 |       31/08 | Cho phép hoàn tiền trong 30 ngày |
+| Refund Policy v3 |     01/09 |      01/09 |          Mở | Cho phép hoàn tiền trong 7 ngày  |
 
 User hỏi: “Ngày 20/04 khách hàng có thể yêu cầu refund theo policy khi đó không?” Tài liệu mới nhất là authoritative cho hiện tại nhưng sai với câu hỏi. Semantic retriever có thể xếp v3 cao vì nó chứa cùng product term và giải thích ngắn gọn. Keyword filter cũng có thể fail nếu câu hỏi nói “lúc đó” thay vì nêu ngày cụ thể.
 
 Temporal correctness có ít nhất ba chiều:
 
-| Chiều thời gian | Câu hỏi | Ví dụ failure |
-|---|---|---|
-| Valid time | Fact đúng trong thế giới được mô hình hóa khi nào? | Áp policy 30 ngày cho giao dịch tháng 4 |
-| Transaction time | Hệ thống biết hoặc ghi nhận fact khi nào? | Correction đến muộn ghi đè record cũ |
-| Reference time | User đang hỏi về mốc thời gian nào? | “Lúc incident xảy ra” bị hiểu thành hôm nay |
+| Chiều thời gian  | Câu hỏi                                            | Ví dụ failure                               |
+| ---------------- | -------------------------------------------------- | ------------------------------------------- |
+| Valid time       | Fact đúng trong thế giới được mô hình hóa khi nào? | Áp policy 30 ngày cho giao dịch tháng 4     |
+| Transaction time | Hệ thống biết hoặc ghi nhận fact khi nào?          | Correction đến muộn ghi đè record cũ        |
+| Reference time   | User đang hỏi về mốc thời gian nào?                | “Lúc incident xảy ra” bị hiểu thành hôm nay |
 
 Ba clock này không thể hoán đổi. Một tài liệu viết tháng 6 có thể mô tả sự kiện xảy ra tháng 4. Database có thể ingest một hợp đồng cũ vào tháng 9. Support agent có thể hỏi policy “khi khách hàng đăng ký”, không phải ngày publish và cũng không phải ngày hiện tại.
 
@@ -117,13 +117,13 @@ Tầng thứ hai xếp hạng các candidate hợp lệ theo semantic relevance,
 
 ![Minh họa nét vẽ tay về pipeline lọc evidence theo thời gian trước khi semantic ranking và contradiction review](/blog/temporal-rag-time-aware-retrieval/pipeline.png)
 
-| Tầng | Input | Output | Failure chính được ngăn |
-|---|---|---|---|
-| Temporal planner | Query và context | Reference interval, relation | Trả lời nhầm thời điểm |
-| Candidate filter | Source metadata | Chunk đủ điều kiện thời gian | Tài liệu mới lấn át lịch sử |
-| Semantic ranker | Chunk đủ điều kiện | Evidence set liên quan | Trả text hợp lệ nhưng không liên quan |
-| Contradiction checker | Evidence và lineage | Conflict/gap signal | Trộn các version không tương thích |
-| Generator | Evidence và temporal contract | Câu trả lời có citation | Biến uncertainty thành certainty |
+| Tầng                  | Input                         | Output                       | Failure chính được ngăn               |
+| --------------------- | ----------------------------- | ---------------------------- | ------------------------------------- |
+| Temporal planner      | Query và context              | Reference interval, relation | Trả lời nhầm thời điểm                |
+| Candidate filter      | Source metadata               | Chunk đủ điều kiện thời gian | Tài liệu mới lấn át lịch sử           |
+| Semantic ranker       | Chunk đủ điều kiện            | Evidence set liên quan       | Trả text hợp lệ nhưng không liên quan |
+| Contradiction checker | Evidence và lineage           | Conflict/gap signal          | Trộn các version không tương thích    |
+| Generator             | Evidence và temporal contract | Câu trả lời có citation      | Biến uncertainty thành certainty      |
 
 Thứ tự này không phải công thức duy nhất. Trong một số domain, semantic retrieval trước có thể giúp tìm event định nghĩa temporal interval. Nguyên tắc engineering là thứ tự phải rõ ràng và có thể kiểm thử.
 
@@ -147,13 +147,13 @@ Hai statement chưa chắc mâu thuẫn. Chúng có thể nói về hai populati
 
 Contradiction layer nên phân loại quan hệ: supersedes, narrows scope, expands scope, corrects, coexists hoặc unresolved. Giữ classification gần evidence để generator giải thích vì sao source này được ưu tiên.
 
-| Loại xung đột | Cách xử lý | Cách trả lời |
-|---|---|---|
-| Supersession | Chọn source valid tại reference time | Cite đúng version áp dụng |
-| Khác scope | Lọc theo tenant, product hoặc population | Nêu rõ scope |
-| Correction | Ưu tiên record đã sửa trong interval tương ứng | Nhắc correction nếu quan trọng |
-| Overlap | Dùng precedence của domain hoặc hỏi lại | Không âm thầm trộn |
-| Unresolved | Escalate hoặc qualify | Nói rõ evidence đang xung đột |
+| Loại xung đột | Cách xử lý                                     | Cách trả lời                   |
+| ------------- | ---------------------------------------------- | ------------------------------ |
+| Supersession  | Chọn source valid tại reference time           | Cite đúng version áp dụng      |
+| Khác scope    | Lọc theo tenant, product hoặc population       | Nêu rõ scope                   |
+| Correction    | Ưu tiên record đã sửa trong interval tương ứng | Nhắc correction nếu quan trọng |
+| Overlap       | Dùng precedence của domain hoặc hỏi lại        | Không âm thầm trộn             |
+| Unresolved    | Escalate hoặc qualify                          | Nói rõ evidence đang xung đột  |
 
 Generator không nên nói “policy là X” nếu evidence chỉ hỗ trợ “policy là X trong khoảng 1/4 đến 30/4”. Temporal qualifier là một phần của correctness.
 
@@ -169,14 +169,14 @@ RAG benchmark thông thường có thể chấm relevance, groundedness và answ
 
 Một test matrix nhỏ có thể bao phủ phần lớn bug rủi ro cao:
 
-| Test | Query | Behavior kỳ vọng |
-|---|---|---|
-| Point lookup | “Ngày 20/4 quy định nào áp dụng?” | Trả version valid ngày 20/4 |
-| Before/after | “Sau migration đã thay đổi gì?” | So sánh hai interval và cite cả hai |
-| Late ingestion | Tài liệu tháng 4 đến hệ thống tháng 6 | Giữ valid time, lưu ingestion time |
-| Contradiction | Hai policy overlap | Surface conflict hoặc dùng precedence rõ |
-| Current fallback | “Bây giờ quy định gì?” | Dùng currentness policy và clock hiện tại |
-| Missing time | “Quy định cũ là gì?” | Hỏi lại hoặc qualify, không chọn tùy tiện |
+| Test             | Query                                 | Behavior kỳ vọng                          |
+| ---------------- | ------------------------------------- | ----------------------------------------- |
+| Point lookup     | “Ngày 20/4 quy định nào áp dụng?”     | Trả version valid ngày 20/4               |
+| Before/after     | “Sau migration đã thay đổi gì?”       | So sánh hai interval và cite cả hai       |
+| Late ingestion   | Tài liệu tháng 4 đến hệ thống tháng 6 | Giữ valid time, lưu ingestion time        |
+| Contradiction    | Hai policy overlap                    | Surface conflict hoặc dùng precedence rõ  |
+| Current fallback | “Bây giờ quy định gì?”                | Dùng currentness policy và clock hiện tại |
+| Missing time     | “Quy định cũ là gì?”                  | Hỏi lại hoặc qualify, không chọn tùy tiện |
 
 Đây là nơi Temporal RAG nối tự nhiên với eval-driven system design. Mỗi temporal case không chỉ lưu prose cuối cùng, mà còn lưu interval được suy ra, source version và evidence chain.
 
