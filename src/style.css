@@ -1016,7 +1016,11 @@ html[data-ui-theme="light"] .card:has(.visit-card-bg) {
 
 html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-bg {
   background:
-    radial-gradient(circle at 78% 20%, rgba(184, 117, 88, 0.24), transparent 34%),
+    radial-gradient(
+      circle at 78% 20%,
+      rgba(184, 117, 88, 0.24),
+      transparent 34%
+    ),
     linear-gradient(135deg, #e8d8c3 0%, #d7c0a7 54%, #c99f87 100%) !important;
 }
 
@@ -1036,7 +1040,9 @@ html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-edge-fade {
   ) !important;
 }
 
-html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-edge-fade.bottom-0 {
+html[data-ui-theme="light"]
+  .card:has(.visit-card-bg)
+  .visit-card-edge-fade.bottom-0 {
   background: linear-gradient(
     to top,
     rgba(118, 76, 60, 0.16),
@@ -1060,11 +1066,17 @@ html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-marquee {
   opacity: 0.28;
 }
 
-html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-marquee .text-primary-400 {
+html[data-ui-theme="light"]
+  .card:has(.visit-card-bg)
+  .visit-card-marquee
+  .text-primary-400 {
   color: var(--light-accent-strong) !important;
 }
 
-html[data-ui-theme="light"] .card:has(.visit-card-bg) .visit-card-marquee .text-white\/80 {
+html[data-ui-theme="light"]
+  .card:has(.visit-card-bg)
+  .visit-card-marquee
+  .text-white\/80 {
   color: var(--light-ink-soft) !important;
 }
 
@@ -2363,7 +2375,6 @@ html[data-ui-theme="light"] [data-share-section] svg {
   color: currentColor !important;
 }
 
-
 /* ── Homepage layout stability ─────────────────────────────────────────── */
 main.home-page,
 main.home-page > .card {
@@ -2411,7 +2422,6 @@ main.home-page .about-card-content p {
   }
 }
 
-
 /* ── Intro hero responsive sizing ──────────────────────────────────────── */
 .intro-card-desktop,
 .intro-card-copy,
@@ -2448,4 +2458,90 @@ main.home-page .about-card-content p {
   .intro-card-socials > * {
     max-width: 46px;
   }
+}
+
+/* ── Fingerprint playground typography: align with VNDO playground rule ── */
+.fingerprint-audit {
+  font-family:
+    "Be Vietnam Pro",
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.fingerprint-audit h1,
+.fingerprint-audit h2,
+.fingerprint-audit h3,
+.fingerprint-audit h4,
+.fingerprint-audit h5,
+.fingerprint-audit h6 {
+  font-family:
+    "Be Vietnam Pro",
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif !important;
+}
+
+.fingerprint-audit h1 {
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.fingerprint-audit p,
+.fingerprint-audit label,
+.fingerprint-audit button,
+.fingerprint-audit a {
+  font-family:
+    "Be Vietnam Pro",
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+}
+
+.fingerprint-audit .font-mono {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: -0.01em;
+}
+
+@media (max-width: 767px) {
+  .fingerprint-audit {
+    font-size: 14px;
+  }
+
+  .fingerprint-audit h1 {
+    letter-spacing: -0.02em;
+  }
+}
+
+html[data-ui-theme="light"] .fingerprint-audit h1,
+html[data-ui-theme="light"] .fingerprint-audit h2,
+html[data-ui-theme="light"] .fingerprint-audit h3,
+html[data-ui-theme="light"] .fingerprint-audit h4,
+html[data-ui-theme="light"] .fingerprint-audit h5,
+html[data-ui-theme="light"] .fingerprint-audit h6 {
+  font-family:
+    "Be Vietnam Pro",
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif !important;
+}
+
+html[data-ui-theme="light"] .fingerprint-audit h1 {
+  color: #f8fbff !important;
+}
+
+html[data-ui-theme="light"] .fingerprint-audit .fingerprint-ai-summary h2,
+html[data-ui-theme="light"] .fingerprint-audit .fingerprint-inventory h2 {
+  font-family:
+    "Be Vietnam Pro",
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif !important;
 }
