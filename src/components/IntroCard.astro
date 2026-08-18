@@ -115,8 +115,8 @@ const socials = [
   </div>
 
   {/* ---------- Desktop layout ---------- */}
-  <div class="hidden md:flex w-full h-full relative z-10 pointer-events-none">
-    <div data-bug-safe-below class="flex flex-col justify-between md:max-h-[300px] gap-3 md:gap-4 pointer-events-auto">
+  <div class="intro-card-desktop hidden md:flex w-full min-w-0 h-full relative z-10 pointer-events-none">
+    <div data-bug-safe-below class="intro-card-copy flex min-w-0 flex-1 flex-col justify-between md:max-h-[300px] gap-3 md:gap-4 pointer-events-auto">
       <div class="flex flex-col h-full">
         <div class="flex items-center gap-2 mb-2">
           <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold bg-darkslate-700/60 border border-darkslate-500/50 text-primary-400">
@@ -149,8 +149,8 @@ const socials = [
           </span>
         </p>
       </div>
-      <div class="flex flex-col lg:flex-row gap-2 lg:gap-4">
-        <div class="flex gap-2 lg:gap-4">
+      <div class="intro-card-actions flex max-w-full flex-col gap-2 xl:flex-row xl:gap-4">
+        <div class="intro-card-socials flex max-w-full flex-wrap gap-2 xl:gap-4">
           {
             socials.map((social) => (
               <a href={social.href} aria-label={social.label} target="_blank">
@@ -187,7 +187,7 @@ const socials = [
       quality="max"
       src={MemojiAvatarDefault}
       {...themeSources}
-      class="w-auto max-h-[300px] select-none relative z-[-1] opacity-100 pointer-events-none"
+      class="w-auto max-w-[34%] max-h-[300px] shrink-0 select-none object-contain relative z-[-1] opacity-100 pointer-events-none"
       alt={`memoji of ${SITE.author.firstName}`}
       loading="eager"
       fetchpriority="high"

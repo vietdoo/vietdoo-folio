@@ -6,7 +6,7 @@ import Card from "./Card/index.astro";
   href="/guestbook"
   colSpan="md:col-span-1"
   rowSpan="md:row-span-1"
-  height="h-[76px] sm:h-[92px]"
+  height="min-h-[82px] sm:min-h-[96px] md:h-full"
   padding="p-3 sm:p-4"
   arrowCorner
   prefetch="viewport"
@@ -29,8 +29,8 @@ import Card from "./Card/index.astro";
       }
     </div>
   </div>
-  <div class="flex-1 flex items-start">
-    <h2 class="guestbook-card-title text-[15px] sm:text-lg md:text-xl font-bold m-0 text-white">
+  <div class="flex min-w-0 flex-1 items-start pr-5">
+    <h2 class="guestbook-card-title min-w-0 max-w-full truncate text-[15px] leading-tight sm:text-lg md:text-xl font-bold m-0 text-white">
       Guestbook
     </h2>
   </div>

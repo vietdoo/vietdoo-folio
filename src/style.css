@@ -2304,3 +2304,90 @@ html[data-ui-theme="light"] [data-share-section] a:hover {
 html[data-ui-theme="light"] [data-share-section] svg {
   color: currentColor !important;
 }
+
+
+/* ── Homepage layout stability ─────────────────────────────────────────── */
+main.home-page,
+main.home-page > .card {
+  min-width: 0;
+}
+
+main.home-page > .card {
+  min-height: 0;
+  max-width: 100%;
+}
+
+main.home-page .card h1,
+main.home-page .card h2,
+main.home-page .card h3,
+main.home-page .card p {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+main.home-page .about-card-content,
+main.home-page .about-card-content > div,
+main.home-page .books-card-inner,
+main.home-page .books-card-header > div:first-child {
+  min-width: 0;
+}
+
+main.home-page .about-card-content p {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+  main.home-page {
+    height: auto !important;
+    min-height: 0;
+    align-content: start;
+    grid-template-rows: repeat(8, minmax(0, auto)) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  main.home-page > .card {
+    height: auto;
+    min-height: 0;
+  }
+}
+
+
+/* ── Intro hero responsive sizing ──────────────────────────────────────── */
+.intro-card-desktop,
+.intro-card-copy,
+.intro-card-actions,
+.intro-card-socials {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.intro-card-copy > div:first-child {
+  min-width: 0;
+}
+
+.intro-card-actions a,
+.intro-card-socials a,
+.intro-card-socials [data-tooltip-root] {
+  min-width: 0;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .intro-card-copy {
+    gap: 10px;
+  }
+
+  .intro-card-actions {
+    gap: 8px;
+  }
+
+  .intro-card-socials {
+    gap: 8px;
+  }
+
+  .intro-card-socials > * {
+    max-width: 46px;
+  }
+}

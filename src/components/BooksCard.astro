@@ -81,7 +81,7 @@ const spineVariants = [
   colSpan="md:col-span-1"
   rowSpan="md:row-span-2"
   href="/books"
-  height="min-h-[298px] sm:min-h-[330px] md:h-full"
+  height="min-h-[276px] sm:min-h-[300px] md:min-h-0 md:h-full"
   padding="p-3 sm:p-5"
   arrowCorner
 >
@@ -148,11 +148,13 @@ const spineVariants = [
 
 <style>
   .books-card-inner {
+    min-width: 0;
     min-height: 232px;
   }
 
   .books-card-header {
     display: flex;
+    min-width: 0;
     align-items: flex-start;
     justify-content: space-between;
     gap: 12px;
@@ -169,14 +171,18 @@ const spineVariants = [
   }
 
   .books-card-subtitle {
-    max-width: min(190px, 72vw);
+    min-width: 0;
+    max-width: 100%;
     margin: 6px 0 0;
     overflow: hidden;
     color: rgba(232, 226, 213, 0.61) !important;
+    display: -webkit-box;
     font-size: 0.68rem;
     line-height: 1.35;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
   }
 
   .books-card-count {
@@ -547,6 +553,61 @@ const spineVariants = [
     transform: translateX(2px);
   }
 
+  @media (min-width: 768px) {
+    .books-card-inner {
+      min-height: 0;
+    }
+
+    .books-card-header > div:first-child {
+      min-width: 0;
+    }
+
+    .books-card-subtitle {
+      max-width: 100%;
+    }
+
+    .bookshelf-scene {
+      min-width: 0;
+      min-height: 0;
+      margin: 8px 0 6px;
+      padding: 2px 0 0;
+      overflow: hidden;
+    }
+
+    .book-row {
+      width: 100%;
+      min-height: 0;
+      gap: clamp(2px, 0.55vw, 5px);
+      padding: 0 2px;
+    }
+
+    .book-spine {
+      max-height: 132px;
+    }
+
+    .book-title {
+      max-height: 92px;
+      font-size: 0.43rem;
+    }
+
+    .book-author {
+      max-height: 34px;
+      font-size: 0.31rem;
+    }
+
+    .bookshelf-lip {
+      height: 7px;
+    }
+
+    .bookshelf-base {
+      height: 5px;
+    }
+
+    .books-card-footer {
+      padding-top: 7px;
+    }
+  }
+
   @media (max-width: 420px) {
     .books-card-inner {
       min-height: 270px;
@@ -561,7 +622,7 @@ const spineVariants = [
     }
 
     .books-card-subtitle {
-      max-width: 68vw;
+      max-width: 100%;
       margin-top: 4px;
       font-size: 0.64rem;
     }
@@ -576,12 +637,16 @@ const spineVariants = [
     }
 
     .bookshelf-scene {
+      min-width: 0;
       min-height: 162px;
-      margin: 12px -5px 10px;
-      padding-inline: 1px;
+      margin: 12px 0 10px;
+      overflow: hidden;
+      padding-inline: 0;
     }
 
     .book-row {
+      width: 100%;
+      min-width: 0;
       min-height: 136px;
       gap: 2px;
       padding: 10px 1px 0;
