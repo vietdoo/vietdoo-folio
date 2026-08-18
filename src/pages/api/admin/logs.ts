@@ -4,6 +4,7 @@ import {
   hasAdminSession,
   unauthorizedResponse,
 } from "../../../lib/server/admin-auth";
+import { isMissingTableError } from "../../../lib/server/admin/storage-errors";
 
 function parseJsonArray(value: string) {
   try {
@@ -12,12 +13,6 @@ function parseJsonArray(value: string) {
   } catch {
     return [];
   }
-}
-
-function isMissingAuditTable(error: unknown) {
-  const message = error instanceof Error ? error.message : String(error);
-  return /(?:no such table|does not exist|not found)/i.test(message) &&
-    /AiRequestLog|ai_request_log/i.test(message);
 }
 
 export const GET: APIRoute = async ({ request, url }) => {
@@ -73,7 +68,7 @@ export const GET: APIRoute = async ({ request, url }) => {
       },
     );
   } catch (error) {
-    if (isMissingAuditTable(error)) {
+    if (isMissingTableError(error, "AiRequestLog")) {
       console.warn("[admin] AiRequestLog table is not available yet.");
       return new Response(
         JSON.stringify({

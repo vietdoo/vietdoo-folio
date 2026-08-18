@@ -10,12 +10,7 @@ import {
   generateAdminSummary,
   parseAdminSummaryCacheControl,
 } from "../../../lib/server/admin/ai-summary";
-
-function isMissingAuditTable(error: unknown) {
-  const message = error instanceof Error ? error.message : String(error);
-  return /(?:no such table|does not exist|not found)/i.test(message) &&
-    /AiRequestLog|ai_request_log/i.test(message);
-}
+import { isMissingTableError } from "../../../lib/server/admin/storage-errors";
 
 export const GET: APIRoute = async ({ request }) => {
   if (!hasAdminSession(request)) return unauthorizedResponse();
@@ -34,7 +29,7 @@ export const GET: APIRoute = async ({ request }) => {
       },
     });
   } catch (error) {
-    if (isMissingAuditTable(error)) {
+    if (isMissingTableError(error, "AiRequestLog")) {
       console.warn("[admin] AI summary is using the pre-migration fallback.");
       const summary = createUnavailableAdminSummary();
       return new Response(
