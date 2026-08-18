@@ -341,6 +341,10 @@ The model decides what it would like to do. The application decides whether the 
 
 That is the difference between an agent that merely calls tools and an agent system that can be trusted with real-world effects.
 
+## Related reading
+
+This article is the side-effect boundary in a broader production-agent series. For the workflow mechanics around checkpoints and resuming work, read [Durable Execution for AI Agents](/blog/durable-execution-ai-agent). For the evidence and regression layer, continue with [Do Not Ship a Tool-Calling AI Agent Without Evals](/blog/agent-evals-regression-suite). For the telemetry boundary around prompts, tool calls, tokens, and cost, see [AI Agent Observability Without Data Leaks](/blog/agent-observability-without-data-leaks).
+
 ## References
 
 [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/ "AWS Builders' Library — Making retries safe with idempotent APIs"

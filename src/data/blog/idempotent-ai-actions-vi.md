@@ -341,6 +341,10 @@ Model quyết định nó muốn làm gì. Application quyết định request c
 
 Đó là khác biệt giữa một agent chỉ biết gọi tool và một agent system có thể được tin cậy khi tác động vào thế giới thật.
 
+## Đọc tiếp trong series production AI
+
+Bài viết này là lớp side effect trong một series lớn hơn về production agent. Nếu muốn đi sâu vào checkpoint và resume workflow, hãy đọc [Durable Execution cho AI Agent](/blog/durable-execution-ai-agent). Với lớp kiểm chứng và regression, xem tiếp [Đừng đưa AI Agent lên Production khi chưa có Evals](/blog/agent-evals-regression-suite). Còn nếu cần thiết kế telemetry cho prompt, tool call, token và cost, hãy đọc [Observability cho AI Agent mà không biến Log thành Data Leak](/blog/agent-observability-without-data-leaks).
+
 ## References
 
 [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/ "AWS Builders' Library — Making retries safe with idempotent APIs"
