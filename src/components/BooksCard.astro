@@ -103,48 +103,32 @@ const spineVariants = [
       </div>
     </header>
 
-    <div class="bookshelf-scene" aria-label="A small wooden shelf with books">
-      <div class="bookshelf-crown" aria-hidden="true"></div>
-      <div class="bookshelf-cabinet">
-        <div class="bookshelf-back" aria-hidden="true"></div>
-        <div
-          class="bookshelf-side-shadow bookshelf-side-shadow-left"
-          aria-hidden="true"
-        >
-        </div>
-        <div
-          class="bookshelf-side-shadow bookshelf-side-shadow-right"
-          aria-hidden="true"
-        >
-        </div>
-        <div class="book-row">
-          {
-            shelfBooks.map((book, idx) => {
-              const variant = spineVariants[idx % spineVariants.length];
-              const isLeaning = idx === 0 || idx === 4;
-              return (
-                <div
-                  class:list={["book-spine", isLeaning && "book-spine-leaning"]}
-                  style={`--book-color:${variant.color};--book-dark:${variant.dark};--book-accent:${variant.accent};--book-height:${variant.height}px;--book-width:${variant.width}px;--book-tilt:${variant.tilt}deg;`}
-                  title={`${book.title} — ${book.author}`}
-                >
-                  <span class="book-top-rule" aria-hidden="true" />
-                  <span class="book-title">
-                    {book.title.length > 22
-                      ? `${book.title.slice(0, 20).trimEnd()}…`
-                      : book.title}
-                  </span>
-                  <span class="book-author">{book.author}</span>
-                  <span class="book-bottom-rule" aria-hidden="true" />
-                </div>
-              );
-            })
-          }
-        </div>
-        <div class="bookshelf-lip" aria-hidden="true"></div>
-      </div>
-      <div class="bookshelf-base" aria-hidden="true">
-        <span></span>
+    <div class="bookshelf-scene" aria-label="A collection of books">
+      <div class="book-row">
+        {
+          shelfBooks.map((book, idx) => {
+            const variant = spineVariants[idx % spineVariants.length];
+            const isLeaning = idx === 0 || idx === 4;
+            return (
+              <div
+                class:list={["book-spine", isLeaning && "book-spine-leaning"]}
+                style={`--book-color:${variant.color};--book-dark:${variant.dark};--book-accent:${variant.accent};--book-height:${variant.height}px;--book-width:${variant.width}px;--book-tilt:${variant.tilt}deg;`}
+                title={`${book.title} — ${book.author}`}
+                role="img"
+                aria-label={`${book.title} by ${book.author}`}
+              >
+                <span class="book-top-rule" aria-hidden="true" />
+                <span class="book-title">
+                  {book.title.length > 30
+                    ? `${book.title.slice(0, 28).trimEnd()}…`
+                    : book.title}
+                </span>
+                <span class="book-author">{book.author}</span>
+                <span class="book-bottom-rule" aria-hidden="true" />
+              </div>
+            );
+          })
+        }
       </div>
     </div>
 
@@ -220,10 +204,11 @@ const spineVariants = [
     display: flex;
     min-height: 168px;
     flex: 1 1 auto;
-    flex-direction: column;
-    justify-content: flex-end;
+    align-items: flex-end;
+    justify-content: center;
     margin: 15px -3px 12px;
-    padding: 0 8px;
+    padding: 8px 4px 0;
+    background: transparent;
     perspective: 700px;
   }
 
@@ -346,11 +331,12 @@ const spineVariants = [
     position: relative;
     z-index: 4;
     display: flex;
+    width: 100%;
     align-items: flex-end;
     justify-content: center;
-    gap: 3px;
-    min-height: 139px;
-    padding: 18px 15px 0;
+    gap: clamp(3px, 1vw, 7px);
+    min-height: 145px;
+    padding: 12px 5px 0;
   }
 
   .book-spine {
@@ -358,9 +344,9 @@ const spineVariants = [
     display: flex;
     width: var(--book-width);
     height: var(--book-height);
-    min-width: 18px;
+    min-width: 23px;
     flex: 1 1 var(--book-width);
-    max-width: 31px;
+    max-width: 42px;
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
@@ -430,11 +416,11 @@ const spineVariants = [
 
   .book-title {
     display: block;
-    max-height: 98px;
+    max-height: 108px;
     overflow: hidden;
-    color: rgba(255, 247, 219, 0.95) !important;
+    color: rgba(255, 247, 219, 0.98) !important;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 0.54rem;
+    font-size: 0.48rem;
     font-weight: 700;
     line-height: 1.08;
     text-align: center;
@@ -448,9 +434,9 @@ const spineVariants = [
     overflow: hidden;
     color: color-mix(in srgb, var(--book-accent) 75%, #fff 25%) !important;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 0.36rem;
+    font-size: 0.34rem;
     line-height: 1;
-    opacity: 0.76;
+    opacity: 0.84;
     text-align: center;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
@@ -592,36 +578,24 @@ const spineVariants = [
     .bookshelf-scene {
       min-height: 162px;
       margin: 12px -5px 10px;
-      padding-inline: 2px;
-    }
-
-    .bookshelf-crown {
-      top: 5px;
-      right: 8px;
-      left: 8px;
-    }
-
-    .bookshelf-cabinet {
-      min-height: 143px;
-    }
-
-    .bookshelf-back {
-      inset: 8px 6px 17px;
+      padding-inline: 1px;
     }
 
     .book-row {
-      min-height: 130px;
+      min-height: 136px;
       gap: 2px;
-      padding: 16px 8px 0;
+      padding: 10px 1px 0;
     }
 
     .book-spine {
-      max-width: 29px;
+      min-width: 22px;
+      max-width: 35px;
       padding: 6px 2px 5px;
     }
 
     .book-title {
-      font-size: 0.47rem;
+      max-height: 96px;
+      font-size: 0.43rem;
     }
 
     .book-author {

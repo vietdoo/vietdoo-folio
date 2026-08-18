@@ -13,24 +13,24 @@ import Pulse from "./Pulse.astro";
     <div class="flex flex-col gap-1">
       <div class="flex justify-between items-center w-full">
         <div class="flex items-baseline gap-2">
-          <h2 class="text-white text-lg font-bold">Now</h2>
+          <h2 class="now-card-title text-white text-lg font-bold">Now</h2>
         </div>
         <div class="flex items-center gap-1.5">
           <time
-            class="text-[9px] sm:text-[10px] text-darkslate-300"
+            class="now-card-date text-[9px] sm:text-[10px] text-darkslate-300"
             datetime="2026-05-07">May 7, 2026</time
           >
           <Pulse />
         </div>
       </div>
       <p
-        class="text-[11px] sm:text-xs leading-tight flex flex-wrap items-center gap-x-1 gap-y-0.5"
+        class="now-card-copy text-[11px] sm:text-xs leading-tight flex flex-wrap items-center gap-x-1 gap-y-0.5"
       >
         <span>Currently working fulltime at</span>
         <a
           href="https://vnpt.vn/"
           target="_blank"
-          class="inline-flex items-center gap-1.5 underline hover:text-darkslate-100 transition-colors font-semibold"
+          class="now-card-link inline-flex items-center gap-1.5 underline hover:text-darkslate-100 transition-colors font-semibold"
         >
           <img
             src="https://hrm.vnerp.vn/web/image/res.company/1/logo"
