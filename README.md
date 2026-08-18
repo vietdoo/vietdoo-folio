@@ -57,19 +57,27 @@ The complete variable template is available in [`.env.example`](./.env.example).
 | --- | --- | --- | --- |
 | `ORCAROUTER_API_KEY` | AI playgrounds using OrcaRouter | Server-side access to the OrcaRouter provider and free-model failover routes | Keep server-side; never expose through `PUBLIC_*` |
 | `OPENROUTER_API_KEY` | AI playgrounds using OpenRouter | Server-side access to OpenRouter model routes and multimodal fallbacks | Keep server-side; never expose through `PUBLIC_*` |
-| `ADMIN_PASSWORD` | `/admin` | Password checked by the server before creating an admin session | Use a strong password and never hard-code it in source |
+| `ADMIN_USERNAME` | `/admin` | Username checked by the server before creating an admin session; defaults to `admin` when omitted | Keep server-side and change it from the default for a non-demo deployment |
+| `ADMIN_PASSWORD` | `/admin` | Password checked together with `ADMIN_USERNAME` before creating an admin session | Use a strong password and never hard-code it in source |
 | `ADMIN_SESSION_SECRET` | `/admin` | Long random HMAC secret used to sign and validate HttpOnly admin session cookies | Must be different from `ADMIN_PASSWORD`; rotate it to invalidate existing sessions |
 | `ASTRO_DB_REMOTE_URL` | Remote Astro DB migration and production persistence | Remote LibSQL/Turso database URL | Keep server-side and do not print it in logs |
 | `ASTRO_DB_APP_TOKEN` | Remote Astro DB migration and production persistence | Authentication token for the remote Astro DB database | Keep server-side and do not commit it |
 
-The application reads provider keys and admin credentials only on the server. The browser never receives API keys, raw prompts, provider credentials, or the admin password. Public UI labels use `vndo-ai` rather than exposing provider routing details.
+The application reads provider keys and admin credentials only on the server. The browser never receives API keys, raw prompts, provider credentials, or the admin password. Public UI labels use `vndo-ai` rather than exposing provider routing details. The admin form uses a username/password pair; the current environment-backed account is assigned the `admin` role inside the signed server session.
 
 ### Local setup
 
-For a basic local run, copy the template and fill in the provider keys and admin values:
+For a basic local run, copy the template and fill in the provider keys and admin values. `ADMIN_USERNAME` defaults to `admin` if omitted, but setting it explicitly is recommended:
 
 ```bash
 cp .env.example .env.local
+```
+
+Set the admin identity in `.env.local`:
+
+```env
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=replace-with-a-strong-password
 ```
 
 Generate a session secret with:
@@ -82,11 +90,11 @@ Then set the generated value as `ADMIN_SESSION_SECRET`. Do not use the placehold
 
 ### Vercel setup
 
-Add the variables in the Vercel project settings under **Settings → Environment Variables**. Configure `ORCAROUTER_API_KEY`, `OPENROUTER_API_KEY`, `ADMIN_PASSWORD`, and `ADMIN_SESSION_SECRET` for **Production**. Configure them for **Preview** only when preview deployments are intended to run the AI playgrounds and admin console.
+Add the variables in the Vercel project settings under **Settings → Environment Variables**. Configure `ORCAROUTER_API_KEY`, `OPENROUTER_API_KEY`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `ADMIN_SESSION_SECRET` for **Production**. Configure them for **Preview** only when preview deployments are intended to run the AI playgrounds and admin console.
 
 Configure `ASTRO_DB_REMOTE_URL` and `ASTRO_DB_APP_TOKEN` for **Production**. Use a separate preview database for Preview deployments if preview traffic should write audit logs or model settings; do not point Preview at the production database unintentionally.
 
-After adding or changing a Vercel environment variable, create a new deployment because environment changes are applied to newly built deployments. The existing deployment does not automatically receive updated server-side values.
+After adding or changing a Vercel environment variable, create a new deployment because environment changes are applied to newly built deployments. The existing deployment does not automatically receive updated server-side values. The current implementation supports one environment-backed admin account with role `admin`; future multi-account support can move the credential lookup to a database or identity provider while keeping the username/password form and role-aware session contract.
 
 ### Astro DB migration
 

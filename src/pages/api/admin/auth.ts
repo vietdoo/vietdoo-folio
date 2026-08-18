@@ -1,14 +1,15 @@
 import type { APIRoute } from "astro";
 import {
   createAdminSessionCookie,
+  getConfiguredAdminUsername,
   isAdminPasswordConfigured,
-  verifyAdminPassword,
+  verifyAdminCredentials,
 } from "../../../lib/server/admin-auth";
 
 export const POST: APIRoute = async ({ request }) => {
   if (!isAdminPasswordConfigured()) {
     return new Response(
-      JSON.stringify({ error: "Admin password is not configured." }),
+      JSON.stringify({ error: "Admin credentials are not configured." }),
       {
         status: 503,
         headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -16,7 +17,7 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  let body: { password?: unknown };
+  let body: { username?: unknown; password?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -26,21 +27,37 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
+  // A missing username falls back to the configured account for compatibility
+  // with older private clients. The public admin form always sends both fields.
+  const username =
+    typeof body.username === "string" && body.username.trim()
+      ? body.username.trim()
+      : getConfiguredAdminUsername();
+
   if (
     typeof body.password !== "string" ||
-    !verifyAdminPassword(body.password)
+    !verifyAdminCredentials(username, body.password)
   ) {
-    return new Response(JSON.stringify({ error: "Invalid admin password." }), {
-      status: 401,
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-    });
+    return new Response(
+      JSON.stringify({ error: "Invalid username or password." }),
+      {
+        status: 401,
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+      },
+    );
   }
 
-  return new Response(JSON.stringify({ authenticated: true }), {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Set-Cookie": createAdminSessionCookie(),
+  return new Response(
+    JSON.stringify({
+      authenticated: true,
+      user: { username, role: "admin" },
+    }),
+    {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Set-Cookie": createAdminSessionCookie(username),
+      },
     },
-  });
+  );
 };

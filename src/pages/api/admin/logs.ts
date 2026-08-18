@@ -4,6 +4,7 @@ import {
   hasAdminSession,
   unauthorizedResponse,
 } from "../../../lib/server/admin-auth";
+import { isMissingTableError } from "../../../lib/server/admin/storage-errors";
 
 function parseJsonArray(value: string) {
   try {
@@ -67,6 +68,29 @@ export const GET: APIRoute = async ({ request, url }) => {
       },
     );
   } catch (error) {
+    if (isMissingTableError(error, "AiRequestLog")) {
+      console.warn("[admin] AiRequestLog table is not available yet.");
+      return new Response(
+        JSON.stringify({
+          logs: [],
+          page,
+          limit,
+          total: 0,
+          storageReady: false,
+          warning:
+            "AI request logs are not ready yet. Run pnpm db:push against the production Astro DB, then redeploy.",
+        }),
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "Cache-Control": "private, no-store",
+            "X-AI-Logs-Storage": "unavailable",
+          },
+        },
+      );
+    }
+
     console.error("[admin] Could not load AI request logs.", error);
     return new Response(
       JSON.stringify({ error: "Could not load AI request logs." }),

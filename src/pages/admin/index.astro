@@ -1641,6 +1641,94 @@ import AdminDashboard from "../../components/admin/AdminDashboard";
       flex-direction: column;
     }
   }
+  /* Cohesion pass: keep the secure entry screen and control room on one surface system. */
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background: var(--admin-bg);
+  }
+  .admin-app,
+  .admin-shell {
+    background: var(--admin-bg);
+    color: var(--admin-ink);
+  }
+  .admin-login-page {
+    background: var(--admin-bg);
+  }
+  .login-card {
+    background: var(--admin-surface);
+    box-shadow: 0 16px 42px rgba(65, 54, 43, 0.1);
+  }
+  .password-field {
+    position: relative;
+    display: grid;
+  }
+  .login-form input {
+    padding-right: 70px;
+    border-color: var(--admin-border);
+    background: var(--admin-surface-strong);
+    color: var(--admin-ink);
+    caret-color: var(--admin-accent);
+    -webkit-text-fill-color: var(--admin-ink);
+    font-size: 13px;
+    letter-spacing: 0.07em;
+  }
+  .login-form input::placeholder {
+    color: #a39c92;
+    letter-spacing: 0;
+  }
+  .password-visibility {
+    position: absolute;
+    top: 50%;
+    right: 9px;
+    min-width: 48px;
+    min-height: 30px;
+    padding: 0 8px;
+    transform: translateY(-50%);
+    border: 1px solid transparent;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--admin-subtle);
+    cursor: pointer;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .password-visibility:hover,
+  .password-visibility:focus-visible {
+    border-color: var(--admin-border);
+    background: #f3eee8;
+    color: var(--admin-accent-dark);
+    outline: none;
+  }
+  .admin-sidebar {
+    background: var(--admin-surface);
+    border-right-color: var(--admin-border);
+  }
+  .admin-main {
+    background: var(--admin-bg);
+  }
+  .admin-header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--admin-border-soft);
+  }
+  .hero-panel,
+  .ai-summary-card,
+  .metric-card,
+  .log-table-wrap,
+  .model-card {
+    background: var(--admin-surface);
+  }
+  .hero-panel {
+    background: linear-gradient(120deg, #eee7de, #f7f3ed 68%, #eee9e1);
+  }
+  .ai-summary-card {
+    background: #f8f3ed;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .admin-app *,
     .admin-app *::before,

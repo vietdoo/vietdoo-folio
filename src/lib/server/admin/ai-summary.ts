@@ -267,6 +267,32 @@ export function resetAdminSummaryCache() {
   cachedSummary = undefined;
 }
 
+export function createUnavailableAdminSummary(): AdminSummary {
+  const now = Date.now();
+  const content = fallbackContent({
+    totalRequests: 0,
+    windowRequests: 0,
+    successful: 0,
+    failed: 0,
+    fallbackEvents: 0,
+    averageLatencyMs: 0,
+    enabledRoutes: 0,
+    configuredRoutes: 0,
+    latestRequestAt: null,
+    recentFailures: [],
+  });
+
+  return {
+    ...content,
+    generatedAt: new Date(now).toISOString(),
+    expiresAt: new Date(now + ADMIN_SUMMARY_TTL_MS).toISOString(),
+    cached: false,
+    degraded: true,
+    sourceWindow: 0,
+    cacheTtlSeconds: ADMIN_SUMMARY_TTL_SECONDS,
+  };
+}
+
 export function parseAdminSummaryCacheControl() {
   return `private, max-age=${ADMIN_SUMMARY_TTL_SECONDS}, stale-while-revalidate=60`;
 }
