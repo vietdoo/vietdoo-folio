@@ -11,6 +11,7 @@ import {
   recordAiRequest,
 } from "../../lib/server/ai/audit-log";
 import { enableAiAuditPersistence } from "../../lib/server/ai/audit-log-persistence";
+import { refreshModelOverrides } from "../../lib/server/ai/model-config";
 
 const MAX_MESSAGES = 24;
 const MAX_TOTAL_CHARS = 32_000;
@@ -199,6 +200,7 @@ function routerErrorResponse(error: SmartRouterError, requestId?: string) {
 
 export const POST: APIRoute = async ({ request }) => {
   enableAiAuditPersistence();
+  await refreshModelOverrides();
   const requestId = createAiRequestId();
   if (!request.headers.get("content-type")?.includes("application/json")) {
     await recordInvalidRequest(requestId, "invalid_content_type");
