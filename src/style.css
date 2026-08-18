@@ -1400,3 +1400,589 @@ html[data-ui-theme="light"] .guestbook-form button[type="submit"]:hover {
     height: 4rem !important;
   }
 }
+
+/* ── Exhaustive light-mode audit pass ───────────────────────── */
+/* Keep interactive demo surfaces readable even when components use neutral/black utilities. */
+html[data-ui-theme="light"] .playground-demo-shell [class*="bg-darkslate-"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="bg-neutral-"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="bg-black"] {
+  background-color: var(--light-surface-strong) !important;
+  color: var(--light-ink) !important;
+}
+
+html[data-ui-theme="light"] .playground-demo-shell [class*="border-darkslate-"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="border-neutral-"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="border-black"] {
+  border-color: var(--light-line) !important;
+}
+
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-darkslate-"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-neutral-"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-white"] {
+  color: var(--light-ink) !important;
+}
+
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-darkslate-1"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-darkslate-2"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-neutral-1"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-neutral-2"] {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-darkslate-3"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-darkslate-4"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-neutral-3"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-neutral-4"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="text-neutral-5"],
+html[data-ui-theme="light"]
+  .playground-demo-shell
+  [class*="placeholder-neutral-"] {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"]
+  .playground-demo-shell
+  [class*="bg-primary-"]
+  [class*="text-white"],
+html[data-ui-theme="light"]
+  .playground-demo-shell
+  [class*="bg-sky-"][class*="text-white"],
+html[data-ui-theme="light"] .playground-demo-shell [class*="bg-primary-"] {
+  color: #fffaf3 !important;
+}
+
+html[data-ui-theme="light"]
+  .playground-demo-shell
+  [class*="hover:bg-neutral-"]:hover,
+html[data-ui-theme="light"]
+  .playground-demo-shell
+  [class*="hover:bg-darkslate-"]:hover,
+html[data-ui-theme="light"]
+  .playground-demo-shell
+  [class*="hover:bg-black"]:hover {
+  background-color: var(--light-paper-deep) !important;
+}
+
+html[data-ui-theme="light"]
+  .playground-demo-shell
+  [class*="hover:text-neutral-"]:hover,
+html[data-ui-theme="light"]
+  .playground-demo-shell
+  [class*="hover:text-white"]:hover {
+  color: var(--light-accent-strong) !important;
+}
+
+html[data-ui-theme="light"]
+  .playground-demo-shell
+  [class*="focus:border-neutral-"]:focus,
+html[data-ui-theme="light"]
+  .playground-demo-shell
+  [class*="focus:border-darkslate-"]:focus {
+  border-color: var(--light-accent) !important;
+}
+
+/* Bookshelf cards and analytics need a deliberate light surface, not an accidental dark fallback. */
+html[data-ui-theme="light"] .books-page [class*="bg-darkslate-500/"],
+html[data-ui-theme="light"] .books-page [class*="bg-darkslate-600/"],
+html[data-ui-theme="light"] .books-page [class*="bg-darkslate-700/"],
+html[data-ui-theme="light"] .books-page .book-card {
+  background: var(--light-surface-strong) !important;
+  border-color: var(--light-line) !important;
+  color: var(--light-ink) !important;
+}
+
+html[data-ui-theme="light"] .books-page .book-card:hover {
+  background: var(--light-surface) !important;
+  border-color: var(--light-accent) !important;
+  box-shadow: 0 8px 22px rgba(88, 66, 60, 0.12) !important;
+}
+
+html[data-ui-theme="light"] .books-page .book-card h3,
+html[data-ui-theme="light"] .books-page .book-card [class*="text-zinc-"] {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .books-page .book-card [class*="text-darkslate-"],
+html[data-ui-theme="light"] .books-page [class*="text-darkslate-3"],
+html[data-ui-theme="light"] .books-page [class*="text-darkslate-4"] {
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .books-page .book-card [class*="border-white/"],
+html[data-ui-theme="light"] .books-page [class*="border-darkslate-"] {
+  border-color: var(--light-line) !important;
+}
+
+html[data-ui-theme="light"] #book-modal {
+  background: rgba(76, 57, 51, 0.42) !important;
+}
+
+html[data-ui-theme="light"] #book-modal #modal-content {
+  background: var(--light-surface-strong) !important;
+  border-color: var(--light-line) !important;
+  color: var(--light-ink) !important;
+}
+
+html[data-ui-theme="light"] #book-modal [class*="text-white"],
+html[data-ui-theme="light"] #book-modal [class*="text-zinc-"],
+html[data-ui-theme="light"] #book-modal [class*="text-darkslate-"] {
+  color: var(--light-ink) !important;
+}
+
+html[data-ui-theme="light"] #book-modal h2,
+html[data-ui-theme="light"] #book-modal h3 {
+  color: var(--light-ink-strong) !important;
+}
+
+html[data-ui-theme="light"] .guestbook-entry .heart-btn {
+  min-height: 2rem;
+  padding-inline: 0.55rem;
+  border: 1px solid transparent;
+  color: var(--light-ink-soft) !important;
+}
+
+html[data-ui-theme="light"] .guestbook-entry .heart-btn:hover {
+  background: var(--light-paper-deep) !important;
+  border-color: var(--light-line) !important;
+  color: var(--light-accent-strong) !important;
+}
+
+html[data-ui-theme="light"] .guestbook-entry .heart-btn.is-active {
+  color: #a33e35 !important;
+}
+
+html[data-ui-theme="light"] .books-page [class*="bg-gradient-to-t"] {
+  background: linear-gradient(
+    to top,
+    var(--light-accent-strong),
+    var(--light-accent),
+    #d9a982
+  ) !important;
+  box-shadow: 0 0 8px rgba(167, 91, 67, 0.16) !important;
+}
+
+@media screen {
+  html[data-ui-theme="light"] .resume-page {
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"] .resume-page > div:first-child {
+    background: var(--light-card) !important;
+    border-color: var(--light-line-strong) !important;
+    box-shadow: 0 18px 42px var(--light-shadow) !important;
+  }
+
+  html[data-ui-theme="light"] .resume-page [class~="bg-darkslate-900/50"],
+  html[data-ui-theme="light"] .resume-page [class~="bg-darkslate-900/40"] {
+    background: var(--light-surface-strong) !important;
+    border-color: var(--light-line) !important;
+  }
+
+  html[data-ui-theme="light"] .resume-page [class~="bg-darkslate-800/80"] {
+    background: var(--light-surface) !important;
+    border-color: var(--light-line) !important;
+  }
+
+  html[data-ui-theme="light"] .resume-page [class~="text-white"] {
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .resume-page [class~="text-darkslate-100"],
+  html[data-ui-theme="light"] .resume-page [class~="text-darkslate-200"] {
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"] .resume-page [class~="text-darkslate-300"] {
+    color: var(--light-ink-soft) !important;
+  }
+
+  html[data-ui-theme="light"] .resume-page [class*="border-darkslate-"] {
+    border-color: var(--light-line) !important;
+  }
+
+  html[data-ui-theme="light"] .resume-page h2 {
+    color: var(--light-accent-strong) !important;
+    border-color: var(--light-line-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .resume-page a {
+    color: var(--light-ink-soft);
+  }
+
+  html[data-ui-theme="light"] .resume-page a:hover {
+    color: var(--light-accent-strong) !important;
+  }
+}
+
+@media screen {
+  html[data-ui-theme="light"]
+    .input-tester-page
+    [class~="bg-darkslate-800/80"] {
+    background: var(--light-card) !important;
+    border-color: var(--light-line-strong) !important;
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .input-tester-page
+    [class~="bg-darkslate-600/30"] {
+    background: var(--light-surface) !important;
+    border-color: var(--light-line) !important;
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"] .input-tester-page [class~="bg-darkslate-700/60"],
+  html[data-ui-theme="light"]
+    .input-tester-page
+    [class~="bg-darkslate-700/40"] {
+    background: var(--light-surface-strong) !important;
+    border-color: var(--light-line) !important;
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"] .input-tester-page [class~="text-white"] {
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .input-tester-page [class~="text-darkslate-100"],
+  html[data-ui-theme="light"] .input-tester-page [class~="text-darkslate-200"],
+  html[data-ui-theme="light"] .input-tester-page [class~="text-darkslate-300"] {
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"] .input-tester-page [class~="text-darkslate-400"] {
+    color: var(--light-ink-soft) !important;
+  }
+
+  html[data-ui-theme="light"] .input-tester-page [class~="text-primary-300"] {
+    color: var(--light-accent-strong) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .input-tester-page
+    [class~="border-darkslate-500"] {
+    border-color: var(--light-line-strong) !important;
+  }
+}
+
+@media screen {
+  html[data-ui-theme="light"] .floating-header-page {
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"] .floating-header-page [class~="bg-darkslate-800"],
+  html[data-ui-theme="light"]
+    .floating-header-page
+    [class~="bg-darkslate-600/30"] {
+    background: var(--light-card) !important;
+    border-color: var(--light-line-strong) !important;
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"] .floating-header-page [class~="text-white"],
+  html[data-ui-theme="light"]
+    .floating-header-page
+    [class~="text-darkslate-100"],
+  html[data-ui-theme="light"]
+    .floating-header-page
+    [class~="text-darkslate-200"] {
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .floating-header-page
+    [class~="text-darkslate-300"] {
+    color: var(--light-ink-soft) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .floating-header-page
+    [class~="text-primary-400"] {
+    color: var(--light-accent-strong) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .floating-header-page
+    [class~="border-darkslate-500"] {
+    border-color: var(--light-line-strong) !important;
+  }
+}
+
+@media screen {
+  html[data-ui-theme="light"]
+    .color-contrast-page
+    [class~="bg-darkslate-600/30"],
+  html[data-ui-theme="light"]
+    .color-contrast-page
+    [class~="bg-darkslate-600/60"] {
+    background: var(--light-surface) !important;
+    border-color: var(--light-line-strong) !important;
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"] .color-contrast-page [class~="bg-darkslate-800"] {
+    background: var(--light-card) !important;
+    border-color: var(--light-line-strong) !important;
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .color-contrast-page [class~="text-white"],
+  html[data-ui-theme="light"]
+    .color-contrast-page
+    [class~="text-darkslate-100"],
+  html[data-ui-theme="light"]
+    .color-contrast-page
+    [class~="text-darkslate-200"] {
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .color-contrast-page
+    [class~="text-darkslate-300"],
+  html[data-ui-theme="light"]
+    .color-contrast-page
+    [class~="text-darkslate-400"] {
+    color: var(--light-ink-soft) !important;
+  }
+
+  html[data-ui-theme="light"] .color-contrast-page [class~="text-primary-400"] {
+    color: var(--light-accent-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .color-contrast-page [class~="text-emerald-300"],
+  html[data-ui-theme="light"] .color-contrast-page [class~="text-emerald-400"] {
+    color: #047857 !important;
+  }
+
+  html[data-ui-theme="light"] .color-contrast-page [class~="text-rose-300"],
+  html[data-ui-theme="light"] .color-contrast-page [class~="text-rose-400"] {
+    color: #be123c !important;
+  }
+
+  html[data-ui-theme="light"]
+    .color-contrast-page
+    [class*="border-darkslate-"] {
+    border-color: var(--light-line-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .color-contrast-page input[type="text"] {
+    background: var(--light-surface-strong) !important;
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .color-contrast-preview h2,
+  html[data-ui-theme="light"] .color-contrast-preview p {
+    color: inherit !important;
+  }
+}
+
+@media screen {
+  html[data-ui-theme="light"]
+    .image-description-page
+    [class~="bg-darkslate-600/30"] {
+    background: var(--light-surface) !important;
+    border-color: var(--light-line-strong) !important;
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .image-description-page
+    [class~="bg-darkslate-800"],
+  html[data-ui-theme="light"]
+    .image-description-page
+    [class~="bg-darkslate-800/70"] {
+    background: var(--light-surface-strong) !important;
+    border-color: var(--light-line-strong) !important;
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .image-description-page [class~="text-white"],
+  html[data-ui-theme="light"]
+    .image-description-page
+    [class~="text-darkslate-100"],
+  html[data-ui-theme="light"]
+    .image-description-page
+    [class~="text-darkslate-200"] {
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .image-description-page
+    [class~="text-darkslate-300"],
+  html[data-ui-theme="light"]
+    .image-description-page
+    [class~="text-darkslate-400"],
+  html[data-ui-theme="light"]
+    .image-description-page
+    [class~="text-darkslate-500"] {
+    color: var(--light-ink-soft) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .image-description-page
+    [class*="border-darkslate-"] {
+    border-color: var(--light-line-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .image-description-page input[type="text"],
+  html[data-ui-theme="light"] .image-description-page textarea {
+    background: var(--light-surface-strong) !important;
+    border-color: var(--light-line-strong) !important;
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .image-description-page input::placeholder,
+  html[data-ui-theme="light"] .image-description-page textarea::placeholder {
+    color: var(--light-ink-soft) !important;
+  }
+
+  html[data-ui-theme="light"] .image-description-page .markdown-result {
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"] .image-description-page .markdown-result h1,
+  html[data-ui-theme="light"] .image-description-page .markdown-result h2,
+  html[data-ui-theme="light"] .image-description-page .markdown-result h3,
+  html[data-ui-theme="light"] .image-description-page .markdown-result strong {
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .image-description-page .markdown-result em,
+  html[data-ui-theme="light"]
+    .image-description-page
+    .markdown-result
+    blockquote {
+    color: var(--light-ink-soft) !important;
+  }
+
+  html[data-ui-theme="light"] .image-description-page .markdown-result code,
+  html[data-ui-theme="light"] .image-description-page .markdown-result pre {
+    background: var(--light-surface-strong) !important;
+    border-color: var(--light-line-strong) !important;
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .image-description-page [role="alert"] {
+    background: rgba(190, 24, 93, 0.1) !important;
+    border-color: rgba(190, 24, 93, 0.35) !important;
+    color: #9f1239 !important;
+  }
+}
+
+@media screen {
+  html[data-ui-theme="light"]
+    .meta-tag-generator-page
+    [class~="bg-darkslate-600/30"],
+  html[data-ui-theme="light"]
+    .meta-tag-generator-page
+    [class~="bg-darkslate-600/40"] {
+    background: var(--light-surface) !important;
+    border-color: var(--light-line-strong) !important;
+    color: var(--light-ink) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .meta-tag-generator-page
+    [class~="bg-darkslate-800"] {
+    background: var(--light-card) !important;
+    border-color: var(--light-line-strong) !important;
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .meta-tag-generator-page
+    [class~="bg-darkslate-900"] {
+    background: var(--light-surface-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .meta-tag-generator-page [class~="text-white"],
+  html[data-ui-theme="light"]
+    .meta-tag-generator-page
+    [class~="text-darkslate-100"],
+  html[data-ui-theme="light"]
+    .meta-tag-generator-page
+    [class~="text-darkslate-200"] {
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .meta-tag-generator-page
+    [class~="text-darkslate-300"],
+  html[data-ui-theme="light"]
+    .meta-tag-generator-page
+    [class~="text-darkslate-400"],
+  html[data-ui-theme="light"]
+    .meta-tag-generator-page
+    [class~="text-darkslate-500"] {
+    color: var(--light-ink-soft) !important;
+  }
+
+  html[data-ui-theme="light"]
+    .meta-tag-generator-page
+    [class*="border-darkslate-"] {
+    border-color: var(--light-line-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .meta-tag-generator-page input,
+  html[data-ui-theme="light"] .meta-tag-generator-page textarea {
+    background: var(--light-surface-strong) !important;
+    border-color: var(--light-line-strong) !important;
+    color: var(--light-ink-strong) !important;
+  }
+
+  html[data-ui-theme="light"] .meta-tag-generator-page input::placeholder,
+  html[data-ui-theme="light"] .meta-tag-generator-page textarea::placeholder {
+    color: var(--light-ink-soft) !important;
+  }
+
+  html[data-ui-theme="light"] .meta-tag-generator-page pre {
+    background: #332923 !important;
+    border-color: #5f473d !important;
+    color: #d1fae5 !important;
+  }
+
+  html[data-ui-theme="light"] .meta-tag-generator-page .text-blue-800 {
+    color: #1d4ed8 !important;
+  }
+
+  html[data-ui-theme="light"] .meta-tag-generator-page [class~="bg-white"] {
+    background: #fffdf8 !important;
+  }
+
+  html[data-ui-theme="light"]
+    .meta-tag-generator-page
+    [class~="bg-darkslate-800"]
+    img {
+    background: var(--light-surface-strong) !important;
+  }
+}
+
+/* Exhaustive audit: Visit map remains intentionally dark, but its transparent header and ivory stats panel need route-specific contrast. */
+html[data-ui-theme="light"] body[data-route="/visit"] nav a[href="/"] {
+  color: #f8f1e6 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.72);
+}
+
+html[data-ui-theme="light"] body[data-route="/visit"] nav a[href="/"]:hover {
+  color: #ffffff !important;
+}
+
+html[data-ui-theme="light"] .visit-map-shell .visit-map-stats-label {
+  color: #4c3933 !important;
+  text-shadow: none;
+}
+
+html[data-ui-theme="light"] .visit-map-shell .visit-map-stat-denominator {
+  color: #6f5146 !important;
+}
+
+html[data-ui-theme="light"] .visit-map-shell .visit-map-stat-caption {
+  color: #70594f !important;
+}
+
+/* Super-audit polish: keep the intentional dark Dice Roller score badge, but
+   raise the small label enough to remain legible at mobile scale. */
+html[data-ui-theme="light"] .playground-demo-shell .dice-total-label {
+  color: rgb(231 219 204);
+  text-shadow: 0 1px 1px rgb(0 0 0 / 0.32);
+}

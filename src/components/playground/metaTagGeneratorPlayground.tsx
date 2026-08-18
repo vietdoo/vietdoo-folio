@@ -2,12 +2,17 @@ import { createSignal, createMemo, Show } from "solid-js";
 
 export default function MetaTagGeneratorPlayground() {
   const [title, setTitle] = createSignal("VietDoo - Developer & Designer");
-  const [description, setDescription] = createSignal("Personal portfolio and playground of creative tech experiments, web apps, and design explorations.");
-  const [url, setUrl] = createSignal("https://vietdoo.dev");
-  const [image, setImage] = createSignal("https://vietdoo.dev/og-image.png");
+  const [description, setDescription] = createSignal(
+    "Personal portfolio and playground of creative tech experiments, web apps, and design explorations.",
+  );
+  const [url, setUrl] = createSignal("https://vietdoo.vndo.vn");
+  const [image, setImage] = createSignal(
+    "https://vietdoo.vndo.vn/apple-touch-icon.png",
+  );
   const [author, setAuthor] = createSignal("VietDoo");
   const [twitter, setTwitter] = createSignal("@vietdoo");
   const [themeColor, setThemeColor] = createSignal("#0f172a");
+  const [imageLoadError, setImageLoadError] = createSignal(false);
 
   const [copied, setCopied] = createSignal(false);
   const [activeTab, setActiveTab] = createSignal<"code" | "preview">("preview");
@@ -60,12 +65,15 @@ ${img ? `<meta property="twitter:image" content="${img}" />\n` : ""}${tw ? `<met
   };
 
   return (
-    <div class="w-full max-w-3xl mx-auto flex flex-col gap-6 text-darkslate-100 p-2 md:p-4 font-sans">
+    <div class="meta-tag-generator-page w-full max-w-3xl mx-auto flex flex-col gap-6 text-darkslate-100 p-2 md:p-4 font-sans">
       {/* Title */}
       <div class="flex flex-col gap-1">
-        <h1 class="text-2xl font-bold text-white tracking-tight">Meta Tag Generator</h1>
+        <h1 class="text-2xl font-bold text-white tracking-tight">
+          Meta Tag Generator
+        </h1>
         <p class="text-xs text-darkslate-300">
-          Create standard SEO, Open Graph, and Twitter Card meta tags with live social previews.
+          Create standard SEO, Open Graph, and Twitter Card meta tags with live
+          social previews.
         </p>
       </div>
 
@@ -73,7 +81,9 @@ ${img ? `<meta property="twitter:image" content="${img}" />\n` : ""}${tw ? `<met
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-darkslate-600/30 border border-darkslate-500 rounded-xl p-4">
         {/* Title */}
         <div class="flex flex-col gap-1.5 md:col-span-2">
-          <label class="text-xs font-semibold text-darkslate-200">Page Title</label>
+          <label class="text-xs font-semibold text-darkslate-200">
+            Page Title
+          </label>
           <input
             type="text"
             value={title()}
@@ -85,7 +95,9 @@ ${img ? `<meta property="twitter:image" content="${img}" />\n` : ""}${tw ? `<met
 
         {/* Description */}
         <div class="flex flex-col gap-1.5 md:col-span-2">
-          <label class="text-xs font-semibold text-darkslate-200">Meta Description</label>
+          <label class="text-xs font-semibold text-darkslate-200">
+            Meta Description
+          </label>
           <textarea
             rows="3"
             value={description()}
@@ -97,7 +109,9 @@ ${img ? `<meta property="twitter:image" content="${img}" />\n` : ""}${tw ? `<met
 
         {/* Page URL */}
         <div class="flex flex-col gap-1.5">
-          <label class="text-xs font-semibold text-darkslate-200">Page URL</label>
+          <label class="text-xs font-semibold text-darkslate-200">
+            Page URL
+          </label>
           <input
             type="text"
             value={url()}
@@ -109,11 +123,16 @@ ${img ? `<meta property="twitter:image" content="${img}" />\n` : ""}${tw ? `<met
 
         {/* Image URL */}
         <div class="flex flex-col gap-1.5">
-          <label class="text-xs font-semibold text-darkslate-200">OG Image URL</label>
+          <label class="text-xs font-semibold text-darkslate-200">
+            OG Image URL
+          </label>
           <input
             type="text"
             value={image()}
-            onInput={(e) => setImage(e.currentTarget.value)}
+            onInput={(e) => {
+              setImage(e.currentTarget.value);
+              setImageLoadError(false);
+            }}
             placeholder="https://example.com/og.png"
             class="bg-darkslate-800 border border-darkslate-500 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500"
           />
@@ -133,7 +152,9 @@ ${img ? `<meta property="twitter:image" content="${img}" />\n` : ""}${tw ? `<met
 
         {/* Twitter Handle */}
         <div class="flex flex-col gap-1.5">
-          <label class="text-xs font-semibold text-darkslate-200">Twitter Handle</label>
+          <label class="text-xs font-semibold text-darkslate-200">
+            Twitter Handle
+          </label>
           <input
             type="text"
             value={twitter()}
@@ -188,21 +209,28 @@ ${img ? `<meta property="twitter:image" content="${img}" />\n` : ""}${tw ? `<met
           <div class="flex flex-col gap-6 pt-2">
             {/* Google Search Result Preview */}
             <div class="flex flex-col gap-2">
-              <span class="text-xs font-semibold text-darkslate-300">Google Search Result</span>
+              <span class="text-xs font-semibold text-darkslate-300">
+                Google Search Result
+              </span>
               <div class="bg-white rounded-xl p-4 text-left shadow-md flex flex-col gap-1 border border-slate-200">
-                <span class="text-xs text-slate-600 truncate">{url() || "https://example.com"}</span>
+                <span class="text-xs text-slate-600 truncate">
+                  {url() || "https://example.com"}
+                </span>
                 <h3 class="text-lg font-medium text-blue-800 hover:underline truncate cursor-pointer">
                   {title() || "Page Title"}
                 </h3>
                 <p class="text-xs text-slate-700 leading-normal line-clamp-2">
-                  {description() || "Meta description snippet will appear here in search engine results..."}
+                  {description() ||
+                    "Meta description snippet will appear here in search engine results..."}
                 </p>
               </div>
             </div>
 
             {/* Social Card / Twitter Card Preview */}
             <div class="flex flex-col gap-2">
-              <span class="text-xs font-semibold text-darkslate-300">Social Media Card (Open Graph / Twitter)</span>
+              <span class="text-xs font-semibold text-darkslate-300">
+                Social Media Card (Open Graph / Twitter)
+              </span>
               <div class="bg-darkslate-800 rounded-xl overflow-hidden border border-darkslate-500 flex flex-col">
                 <Show
                   when={image().trim().length > 0}
@@ -212,20 +240,29 @@ ${img ? `<meta property="twitter:image" content="${img}" />\n` : ""}${tw ? `<met
                     </div>
                   }
                 >
-                  <img
-                    src={image()}
-                    alt="OG Preview"
-                    class="w-full h-44 object-cover bg-darkslate-900"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                    }}
-                  />
+                  <Show
+                    when={!imageLoadError()}
+                    fallback={
+                      <div class="flex h-44 items-center justify-center bg-darkslate-600/40 px-4 text-center text-xs italic text-darkslate-400">
+                        Image preview unavailable for this URL
+                      </div>
+                    }
+                  >
+                    <img
+                      src={image()}
+                      alt="OG Preview"
+                      class="w-full h-44 object-cover bg-darkslate-900"
+                      onError={() => setImageLoadError(true)}
+                    />
+                  </Show>
                 </Show>
                 <div class="p-4 flex flex-col gap-1">
                   <span class="text-[11px] font-medium text-darkslate-400 uppercase tracking-wider">
                     {domain()}
                   </span>
-                  <h4 class="text-sm font-semibold text-white truncate">{title() || "Page Title"}</h4>
+                  <h4 class="text-sm font-semibold text-white truncate">
+                    {title() || "Page Title"}
+                  </h4>
                   <p class="text-xs text-darkslate-300 line-clamp-2 leading-relaxed">
                     {description() || "Description snippet for social cards..."}
                   </p>

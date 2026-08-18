@@ -128,7 +128,7 @@ export default function ImageDescriptionPlayground() {
   };
 
   return (
-    <div class="w-full max-w-4xl mx-auto flex flex-col gap-6 text-darkslate-100 p-2 md:p-4 font-sans">
+    <div class="image-description-page w-full max-w-4xl mx-auto flex flex-col gap-6 text-darkslate-100 p-2 md:p-4 font-sans">
       <div class="flex flex-col gap-1">
         <h1 class="text-2xl font-bold text-white tracking-tight">
           Image describer

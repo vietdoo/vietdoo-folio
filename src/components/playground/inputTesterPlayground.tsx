@@ -104,11 +104,19 @@ const KEYBOARD_ROWS: KeyDef[][] = [
 export default function InputTesterPlayground() {
   const [activeKeys, setActiveKeys] = createSignal<Set<string>>(new Set());
   const [testedKeys, setTestedKeys] = createSignal<Set<string>>(new Set());
-  const [lastKey, setLastKey] = createSignal<{ key: string; code: string; keyCode: number } | null>(null);
+  const [lastKey, setLastKey] = createSignal<{
+    key: string;
+    code: string;
+    keyCode: number;
+  } | null>(null);
 
   // Mouse State
-  const [activeMouseButtons, setActiveMouseButtons] = createSignal<Set<number>>(new Set());
-  const [testedMouseButtons, setTestedMouseButtons] = createSignal<Set<number>>(new Set());
+  const [activeMouseButtons, setActiveMouseButtons] = createSignal<Set<number>>(
+    new Set(),
+  );
+  const [testedMouseButtons, setTestedMouseButtons] = createSignal<Set<number>>(
+    new Set(),
+  );
   const [scrollDelta, setScrollDelta] = createSignal<number>(0);
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -181,11 +189,13 @@ export default function InputTesterPlayground() {
   });
 
   return (
-    <div class="w-full max-w-4xl mx-auto flex flex-col gap-6 text-darkslate-100 p-2 md:p-4 font-sans select-none">
+    <div class="input-tester-page w-full max-w-4xl mx-auto flex flex-col gap-6 text-darkslate-100 p-2 md:p-4 font-sans select-none">
       {/* Title Header */}
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 class="text-2xl font-bold text-white tracking-tight">Input tester</h1>
+          <h1 class="text-2xl font-bold text-white tracking-tight">
+            Input tester
+          </h1>
           <p class="text-xs text-darkslate-300 mt-0.5">
             Test keyboard keys, mouse clicks, and scroll wheel events.
           </p>
@@ -206,7 +216,11 @@ export default function InputTesterPlayground() {
           <div>
             <span class="text-darkslate-400 block text-[10px]">Key</span>
             <span class="font-mono text-sm font-semibold text-white">
-              {lastKey() ? (lastKey()?.key === " " ? "Space" : lastKey()?.key) : "-"}
+              {lastKey()
+                ? lastKey()?.key === " "
+                  ? "Space"
+                  : lastKey()?.key
+                : "-"}
             </span>
           </div>
 
@@ -226,46 +240,51 @@ export default function InputTesterPlayground() {
         </div>
 
         <div class="text-darkslate-400 text-[11px]">
-          Tested keys: <span class="text-primary-300 font-semibold">{testedKeys().size}</span>
+          Tested keys:{" "}
+          <span class="text-primary-300 font-semibold">
+            {testedKeys().size}
+          </span>
         </div>
       </div>
 
       {/* Virtual Keyboard */}
       <div class="flex flex-col gap-1">
         <div class="flex items-center justify-between text-xs text-darkslate-300 md:hidden px-1">
-          <span class="text-[11px] text-darkslate-400 italic">↔ Scroll horizontally to view full keyboard layout</span>
+          <span class="text-[11px] text-darkslate-400 italic">
+            ↔ Scroll horizontally to view full keyboard layout
+          </span>
         </div>
         <div class="bg-darkslate-800/80 border border-darkslate-500 rounded-2xl p-3 md:p-5 flex flex-col gap-2 overflow-x-auto">
           <For each={KEYBOARD_ROWS}>
             {(row) => (
               <div class="flex gap-1.5 min-w-[640px]">
-              <For each={row}>
-                {(k) => {
-                  const isActive = () => activeKeys().has(k.code);
-                  const isTested = () => testedKeys().has(k.code);
+                <For each={row}>
+                  {(k) => {
+                    const isActive = () => activeKeys().has(k.code);
+                    const isTested = () => testedKeys().has(k.code);
 
-                  return (
-                    <div
-                      class={`h-10 md:h-11 rounded-lg border text-xs font-mono font-medium flex items-center justify-center transition-all duration-75 ${
-                        k.width || "flex-1 min-w-[34px]"
-                      } ${
-                        isActive()
-                          ? "bg-primary-500 border-primary-400 text-white shadow-md scale-[0.97]"
-                          : isTested()
-                            ? "bg-primary-500/20 border-primary-500/50 text-primary-300"
-                            : "bg-darkslate-700/60 border-darkslate-500 text-darkslate-200"
-                      }`}
-                    >
-                      {k.label}
-                    </div>
-                  );
-                }}
-              </For>
-            </div>
-          )}
-        </For>
+                    return (
+                      <div
+                        class={`h-10 md:h-11 rounded-lg border text-xs font-mono font-medium flex items-center justify-center transition-all duration-75 ${
+                          k.width || "flex-1 min-w-[34px]"
+                        } ${
+                          isActive()
+                            ? "bg-primary-500 border-primary-400 text-white shadow-md scale-[0.97]"
+                            : isTested()
+                              ? "bg-primary-500/20 border-primary-500/50 text-primary-300"
+                              : "bg-darkslate-700/60 border-darkslate-500 text-darkslate-200"
+                        }`}
+                      >
+                        {k.label}
+                      </div>
+                    );
+                  }}
+                </For>
+              </div>
+            )}
+          </For>
+        </div>
       </div>
-    </div>
 
       {/* Mouse Click & Scroll Tester */}
       <div class="grid grid-cols-1 md:grid-cols-12 gap-5">

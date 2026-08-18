@@ -4,7 +4,10 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
   const cleanHex = hex.replace("#", "").trim();
   let fullHex = cleanHex;
   if (cleanHex.length === 3) {
-    fullHex = cleanHex.split("").map((c) => c + c).join("");
+    fullHex = cleanHex
+      .split("")
+      .map((c) => c + c)
+      .join("");
   }
   if (fullHex.length !== 6) return null;
   const r = parseInt(fullHex.substring(0, 2), 16);
@@ -65,18 +68,23 @@ export default function ColorContrastPlayground() {
   };
 
   return (
-    <div class="w-full max-w-3xl mx-auto flex flex-col gap-6 text-darkslate-100 p-2 md:p-4 font-sans">
+    <div class="color-contrast-page w-full max-w-3xl mx-auto flex flex-col gap-6 text-darkslate-100 p-2 md:p-4 font-sans">
       {/* Header */}
       <div class="flex flex-col gap-1">
-        <h1 class="text-2xl font-bold text-white tracking-tight">Color Contrast Checker</h1>
+        <h1 class="text-2xl font-bold text-white tracking-tight">
+          Color Contrast Checker
+        </h1>
         <p class="text-xs text-darkslate-300">
-          Calculate contrast ratios between text and background colors according to WCAG 2.1 guidelines.
+          Calculate contrast ratios between text and background colors according
+          to WCAG 2.1 guidelines.
         </p>
       </div>
 
       {/* Preset Buttons */}
       <div class="flex flex-wrap items-center gap-2">
-        <span class="text-xs font-medium text-darkslate-300 mr-1">Presets:</span>
+        <span class="text-xs font-medium text-darkslate-300 mr-1">
+          Presets:
+        </span>
         <For each={PRESETS}>
           {(preset) => (
             <button
@@ -97,7 +105,9 @@ export default function ColorContrastPlayground() {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
         {/* Foreground Color Picker */}
         <div class="bg-darkslate-600/30 border border-darkslate-500 rounded-xl p-4 flex flex-col gap-3">
-          <label class="text-xs font-medium text-darkslate-300">Text Color (Foreground)</label>
+          <label class="text-xs font-medium text-darkslate-300">
+            Text Color (Foreground)
+          </label>
           <div class="flex items-center gap-3">
             <input
               type="color"
@@ -122,10 +132,17 @@ export default function ColorContrastPlayground() {
             title="Swap foreground and background colors"
             class="absolute top-2 right-2 p-1.5 rounded-lg border border-darkslate-500 text-darkslate-300 hover:text-white hover:bg-darkslate-600/50 transition text-xs"
           >
-             Swap
+            Swap
           </button>
-          <span class="text-[11px] font-medium uppercase tracking-wider text-darkslate-300">Contrast Ratio</span>
-          <Show when={ratio() !== null} fallback={<span class="text-xl font-bold text-rose-400">Invalid Hex</span>}>
+          <span class="text-[11px] font-medium uppercase tracking-wider text-darkslate-300">
+            Contrast Ratio
+          </span>
+          <Show
+            when={ratio() !== null}
+            fallback={
+              <span class="text-xl font-bold text-rose-400">Invalid Hex</span>
+            }
+          >
             <span class="text-4xl font-extrabold text-primary-400 tabular-nums">
               {ratio()}:1
             </span>
@@ -134,7 +151,9 @@ export default function ColorContrastPlayground() {
 
         {/* Background Color Picker */}
         <div class="bg-darkslate-600/30 border border-darkslate-500 rounded-xl p-4 flex flex-col gap-3">
-          <label class="text-xs font-medium text-darkslate-300">Background Color</label>
+          <label class="text-xs font-medium text-darkslate-300">
+            Background Color
+          </label>
           <div class="flex items-center gap-3">
             <input
               type="color"
@@ -168,10 +187,18 @@ export default function ColorContrastPlayground() {
               {getStatus(4.5).text}
             </span>
           </div>
-          <p class="text-[11px] text-darkslate-300">Minimum 4.5:1 ratio required for WCAG AA (small text under 18pt).</p>
+          <p class="text-[11px] text-darkslate-300">
+            Minimum 4.5:1 ratio required for WCAG AA (small text under 18pt).
+          </p>
           <div class="text-xs text-darkslate-400 mt-auto pt-1 flex justify-between">
             <span>AAA (7:1)</span>
-            <span class={getStatus(7).pass ? "text-emerald-400 font-semibold" : "text-darkslate-400"}>
+            <span
+              class={
+                getStatus(7).pass
+                  ? "text-emerald-400 font-semibold"
+                  : "text-darkslate-400"
+              }
+            >
               {getStatus(7).pass ? "Pass" : "Fail"}
             </span>
           </div>
@@ -191,10 +218,19 @@ export default function ColorContrastPlayground() {
               {getStatus(3.0).text}
             </span>
           </div>
-          <p class="text-[11px] text-darkslate-300">Minimum 3.0:1 ratio required for WCAG AA (bold 14pt+ or regular 18pt+).</p>
+          <p class="text-[11px] text-darkslate-300">
+            Minimum 3.0:1 ratio required for WCAG AA (bold 14pt+ or regular
+            18pt+).
+          </p>
           <div class="text-xs text-darkslate-400 mt-auto pt-1 flex justify-between">
             <span>AAA (4.5:1)</span>
-            <span class={getStatus(4.5).pass ? "text-emerald-400 font-semibold" : "text-darkslate-400"}>
+            <span
+              class={
+                getStatus(4.5).pass
+                  ? "text-emerald-400 font-semibold"
+                  : "text-darkslate-400"
+              }
+            >
               {getStatus(4.5).pass ? "Pass" : "Fail"}
             </span>
           </div>
@@ -214,10 +250,19 @@ export default function ColorContrastPlayground() {
               {getStatus(3.0).text}
             </span>
           </div>
-          <p class="text-[11px] text-darkslate-300">Minimum 3.0:1 ratio for user interface controls and graphical objects.</p>
+          <p class="text-[11px] text-darkslate-300">
+            Minimum 3.0:1 ratio for user interface controls and graphical
+            objects.
+          </p>
           <div class="text-xs text-darkslate-400 mt-auto pt-1 flex justify-between">
             <span>AA (3.0:1)</span>
-            <span class={getStatus(3.0).pass ? "text-emerald-400 font-semibold" : "text-darkslate-400"}>
+            <span
+              class={
+                getStatus(3.0).pass
+                  ? "text-emerald-400 font-semibold"
+                  : "text-darkslate-400"
+              }
+            >
               {getStatus(3.0).pass ? "Pass" : "Fail"}
             </span>
           </div>
@@ -228,13 +273,15 @@ export default function ColorContrastPlayground() {
       <div class="flex flex-col gap-2">
         <span class="text-xs font-medium text-darkslate-300">Live Preview</span>
         <div
-          class="rounded-xl border border-darkslate-500 p-6 flex flex-col gap-4 transition-colors duration-200"
+          class="color-contrast-preview rounded-xl border border-darkslate-500 p-6 flex flex-col gap-4 transition-colors duration-200"
           style={{ "background-color": bgColor(), color: fgColor() }}
         >
           <div>
             <h2 class="text-2xl font-bold leading-snug">Sample Heading Text</h2>
             <p class="text-sm mt-2 leading-relaxed max-w-xl opacity-90">
-              Accessibility ensures that digital content can be comfortably read by everyone, including people with visual impairments. Good color contrast is a fundamental part of inclusive design.
+              Accessibility ensures that digital content can be comfortably read
+              by everyone, including people with visual impairments. Good color
+              contrast is a fundamental part of inclusive design.
             </p>
           </div>
 

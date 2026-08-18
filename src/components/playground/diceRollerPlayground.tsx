@@ -7,7 +7,10 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 // Helper to create canvas texture for a dice face - realistic glossy plastic dice look
 type PipPalette = { light: string; base: string; dark: string };
 
-function createDiceFaceTexture(number: number, pipColor: PipPalette): THREE.CanvasTexture {
+function createDiceFaceTexture(
+  number: number,
+  pipColor: PipPalette,
+): THREE.CanvasTexture {
   const canvas = document.createElement("canvas");
   canvas.width = 256;
   canvas.height = 256;
@@ -34,7 +37,14 @@ function createDiceFaceTexture(number: number, pipColor: PipPalette): THREE.Canv
     ctx.fill();
 
     // Main pip body with subtle top-lit shading
-    const pipGrad = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, 1, x, y, r);
+    const pipGrad = ctx.createRadialGradient(
+      x - r * 0.3,
+      y - r * 0.3,
+      1,
+      x,
+      y,
+      r,
+    );
     pipGrad.addColorStop(0, pipColor.light);
     pipGrad.addColorStop(0.6, pipColor.base);
     pipGrad.addColorStop(1, pipColor.dark);
@@ -117,7 +127,9 @@ export default function DiceRollerPlayground() {
 
   const [isRolling, setIsRolling] = createSignal(false);
   const [totalSum, setTotalSum] = createSignal<number>(10);
-  const [history, setHistory] = createSignal<{ values: number[]; total: number }[]>([]);
+  const [history, setHistory] = createSignal<
+    { values: number[]; total: number }[]
+  >([]);
 
   // Simulation variables
   let scene: THREE.Scene;
@@ -154,7 +166,10 @@ export default function DiceRollerPlayground() {
 
     // Soft studio environment map for realistic glossy plastic reflections
     const pmremGenerator = new THREE.PMREMGenerator(renderer);
-    scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
+    scene.environment = pmremGenerator.fromScene(
+      new RoomEnvironment(),
+      0.04,
+    ).texture;
     pmremGenerator.dispose();
 
     // Lighting - soft studio setup similar to a product photo
@@ -214,8 +229,16 @@ export default function DiceRollerPlayground() {
     // Dice geometry - rounded corners like real injection-molded dice, sized up for a bolder look
     const diceSize = 1.9;
     const halfSize = diceSize / 2;
-    const diceGeo = new RoundedBoxGeometry(diceSize, diceSize, diceSize, 6, diceSize * 0.12);
-    const diceShape = new CANNON.Box(new CANNON.Vec3(halfSize, halfSize, halfSize));
+    const diceGeo = new RoundedBoxGeometry(
+      diceSize,
+      diceSize,
+      diceSize,
+      6,
+      diceSize * 0.12,
+    );
+    const diceShape = new CANNON.Box(
+      new CANNON.Vec3(halfSize, halfSize, halfSize),
+    );
 
     // One die uses red pips, the others classic black - matching a real dice set
     const dicePipColors = [PIP_BLACK, PIP_BLACK, PIP_RED];
@@ -250,7 +273,11 @@ export default function DiceRollerPlayground() {
         material: physicsMat,
         linearDamping: 0.35,
         angularDamping: 0.35,
-        position: new CANNON.Vec3(initialPositions[i].x, initialPositions[i].y, initialPositions[i].z),
+        position: new CANNON.Vec3(
+          initialPositions[i].x,
+          initialPositions[i].y,
+          initialPositions[i].z,
+        ),
       });
       world.addBody(body);
       diceBodies.push(body);
@@ -265,8 +292,12 @@ export default function DiceRollerPlayground() {
 
       // Sync Three.js Meshes with Cannon Bodies
       for (let i = 0; i < 3; i++) {
-        diceMeshes[i].position.copy(diceBodies[i].position as unknown as THREE.Vector3);
-        diceMeshes[i].quaternion.copy(diceBodies[i].quaternion as unknown as THREE.Quaternion);
+        diceMeshes[i].position.copy(
+          diceBodies[i].position as unknown as THREE.Vector3,
+        );
+        diceMeshes[i].quaternion.copy(
+          diceBodies[i].quaternion as unknown as THREE.Quaternion,
+        );
       }
 
       renderer.render(scene, camera);
@@ -341,7 +372,10 @@ export default function DiceRollerPlayground() {
 
     const sum = results.reduce((a, b) => a + b, 0);
     setTotalSum(sum);
-    setHistory((prev) => [{ values: results, total: sum }, ...prev.slice(0, 4)]);
+    setHistory((prev) => [
+      { values: results, total: sum },
+      ...prev.slice(0, 4),
+    ]);
     setIsRolling(false);
   };
 
@@ -355,25 +389,29 @@ export default function DiceRollerPlayground() {
       const body = diceBodies[i];
 
       // Lift dice into air, spread wide across the free-roam floor
-      body.position.set(startX[i] + (Math.random() - 0.5) * 1.4, 6 + Math.random() * 1.5, (Math.random() - 0.5) * 2);
+      body.position.set(
+        startX[i] + (Math.random() - 0.5) * 1.4,
+        6 + Math.random() * 1.5,
+        (Math.random() - 0.5) * 2,
+      );
       body.quaternion.setFromEuler(
         Math.random() * Math.PI * 2,
         Math.random() * Math.PI * 2,
-        Math.random() * Math.PI * 2
+        Math.random() * Math.PI * 2,
       );
 
       // Apply downward & sideways impulse - energetic, tumbling toss
       body.velocity.set(
         (Math.random() - 0.5) * 12,
         -10 - Math.random() * 6,
-        (Math.random() - 0.5) * 12
+        (Math.random() - 0.5) * 12,
       );
 
       // Apply strong random angular rotation torque
       body.angularVelocity.set(
         (Math.random() - 0.5) * 35,
         (Math.random() - 0.5) * 35,
-        (Math.random() - 0.5) * 35
+        (Math.random() - 0.5) * 35,
       );
     }
   };
@@ -395,9 +433,12 @@ export default function DiceRollerPlayground() {
       {/* Title & Actions */}
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">Dice roller</h1>
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
+            Dice roller
+          </h1>
           <p class="text-xs sm:text-sm text-darkslate-300 mt-1">
-            Real 3D dice simulation with Three.js WebGL & Cannon.es physics engine.
+            Real 3D dice simulation with Three.js WebGL & Cannon.es physics
+            engine.
           </p>
         </div>
 
@@ -421,7 +462,7 @@ export default function DiceRollerPlayground() {
 
         {/* Total Score Overlay Badge */}
         <div class="absolute bottom-3 sm:bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2.5 sm:gap-3 bg-darkslate-900/80 border border-darkslate-500/80 rounded-xl sm:rounded-2xl px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 shadow-xl backdrop-blur-md">
-          <span class="text-[11px] sm:text-xs md:text-sm text-darkslate-300 font-medium uppercase tracking-wider">
+          <span class="dice-total-label text-[11px] sm:text-xs md:text-sm text-darkslate-300 font-medium uppercase tracking-wider">
             Total Sum
           </span>
           <span class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary-400 font-mono tabular-nums">
