@@ -31,9 +31,12 @@ import { SITE } from "../site-config";
     <BlogCard />
     <TimeZone />
     <EngineeringShowcaseCard />
-    <Now />
-    <PlaygroundCard />
-    <GuestbookCard />
+    <div class="home-feature-grid">
+      <Now />
+      <PlaygroundCard />
+      <GuestbookCard />
+      <VisitCard />
+    </div>
     <BooksCard />
     {/* Temporarily hidden: Countries I visited card
     <Card
@@ -55,6 +58,5 @@ import { SITE } from "../site-config";
       >
     </Card>
     */}
-    <VisitCard />
   </main>
 </Layout>
