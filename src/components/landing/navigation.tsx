@@ -358,29 +358,6 @@ export function Navigation() {
             </For>
           </div>
 
-          <div class="mt-auto shrink-0 pt-7">
-            <div class="flex items-center justify-between border-t border-white/10 pt-5">
-              <div>
-                <p class="m-0 text-[10px] font-bold uppercase tracking-[0.2em] text-darkslate-400">
-                  Giao diện
-                </p>
-                <p class="m-0 mt-1 text-xs text-darkslate-300">
-                  Chọn chế độ bạn thích
-                </p>
-              </div>
-              <ThemeToggle />
-            </div>
-            <a
-              href="mailto:vietdoo@outlook.com"
-              onClick={closeMobileMenu}
-              class="mt-5 flex h-12 w-full items-center justify-center rounded-xl bg-primary-500 text-sm font-bold text-white shadow-lg shadow-primary-500/20 transition-all hover:bg-primary-600 active:scale-[0.98]"
-            >
-              Gửi lời chào ↗
-            </a>
-            <p class="m-0 mt-3 text-center text-[11px] text-darkslate-400">
-              vietdoo@outlook.com · Ho Chi Minh City, Vietnam
-            </p>
-          </div>
         </aside>
       </div>
     </>
