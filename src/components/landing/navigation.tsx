@@ -445,10 +445,10 @@ export function Navigation() {
           <div class="relative mt-5 grid gap-2.5">
             <a
               href="mailto:vietdoo@outlook.com"
-              class="group flex items-center gap-3 rounded-xl border border-darkslate-700 bg-darkslate-800/20 p-3 transition-colors duration-200 hover:border-darkslate-600 hover:bg-darkslate-800/70"
+              class="group flex items-start gap-3 rounded-xl border border-darkslate-700 bg-darkslate-800/20 p-3 transition-colors duration-200 hover:border-darkslate-600 hover:bg-darkslate-800/70"
             >
               <span
-                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-darkslate-800 text-primary-300"
+                class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-darkslate-800 text-primary-300"
                 aria-hidden="true"
               >
                 <svg
@@ -465,7 +465,7 @@ export function Navigation() {
                   />
                 </svg>
               </span>
-              <span class="min-w-0 flex-1">
+              <span class="min-w-0 flex-1 pt-0.5">
                 <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-500">
                   Email
                 </span>
@@ -474,7 +474,7 @@ export function Navigation() {
                 </span>
               </span>
               <span
-                class="text-base text-darkslate-500 transition-colors group-hover:text-primary-300"
+                class="mt-0.5 text-base text-darkslate-500 transition-colors group-hover:text-primary-300"
                 aria-hidden="true"
               >
                 ↗
@@ -485,32 +485,19 @@ export function Navigation() {
               href={`https://zalo.me/${phoneNumber}`}
               target="_blank"
               rel="noreferrer"
-              class="group flex items-center gap-3 rounded-xl border border-darkslate-700 bg-darkslate-800/20 p-3 transition-colors duration-200 hover:border-darkslate-600 hover:bg-darkslate-800/70"
+              class="group flex items-start gap-3 rounded-xl border border-darkslate-700 bg-darkslate-800/20 p-3 transition-colors duration-200 hover:border-darkslate-600 hover:bg-darkslate-800/70"
             >
               <span
-                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-darkslate-800 text-sky-300"
+                class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-darkslate-800"
                 aria-hidden="true"
               >
-                <svg
-                  class="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="1.7"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6.75 4.75h10.5A2.75 2.75 0 0 1 20 7.5v6.75A2.75 2.75 0 0 1 17.25 17H10l-4.5 2.25L6.4 17h-.15A2.75 2.75 0 0 1 3.5 14.25V7.5a2.75 2.75 0 0 1 2.75-2.75Z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m8.25 9 5.5 0-4 4h5.75"
-                  />
-                </svg>
+                <img
+                  src="/assets/zalo-logo.png"
+                  alt=""
+                  class="h-auto w-7 object-contain"
+                />
               </span>
-              <span class="min-w-0 flex-1">
+              <span class="min-w-0 flex-1 pt-0.5">
                 <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-500">
                   Zalo
                 </span>
@@ -519,16 +506,16 @@ export function Navigation() {
                 </span>
               </span>
               <span
-                class="text-base text-darkslate-500 transition-colors group-hover:text-sky-300"
+                class="mt-0.5 text-base text-darkslate-500 transition-colors group-hover:text-sky-300"
                 aria-hidden="true"
               >
                 ↗
               </span>
             </a>
 
-            <div class="flex items-center gap-3 rounded-xl border border-darkslate-700 bg-darkslate-800/20 p-3">
+            <div class="flex items-start gap-3 rounded-xl border border-darkslate-700 bg-darkslate-800/20 p-3">
               <span
-                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-darkslate-800 text-emerald-300"
+                class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-darkslate-800 text-emerald-300"
                 aria-hidden="true"
               >
                 <svg
@@ -545,7 +532,7 @@ export function Navigation() {
                   />
                 </svg>
               </span>
-              <span class="min-w-0 flex-1">
+              <span class="min-w-0 flex-1 pt-0.5">
                 <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-500">
                   Số điện thoại
                 </span>
@@ -556,7 +543,7 @@ export function Navigation() {
               <button
                 type="button"
                 onClick={copyPhoneNumber}
-                class="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-darkslate-600 bg-darkslate-800 px-2.5 py-1.5 text-[11px] font-medium text-darkslate-200 transition-colors hover:border-emerald-300/40 hover:text-emerald-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/80"
+                class="mt-0.5 inline-flex shrink-0 items-center gap-1.5 rounded-md border border-darkslate-600 bg-darkslate-800 px-2.5 py-1.5 text-[11px] font-medium text-darkslate-200 transition-colors hover:border-emerald-300/40 hover:text-emerald-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/80"
                 aria-label="Sao chép số điện thoại"
               >
                 {isPhoneCopied() ? "Đã copy" : "Copy"}
