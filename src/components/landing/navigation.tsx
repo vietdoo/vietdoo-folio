@@ -71,13 +71,36 @@ const menuSections = [
 export function Navigation() {
   const [isScrolled, setIsScrolled] = createSignal(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = createSignal(false);
+  const [isContactOpen, setIsContactOpen] = createSignal(false);
+  const [isPhoneCopied, setIsPhoneCopied] = createSignal(false);
 
+  const phoneNumber = "0845846788";
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
+  const closeContact = () => {
+    setIsContactOpen(false);
+    setIsPhoneCopied(false);
+  };
+  const openContact = () => {
+    closeMobileMenu();
+    setIsContactOpen(true);
+  };
+  const copyPhoneNumber = async () => {
+    try {
+      await navigator.clipboard.writeText(phoneNumber);
+      setIsPhoneCopied(true);
+      window.setTimeout(() => setIsPhoneCopied(false), 2200);
+    } catch {
+      setIsPhoneCopied(false);
+    }
+  };
 
   onMount(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
     const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeMobileMenu();
+      if (event.key === "Escape") {
+        closeMobileMenu();
+        closeContact();
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -138,7 +161,6 @@ export function Navigation() {
                   </span>
                 </span>
               </a>
-
             </div>
 
             <div class="hidden md:flex items-center gap-10">
@@ -164,12 +186,21 @@ export function Navigation() {
               >
                 Resume
               </a>
-              <a
-                href="mailto:vietdoo@outlook.com"
-                class="inline-flex items-center justify-center bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-full transition-all duration-500 shadow-sm px-5 h-10 text-sm"
+              <button
+                type="button"
+                onClick={openContact}
+                class="inline-flex items-center justify-center bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-full transition-all duration-500 shadow-sm px-5 h-10 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-300/80"
+                aria-haspopup="dialog"
+                aria-expanded={isContactOpen()}
               >
-                Say hello ↗
-              </a>
+                Say hello{" "}
+                <span
+                  aria-hidden="true"
+                  class="ml-1 transition-transform duration-300 group-hover:translate-x-0.5"
+                >
+                  ↗
+                </span>
+              </button>
             </div>
 
             <div class="md:hidden flex items-center gap-2">
@@ -357,8 +388,178 @@ export function Navigation() {
               )}
             </For>
           </div>
-
         </aside>
+      </div>
+
+      <div
+        class={`fixed inset-0 z-[70] flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-md transition-all duration-300 ${
+          isContactOpen()
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
+        }`}
+        role="presentation"
+        onClick={closeContact}
+        aria-hidden={!isContactOpen()}
+      >
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="contact-dialog-title"
+          aria-describedby="contact-dialog-description"
+          onClick={(event) => event.stopPropagation()}
+          class={`relative w-full max-w-md overflow-hidden rounded-[2rem] border border-white/15 bg-darkslate-900/95 p-5 shadow-2xl shadow-black/40 transition-all duration-300 sm:p-7 ${
+            isContactOpen()
+              ? "translate-y-0 scale-100"
+              : "translate-y-3 scale-95"
+          }`}
+        >
+          <div
+            class="pointer-events-none absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-primary-300 to-transparent"
+            aria-hidden="true"
+          />
+          <div
+            class="pointer-events-none absolute -right-20 -top-24 h-48 w-48 rounded-full bg-primary-400/10 blur-3xl"
+            aria-hidden="true"
+          />
+
+          <div class="relative flex items-start justify-between gap-5">
+            <div>
+              <p class="m-0 text-[10px] font-bold uppercase tracking-[0.22em] text-primary-300">
+                Let&apos;s connect
+              </p>
+              <h2
+                id="contact-dialog-title"
+                class="m-0 mt-2 font-serif text-3xl font-semibold tracking-tight text-white"
+              >
+                Say hello
+              </h2>
+              <p
+                id="contact-dialog-description"
+                class="m-0 mt-2 max-w-[30ch] text-sm leading-relaxed text-darkslate-200"
+              >
+                Có một ý tưởng, dự án hoặc chỉ muốn trò chuyện? Mình rất vui
+                được kết nối.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={closeContact}
+              class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg text-white/60 transition hover:border-primary-300/50 hover:bg-primary-400/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-300/80"
+              aria-label="Đóng thông tin liên hệ"
+            >
+              ×
+            </button>
+          </div>
+
+          <div class="relative mt-7 grid gap-3">
+            <a
+              href="mailto:vietdoo@outlook.com"
+              class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.045] p-4 transition duration-300 hover:-translate-y-0.5 hover:border-primary-300/40 hover:bg-primary-300/[0.08]"
+            >
+              <span
+                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-400/15 text-primary-200"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 7.5 12 13l9-5.5M4.5 6h15A1.5 1.5 0 0 1 21 7.5v9A1.5 1.5 0 0 1 19.5 18h-15A1.5 1.5 0 0 1 3 16.5v-9A1.5 1.5 0 0 1 4.5 6Z"
+                  />
+                </svg>
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-[10px] font-bold uppercase tracking-[0.18em] text-darkslate-400">
+                  Email
+                </span>
+                <span class="mt-1 block truncate text-sm font-medium text-white">
+                  vietdoo@outlook.com
+                </span>
+              </span>
+              <span
+                class="text-lg text-darkslate-500 transition group-hover:translate-x-1 group-hover:text-primary-300"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
+            </a>
+
+            <a
+              href={`https://zalo.me/${phoneNumber}`}
+              target="_blank"
+              rel="noreferrer"
+              class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.045] p-4 transition duration-300 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-sky-300/[0.08]"
+            >
+              <span
+                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-300/15 text-sm font-bold text-sky-200"
+                aria-hidden="true"
+              >
+                Z
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-[10px] font-bold uppercase tracking-[0.18em] text-darkslate-400">
+                  Zalo
+                </span>
+                <span class="mt-1 block text-sm font-medium text-white">
+                  {phoneNumber}
+                </span>
+              </span>
+              <span
+                class="text-lg text-darkslate-500 transition group-hover:translate-x-1 group-hover:text-sky-200"
+                aria-hidden="true"
+              >
+                ↗
+              </span>
+            </a>
+
+            <div class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.045] p-4">
+              <span
+                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-300/15 text-emerald-200"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.5 4.5h2l1.25 3.25-1.5 1.75a13.2 13.2 0 0 0 6.25 6.25l1.75-1.5 3.25 1.25v2a1.5 1.5 0 0 1-1.5 1.5C11.1 19 5 12.9 5 5.75A1.5 1.5 0 0 1 6.5 4.5Z"
+                  />
+                </svg>
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-[10px] font-bold uppercase tracking-[0.18em] text-darkslate-400">
+                  Số điện thoại
+                </span>
+                <span class="mt-1 block text-sm font-medium text-white">
+                  {phoneNumber}
+                </span>
+              </span>
+              <button
+                type="button"
+                onClick={copyPhoneNumber}
+                class="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-2 text-xs font-medium text-white/75 transition hover:border-emerald-300/40 hover:bg-emerald-300/10 hover:text-emerald-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/80"
+                aria-label="Sao chép số điện thoại"
+              >
+                {isPhoneCopied() ? "Đã copy" : "Copy"}
+              </button>
+            </div>
+          </div>
+
+          <p class="relative m-0 mt-6 text-center text-[11px] uppercase tracking-[0.16em] text-darkslate-500">
+            Usually replies within a day
+          </p>
+        </div>
       </div>
     </>
   );
