@@ -466,7 +466,7 @@ export function Navigation() {
                 </svg>
               </span>
               <span class="min-w-0 flex-1 pt-0.5">
-                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-500">
+                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-300">
                   Email
                 </span>
                 <span class="mt-0.5 block truncate text-[13px] font-medium text-darkslate-100">
@@ -498,7 +498,7 @@ export function Navigation() {
                 />
               </span>
               <span class="min-w-0 flex-1 pt-0.5">
-                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-500">
+                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-300">
                   Zalo
                 </span>
                 <span class="mt-0.5 block text-[13px] font-medium text-darkslate-100">
@@ -533,7 +533,7 @@ export function Navigation() {
                 </svg>
               </span>
               <span class="min-w-0 flex-1 pt-0.5">
-                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-500">
+                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-300">
                   Số điện thoại
                 </span>
                 <span class="mt-0.5 block text-[13px] font-medium text-darkslate-100">
