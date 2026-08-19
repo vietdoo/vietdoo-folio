@@ -294,7 +294,7 @@ export function Navigation() {
               aria-label="Đóng menu"
             >
               <svg
-                class="h-5 w-5"
+                class="h-4 w-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -392,7 +392,7 @@ export function Navigation() {
       </div>
 
       <div
-        class={`fixed inset-0 z-[70] flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-md transition-all duration-300 ${
+        class={`fixed inset-0 z-[70] flex items-center justify-center bg-black/60 px-4 py-6 backdrop-blur-[2px] transition-opacity duration-200 ${
           isContactOpen()
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
@@ -407,35 +407,26 @@ export function Navigation() {
           aria-labelledby="contact-dialog-title"
           aria-describedby="contact-dialog-description"
           onClick={(event) => event.stopPropagation()}
-          class={`relative w-full max-w-md overflow-hidden rounded-[2rem] border border-white/15 bg-darkslate-900/95 p-5 shadow-2xl shadow-black/40 transition-all duration-300 sm:p-7 ${
+          class={`relative w-full max-w-[410px] overflow-hidden rounded-[1.25rem] border border-darkslate-700 bg-darkslate-900 p-4 shadow-xl shadow-black/30 transition-all duration-200 sm:p-5 ${
             isContactOpen()
               ? "translate-y-0 scale-100"
               : "translate-y-3 scale-95"
           }`}
         >
-          <div
-            class="pointer-events-none absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-primary-300 to-transparent"
-            aria-hidden="true"
-          />
-          <div
-            class="pointer-events-none absolute -right-20 -top-24 h-48 w-48 rounded-full bg-primary-400/10 blur-3xl"
-            aria-hidden="true"
-          />
-
-          <div class="relative flex items-start justify-between gap-5">
+          <div class="relative flex items-start justify-between gap-4">
             <div>
-              <p class="m-0 text-[10px] font-bold uppercase tracking-[0.22em] text-primary-300">
+              <p class="m-0 text-[9px] font-bold uppercase tracking-[0.18em] text-primary-300/90">
                 Let&apos;s connect
               </p>
               <h2
                 id="contact-dialog-title"
-                class="m-0 mt-2 font-serif text-3xl font-semibold tracking-tight text-white"
+                class="m-0 mt-1.5 font-serif text-[1.75rem] font-semibold tracking-tight text-white"
               >
                 Say hello
               </h2>
               <p
                 id="contact-dialog-description"
-                class="m-0 mt-2 max-w-[30ch] text-sm leading-relaxed text-darkslate-200"
+                class="m-0 mt-1.5 max-w-[34ch] text-[13px] leading-relaxed text-darkslate-300"
               >
                 Có một ý tưởng, dự án hoặc chỉ muốn trò chuyện? Mình rất vui
                 được kết nối.
@@ -444,24 +435,24 @@ export function Navigation() {
             <button
               type="button"
               onClick={closeContact}
-              class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-lg text-white/60 transition hover:border-primary-300/50 hover:bg-primary-400/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-300/80"
+              class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-darkslate-700 bg-darkslate-800/70 text-base text-darkslate-400 transition-colors hover:border-darkslate-500 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-300/80"
               aria-label="Đóng thông tin liên hệ"
             >
               ×
             </button>
           </div>
 
-          <div class="relative mt-7 grid gap-3">
+          <div class="relative mt-5 grid gap-2.5">
             <a
               href="mailto:vietdoo@outlook.com"
-              class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.045] p-4 transition duration-300 hover:-translate-y-0.5 hover:border-primary-300/40 hover:bg-primary-300/[0.08]"
+              class="group flex items-center gap-3 rounded-xl border border-darkslate-700 bg-darkslate-800/20 p-3 transition-colors duration-200 hover:border-darkslate-600 hover:bg-darkslate-800/70"
             >
               <span
-                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-400/15 text-primary-200"
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-darkslate-800 text-primary-300"
                 aria-hidden="true"
               >
                 <svg
-                  class="h-5 w-5"
+                  class="h-4 w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -475,15 +466,15 @@ export function Navigation() {
                 </svg>
               </span>
               <span class="min-w-0 flex-1">
-                <span class="block text-[10px] font-bold uppercase tracking-[0.18em] text-darkslate-400">
+                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-500">
                   Email
                 </span>
-                <span class="mt-1 block truncate text-sm font-medium text-white">
+                <span class="mt-0.5 block truncate text-[13px] font-medium text-darkslate-100">
                   vietdoo@outlook.com
                 </span>
               </span>
               <span
-                class="text-lg text-darkslate-500 transition group-hover:translate-x-1 group-hover:text-primary-300"
+                class="text-base text-darkslate-500 transition-colors group-hover:text-primary-300"
                 aria-hidden="true"
               >
                 ↗
@@ -494,37 +485,54 @@ export function Navigation() {
               href={`https://zalo.me/${phoneNumber}`}
               target="_blank"
               rel="noreferrer"
-              class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.045] p-4 transition duration-300 hover:-translate-y-0.5 hover:border-sky-300/40 hover:bg-sky-300/[0.08]"
+              class="group flex items-center gap-3 rounded-xl border border-darkslate-700 bg-darkslate-800/20 p-3 transition-colors duration-200 hover:border-darkslate-600 hover:bg-darkslate-800/70"
             >
               <span
-                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-300/15 text-sm font-bold text-sky-200"
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-darkslate-800 text-sky-300"
                 aria-hidden="true"
               >
-                Z
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.75 4.75h10.5A2.75 2.75 0 0 1 20 7.5v6.75A2.75 2.75 0 0 1 17.25 17H10l-4.5 2.25L6.4 17h-.15A2.75 2.75 0 0 1 3.5 14.25V7.5a2.75 2.75 0 0 1 2.75-2.75Z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m8.25 9 5.5 0-4 4h5.75"
+                  />
+                </svg>
               </span>
               <span class="min-w-0 flex-1">
-                <span class="block text-[10px] font-bold uppercase tracking-[0.18em] text-darkslate-400">
+                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-500">
                   Zalo
                 </span>
-                <span class="mt-1 block text-sm font-medium text-white">
+                <span class="mt-0.5 block text-[13px] font-medium text-darkslate-100">
                   {phoneNumber}
                 </span>
               </span>
               <span
-                class="text-lg text-darkslate-500 transition group-hover:translate-x-1 group-hover:text-sky-200"
+                class="text-base text-darkslate-500 transition-colors group-hover:text-sky-300"
                 aria-hidden="true"
               >
                 ↗
               </span>
             </a>
 
-            <div class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.045] p-4">
+            <div class="flex items-center gap-3 rounded-xl border border-darkslate-700 bg-darkslate-800/20 p-3">
               <span
-                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-300/15 text-emerald-200"
+                class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-darkslate-800 text-emerald-300"
                 aria-hidden="true"
               >
                 <svg
-                  class="h-5 w-5"
+                  class="h-4 w-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -538,17 +546,17 @@ export function Navigation() {
                 </svg>
               </span>
               <span class="min-w-0 flex-1">
-                <span class="block text-[10px] font-bold uppercase tracking-[0.18em] text-darkslate-400">
+                <span class="block text-[9px] font-bold uppercase tracking-[0.16em] text-darkslate-500">
                   Số điện thoại
                 </span>
-                <span class="mt-1 block text-sm font-medium text-white">
+                <span class="mt-0.5 block text-[13px] font-medium text-darkslate-100">
                   {phoneNumber}
                 </span>
               </span>
               <button
                 type="button"
                 onClick={copyPhoneNumber}
-                class="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-2 text-xs font-medium text-white/75 transition hover:border-emerald-300/40 hover:bg-emerald-300/10 hover:text-emerald-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/80"
+                class="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-darkslate-600 bg-darkslate-800 px-2.5 py-1.5 text-[11px] font-medium text-darkslate-200 transition-colors hover:border-emerald-300/40 hover:text-emerald-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300/80"
                 aria-label="Sao chép số điện thoại"
               >
                 {isPhoneCopied() ? "Đã copy" : "Copy"}
@@ -556,8 +564,8 @@ export function Navigation() {
             </div>
           </div>
 
-          <p class="relative m-0 mt-6 text-center text-[11px] uppercase tracking-[0.16em] text-darkslate-500">
-            Usually replies within a day
+          <p class="relative m-0 mt-4 text-center text-[10px] text-darkslate-500">
+            Thường phản hồi trong vòng 24 giờ
           </p>
         </div>
       </div>
