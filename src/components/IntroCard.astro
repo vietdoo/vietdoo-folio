@@ -78,15 +78,6 @@ const socials = [
         <span class="block mt-1 text-xs text-darkslate-300">Feel free to reach out if you have a project in mind, want to collaborate, or just want to say hello.</span>
       </p>
 
-      <a href={`mailto:${LINKS.email}`} class="block">
-        <Button
-          aria-label="send a message"
-          class="!w-full !max-h-none !py-2.5 !text-sm flex items-center justify-center gap-2"
-        >
-          <Icon name="ri:mail-send-line" class="h-4 w-4" />
-          <span data-umami-event="Send a message" class="font-bold">Send a message</span>
-        </Button>
-      </a>
 
       <div class="grid grid-cols-5 gap-2">
         {
@@ -150,7 +141,7 @@ const socials = [
         </p>
       </div>
       <div class="intro-card-actions flex max-w-full flex-col gap-2 xl:flex-row xl:gap-4">
-        <div class="intro-card-socials flex max-w-full flex-wrap gap-2 xl:gap-4">
+        <div class="intro-card-socials flex max-w-full flex-nowrap gap-2 xl:gap-4">
           {
             socials.map((social) => (
               <a href={social.href} aria-label={social.label} target="_blank">
@@ -172,14 +163,6 @@ const socials = [
             </Button>
           </Tooltip>
         </div>
-        <a href={`mailto:${LINKS.email}`} class="contents">
-          <Button aria-label="send a message">
-            <span
-              data-umami-event="Send a message"
-              class="font-bold whitespace-nowrap">Send a message</span
-            >
-          </Button>
-        </a>
       </div>
     </div>
     <Image
