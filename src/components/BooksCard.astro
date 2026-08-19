@@ -118,7 +118,10 @@ const spineVariants = [
             const variant = spineVariants[idx % spineVariants.length];
             const isLeaning = idx === 0 || idx === 4;
             const spineTitle = formatSpineTitle(book.title);
-            const titleSize = Math.max(4.5, Math.min(6.2, 94 / spineTitle.length));
+            const titleSize = Math.max(
+              4.5,
+              Math.min(6.2, 94 / spineTitle.length),
+            );
             return (
               <div
                 class:list={["book-spine", isLeaning && "book-spine-leaning"]}
@@ -128,8 +131,12 @@ const spineVariants = [
                 aria-label={`${book.title} by ${book.author}`}
               >
                 <span class="book-top-rule" aria-hidden="true" />
-                <span class="book-title" aria-hidden="true">{spineTitle}</span>
-                <span class="book-author" aria-hidden="true">{book.author}</span>
+                <span class="book-title" aria-hidden="true">
+                  {spineTitle}
+                </span>
+                <span class="book-author" aria-hidden="true">
+                  {book.author}
+                </span>
                 <span class="book-spine-ridge" aria-hidden="true" />
                 <span class="book-bottom-rule" aria-hidden="true" />
               </div>
