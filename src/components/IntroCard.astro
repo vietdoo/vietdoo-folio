@@ -4,34 +4,41 @@ import Button from "./Button.astro";
 import { LINKS } from "../lib/constants";
 import { Icon } from "astro-icon/components";
 import Tooltip from "./Tooltip/index";
-import { Image } from "astro:assets";
 import { SITE } from "../site-config";
-import MemojiAvatarDefault from "../assets/vietdoo_pixel.png";
-import MemojiAvatarBlue from "../assets/vietdoo_pixel.png";
-import MemojiAvatarGreen from "../assets/vietdoo_pixel.png";
-import MemojiAvatarPurple from "../assets/vietdoo_pixel.png";
-import MemojiAvatarYellow from "../assets/vietdoo_pixel.png";
 import CuteBugs from "./CuteBugs.astro";
 
-const themeSources = {
-  "data-memoji": true,
-  "data-theme-default": MemojiAvatarDefault.src,
-  "data-theme-yellow-theme": MemojiAvatarYellow.src,
-  "data-theme-blue-theme": MemojiAvatarBlue.src,
-  "data-theme-green-theme": MemojiAvatarGreen.src,
-  "data-theme-purple-theme": MemojiAvatarPurple.src,
-};
-
 const socials = [
-  { href: LINKS.github, icon: "ri:github-fill", label: "github profile", event: "github button" },
-  { href: LINKS.linkedin, icon: "ri:linkedin-box-fill", label: "linkedin profile", event: "linkedin button" },
-  { href: "/resume", icon: "ri:file-text-line", label: "view resume", event: "resume button" },
-  { href: SITE.site.url, icon: "ri:global-line", label: "website", event: "website button" },
+  {
+    href: LINKS.github,
+    icon: "ri:github-fill",
+    label: "github profile",
+    event: "github button",
+  },
+  {
+    href: LINKS.linkedin,
+    icon: "ri:linkedin-box-fill",
+    label: "linkedin profile",
+    event: "linkedin button",
+  },
+  {
+    href: "/resume",
+    icon: "ri:file-text-line",
+    label: "view resume",
+    event: "resume button",
+  },
+  {
+    href: SITE.site.url,
+    icon: "ri:global-line",
+    label: "website",
+    event: "website button",
+  },
 ];
 ---
 
 <Card colSpan="md:col-span-3" rowSpan="md:row-span-4">
-  {/* Bugs roam the whole card on desktop, but only a dedicated strip at the bottom on mobile. */}
+  {
+    /* Bugs roam the whole card on desktop, but only a dedicated strip at the bottom on mobile. */
+  }
   <div
     slot="background"
     class="absolute inset-x-0 bottom-0 h-[112px] md:inset-0 md:h-auto pointer-events-auto"
@@ -53,20 +60,34 @@ const socials = [
         />
         <div class="flex flex-col min-w-0">
           <div class="flex items-center gap-2 mb-0.5">
-            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] uppercase tracking-wider font-bold bg-darkslate-700/60 border border-darkslate-500/50 text-primary-400">
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] uppercase tracking-wider font-bold bg-darkslate-700/60 border border-darkslate-500/50 text-primary-400"
+            >
               CURRENTLY BUILDING
             </span>
           </div>
-          <p class="text-base font-bold leading-tight truncate m-0">{SITE.author.fullNameVi}</p>
-          <div class="flex flex-col gap-0.5 text-xs text-primary-400 font-medium m-0 mt-1">
+          <p class="text-base font-bold leading-tight truncate m-0">
+            {SITE.author.fullNameVi}
+          </p>
+          <div
+            class="flex flex-col gap-0.5 text-xs text-primary-400 font-medium m-0 mt-1"
+          >
             <span class="inline-flex items-center gap-1">
               <span>Software Engineer @</span>
-              <img src="https://hrm.vnerp.vn/web/image/res.company/1/logo" alt="VNPT Logo" class="h-3.5 w-auto object-contain" />
+              <img
+                src="https://hrm.vnerp.vn/web/image/res.company/1/logo"
+                alt="VNPT Logo"
+                class="h-3.5 w-auto object-contain"
+              />
               <span>VNPT</span>
             </span>
             <span class="inline-flex items-center gap-1">
               <span>Founder @</span>
-              <img src="/vndo.png" alt="VNDO Logo" class="h-3.5 w-3.5 rounded-full object-contain" />
+              <img
+                src="/vndo.png"
+                alt="VNDO Logo"
+                class="h-3.5 w-3.5 rounded-full object-contain"
+              />
               <span>VNDO</span>
             </span>
           </div>
@@ -74,16 +95,28 @@ const socials = [
       </div>
 
       <p class="m-0 text-[13px] font-light leading-relaxed text-white/80">
-        <span class="block font-semibold text-white">Part programmer, part prompt whisperer, full-time builder.</span>
-        <span class="block mt-1 text-xs text-darkslate-300">Feel free to reach out if you have a project in mind, want to collaborate, or just want to say hello.</span>
+        <span class="block font-semibold text-white"
+          >Part programmer, part prompt whisperer, full-time builder.</span
+        >
+        <span class="block mt-1 text-xs text-darkslate-300"
+          >Feel free to reach out if you have a project in mind, want to
+          collaborate, or just want to say hello.</span
+        >
       </p>
-
 
       <div class="grid grid-cols-5 gap-2">
         {
           socials.map((social) => (
-            <a href={social.href} aria-label={social.label} target="_blank" class="block">
-              <Button aria-label={social.label} class="!w-full !max-h-none !py-2 flex items-center justify-center">
+            <a
+              href={social.href}
+              aria-label={social.label}
+              target="_blank"
+              class="block"
+            >
+              <Button
+                aria-label={social.label}
+                class="!w-full !max-h-none !py-2 flex items-center justify-center"
+              >
                 <Icon name={social.icon} class="h-5 w-5" />
                 <span class="sr-only" data-umami-event={social.event}>
                   {social.label}
@@ -98,7 +131,9 @@ const socials = [
             class="!w-full !max-h-none !py-2 flex items-center justify-center"
           >
             <Icon name="ri:emotion-laugh-line" class="h-5 w-5" />
-            <span class="sr-only" data-umami-event="Easter egg button">Easter egg button</span>
+            <span class="sr-only" data-umami-event="Easter egg button"
+              >Easter egg button</span
+            >
           </Button>
         </Tooltip>
       </div>
@@ -106,42 +141,75 @@ const socials = [
   </div>
 
   {/* ---------- Desktop layout ---------- */}
-  <div class="intro-card-desktop hidden md:flex w-full min-w-0 h-full relative z-10 pointer-events-none">
-    <div data-bug-safe-below class="intro-card-copy flex min-w-0 flex-1 flex-col justify-between md:max-h-[300px] gap-3 md:gap-4 pointer-events-auto">
+  <div
+    class="intro-card-desktop hidden md:flex w-full min-w-0 h-full relative z-10 pointer-events-none"
+  >
+    <div
+      data-bug-safe-below
+      class="intro-card-copy flex min-w-0 flex-1 flex-col justify-between md:max-h-[300px] gap-3 md:gap-4 pointer-events-auto"
+    >
       <div class="flex flex-col h-full">
         <div class="flex items-center gap-2 mb-2">
-          <span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold bg-darkslate-700/60 border border-darkslate-500/50 text-primary-400">
+          <span
+            class="inline-flex items-center px-3 py-1 rounded-full text-[10px] uppercase tracking-wider font-bold bg-darkslate-700/60 border border-darkslate-500/50 text-primary-400"
+          >
             CURRENTLY BUILDING
           </span>
         </div>
 
-        <h1 class="text-xl lg:text-2xl font-bold text-white tracking-tight mb-1.5 m-0">
-          {SITE.author.fullNameVi} <span class="text-primary-400 text-lg font-semibold">({SITE.author.shortName})</span>
+        <h1
+          class="text-xl lg:text-2xl font-bold text-white tracking-tight mb-1.5 m-0"
+        >
+          {SITE.author.fullNameVi}
+          <span class="text-primary-400 text-lg font-semibold"
+            >({SITE.author.shortName})</span
+          >
         </h1>
-        <div class="flex flex-wrap items-center gap-2 text-xs md:text-sm font-semibold text-primary-300 mb-2.5 m-0">
-          <span class="inline-flex items-center gap-1.5 bg-darkslate-700/60 px-2.5 py-1 rounded-md border border-darkslate-500/50">
+        <div
+          class="flex flex-wrap items-center gap-2 text-xs md:text-sm font-semibold text-primary-300 mb-2.5 m-0"
+        >
+          <span
+            class="inline-flex items-center gap-1.5 bg-darkslate-700/60 px-2.5 py-1 rounded-md border border-darkslate-500/50"
+          >
             <span>Software Engineer @</span>
-            <img src="https://hrm.vnerp.vn/web/image/res.company/1/logo" alt="VNPT Logo" class="h-4 w-auto object-contain" />
+            <img
+              src="https://hrm.vnerp.vn/web/image/res.company/1/logo"
+              alt="VNPT Logo"
+              class="h-4 w-auto object-contain"
+            />
             <span>VNPT</span>
           </span>
-          <span class="inline-flex items-center gap-1.5 bg-darkslate-700/60 px-2.5 py-1 rounded-md border border-darkslate-500/50">
+          <span
+            class="inline-flex items-center gap-1.5 bg-darkslate-700/60 px-2.5 py-1 rounded-md border border-darkslate-500/50"
+          >
             <span>Founder @</span>
-            <img src="/vndo.png" alt="VNDO Logo" class="h-4 w-4 rounded-full object-contain" />
+            <img
+              src="/vndo.png"
+              alt="VNDO Logo"
+              class="h-4 w-4 rounded-full object-contain"
+            />
             <span>VNDO</span>
           </span>
         </div>
 
         <p class="m-0 font-light text-sm md:text-base">
-          <span class="block font-bold text-white text-base md:text-lg leading-snug">
+          <span
+            class="block font-bold text-white text-base md:text-lg leading-snug"
+          >
             Part programmer, part prompt whisperer, full-time builder.
           </span>
           <span class="block mt-1.5 text-xs md:text-sm text-darkslate-300">
-            Feel free to reach out if you have a project in mind, want to collaborate, or just want to say hello.
+            Feel free to reach out if you have a project in mind, want to
+            collaborate, or just want to say hello.
           </span>
         </p>
       </div>
-      <div class="intro-card-actions flex max-w-full flex-col gap-2 xl:flex-row xl:gap-4">
-        <div class="intro-card-socials flex max-w-full flex-nowrap gap-2 xl:gap-4">
+      <div
+        class="intro-card-actions flex max-w-full flex-col gap-2 xl:flex-row xl:gap-4"
+      >
+        <div
+          class="intro-card-socials flex max-w-full flex-nowrap gap-2 xl:gap-4"
+        >
           {
             socials.map((social) => (
               <a href={social.href} aria-label={social.label} target="_blank">
@@ -165,14 +233,13 @@ const socials = [
         </div>
       </div>
     </div>
-    <Image
+    <img
       id="memoji-avatar"
-      quality="max"
-      src={MemojiAvatarDefault}
-      {...themeSources}
+      src="/assets/vietdoo-agent-data-flow.gif"
       class="w-auto max-w-[34%] max-h-[300px] shrink-0 select-none object-contain relative z-[-1] opacity-100 pointer-events-none"
-      alt={`memoji of ${SITE.author.firstName}`}
+      alt={`animated data-flow agent of ${SITE.author.firstName}`}
       loading="eager"
+      decoding="async"
       fetchpriority="high"
     />
   </div>
@@ -180,27 +247,6 @@ const socials = [
 
 <script>
   import { animate } from "motion";
-
-  function updateMemojiImage() {
-    const avatars = document.querySelectorAll<HTMLImageElement>("[data-memoji]");
-    if (avatars.length === 0) return;
-
-    const theme = localStorage.getItem("theme") || "default";
-    const themeClass = theme === "default" ? "default" : theme;
-
-    avatars.forEach((avatarImg) => {
-      const imageSrc =
-        avatarImg.getAttribute(`data-theme-${themeClass}`) ||
-        avatarImg.getAttribute("data-theme-default");
-
-      if (imageSrc && avatarImg.src !== imageSrc) {
-        avatarImg.src = imageSrc;
-        if (avatarImg.srcset) {
-          avatarImg.srcset = "";
-        }
-      }
-    });
-  }
 
   function initLevitatingAnimation() {
     const avatarImg = document.getElementById("memoji-avatar") as HTMLElement;
@@ -217,26 +263,7 @@ const socials = [
     );
   }
 
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (
-        mutation.type === "attributes" &&
-        mutation.attributeName === "class"
-      ) {
-        updateMemojiImage();
-      }
-    });
-  });
-
   document.addEventListener("astro:page-load", () => {
-    updateMemojiImage();
     initLevitatingAnimation();
-    observer.observe(document.body, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
   });
-
-  document.addEventListener("astro:before-swap", () => observer.disconnect());
-  document.addEventListener("themechange", updateMemojiImage);
 </script>
