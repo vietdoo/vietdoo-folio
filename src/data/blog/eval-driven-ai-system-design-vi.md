@@ -1,7 +1,7 @@
 ---
 title: "Thiết kế AI System theo Evals: Từ Golden Set nhỏ đến Rollout theo KPI"
 description: "Playbook dành cho senior engineer để biến một golden set nhỏ thành release gate, KPI kinh doanh và vòng lặp học tập cho AI system production."
-pubDate: 2026-08-22
+pubDate: 2026-07-05
 category: "engineering"
 image: "/blog/eval-driven-ai-system-design/hero.png"
 lang: "vi"

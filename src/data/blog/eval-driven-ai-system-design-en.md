@@ -1,7 +1,7 @@
 ---
 title: "Eval-Driven AI Systems: From Tiny Golden Sets to Business-Level Rollouts"
 description: "A senior engineer's playbook for turning a small golden set into release gates, business metrics, and a production learning loop for AI systems."
-pubDate: 2026-08-22
+pubDate: 2026-07-05
 category: "engineering"
 image: "/blog/eval-driven-ai-system-design/hero.png"
 lang: "en"

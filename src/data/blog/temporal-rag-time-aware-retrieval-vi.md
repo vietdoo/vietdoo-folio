@@ -1,7 +1,7 @@
 ---
 title: "Temporal RAG: Dạy hệ thống truy hồi hiểu điều gì đúng ở từng thời điểm"
 description: "Hướng dẫn xây dựng retrieval có nhận thức về thời gian: valid-time, transaction-time, xử lý mâu thuẫn và đánh giá câu hỏi lịch sử trong production."
-pubDate: 2026-08-26
+pubDate: 2026-07-07
 category: "engineering"
 image: "/blog/temporal-rag-time-aware-retrieval/hero.png"
 lang: "vi"

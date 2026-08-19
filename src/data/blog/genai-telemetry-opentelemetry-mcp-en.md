@@ -1,7 +1,7 @@
 ---
 title: "GenAI Telemetry That Travels: OpenTelemetry Semantics for Agents and MCP"
 description: "How to design vendor-neutral traces for model calls, retrieval, tool use, MCP sessions, privacy controls, and cost accounting without locking observability to one provider."
-pubDate: 2026-08-30
+pubDate: 2026-07-28
 category: "engineering"
 image: "/blog/genai-telemetry-opentelemetry-mcp/hero.png"
 lang: "en"

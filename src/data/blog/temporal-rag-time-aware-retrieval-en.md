@@ -1,7 +1,7 @@
 ---
 title: "Temporal RAG: Teaching Retrieval to Respect What Was True When"
 description: "A production-minded guide to time-aware retrieval, valid-time versus transaction-time, contradiction handling, and evaluation for historical questions."
-pubDate: 2026-08-26
+pubDate: 2026-07-07
 category: "engineering"
 image: "/blog/temporal-rag-time-aware-retrieval/hero.png"
 lang: "en"

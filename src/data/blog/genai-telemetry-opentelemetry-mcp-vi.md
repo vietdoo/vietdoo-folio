@@ -1,7 +1,7 @@
 ---
 title: "Telemetry cho GenAI có thể di chuyển: OpenTelemetry Semantics cho Agent và MCP"
 description: "Cách thiết kế trace vendor-neutral cho model call, retrieval, tool use, MCP session, privacy control và cost accounting mà không bị khóa vào một provider."
-pubDate: 2026-08-30
+pubDate: 2026-07-28
 category: "engineering"
 image: "/blog/genai-telemetry-opentelemetry-mcp/hero.png"
 lang: "vi"
