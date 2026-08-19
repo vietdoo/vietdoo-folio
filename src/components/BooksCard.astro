@@ -9,6 +9,14 @@ const currentlyReading = booksData.find((b) => b.status === "reading");
 const shelfBooks = booksData.slice(0, 8);
 const hasLiveBooks = liveBooks.length > 0;
 
+const formatSpineTitle = (title: string) => {
+  const normalized = title.replace(/[!?]/g, "").replace(/\s+/g, " ").trim();
+  const maxLength = 20;
+  return normalized.length > maxLength
+    ? `${normalized.slice(0, maxLength - 1).trimEnd()}…`
+    : normalized;
+};
+
 const spineVariants = [
   {
     color: "#65321f",
@@ -109,21 +117,20 @@ const spineVariants = [
           shelfBooks.map((book, idx) => {
             const variant = spineVariants[idx % spineVariants.length];
             const isLeaning = idx === 0 || idx === 4;
+            const spineTitle = formatSpineTitle(book.title);
+            const titleSize = Math.max(4.5, Math.min(6.2, 94 / spineTitle.length));
             return (
               <div
                 class:list={["book-spine", isLeaning && "book-spine-leaning"]}
-                style={`--book-color:${variant.color};--book-dark:${variant.dark};--book-accent:${variant.accent};--book-height:${variant.height}px;--book-width:${variant.width}px;--book-tilt:${variant.tilt}deg;`}
+                style={`--book-color:${variant.color};--book-dark:${variant.dark};--book-accent:${variant.accent};--book-height:${variant.height}px;--book-width:${variant.width}px;--book-tilt:${variant.tilt}deg;--book-title-size:${titleSize}px;`}
                 title={`${book.title} — ${book.author}`}
                 role="img"
                 aria-label={`${book.title} by ${book.author}`}
               >
                 <span class="book-top-rule" aria-hidden="true" />
-                <span class="book-title">
-                  {book.title.length > 30
-                    ? `${book.title.slice(0, 28).trimEnd()}…`
-                    : book.title}
-                </span>
-                <span class="book-author">{book.author}</span>
+                <span class="book-title" aria-hidden="true">{spineTitle}</span>
+                <span class="book-author" aria-hidden="true">{book.author}</span>
+                <span class="book-spine-ridge" aria-hidden="true" />
                 <span class="book-bottom-rule" aria-hidden="true" />
               </div>
             );
@@ -394,12 +401,39 @@ const spineVariants = [
 
   .book-spine::before {
     position: absolute;
+    z-index: 1;
     top: 0;
     bottom: 0;
     left: 2px;
     width: 1px;
-    background: rgba(255, 234, 178, 0.23);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 234, 178, 0.36),
+      rgba(255, 234, 178, 0.08) 35%,
+      rgba(0, 0, 0, 0.18) 70%,
+      rgba(255, 234, 178, 0.2)
+    );
+    box-shadow: 1px 0 rgba(0, 0, 0, 0.22);
     content: "";
+    pointer-events: none;
+  }
+
+  .book-spine-ridge {
+    position: absolute;
+    z-index: 1;
+    top: 6px;
+    right: 2px;
+    bottom: 5px;
+    width: 1px;
+    border-radius: 999px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 232, 171, 0.22),
+      rgba(0, 0, 0, 0.24) 48%,
+      rgba(255, 232, 171, 0.12)
+    );
+    box-shadow: -1px 0 rgba(0, 0, 0, 0.16);
+    pointer-events: none;
   }
 
   .book-spine:hover,
@@ -423,29 +457,44 @@ const spineVariants = [
   }
 
   .book-title {
+    position: relative;
+    z-index: 2;
     display: block;
     max-height: 108px;
     overflow: hidden;
-    color: rgba(255, 247, 219, 0.98) !important;
+    color: color-mix(in srgb, var(--book-accent) 72%, #fff8dc 28%) !important;
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 0.48rem;
+    font-size: var(--book-title-size, 5px);
     font-weight: 700;
-    line-height: 1.08;
+    letter-spacing: 0.045em;
+    line-height: 1;
     text-align: center;
     text-overflow: clip;
+    text-shadow:
+      -0.45px -0.45px 0 rgba(255, 242, 195, 0.6),
+      0.55px 0.55px 0 rgba(21, 8, 4, 0.78),
+      0 0 2px rgba(0, 0, 0, 0.18);
+    white-space: nowrap;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
   }
 
   .book-author {
+    position: relative;
+    z-index: 2;
     max-height: 42px;
     overflow: hidden;
-    color: color-mix(in srgb, var(--book-accent) 75%, #fff 25%) !important;
+    color: color-mix(in srgb, var(--book-accent) 70%, #fff 30%) !important;
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     font-size: 0.34rem;
+    letter-spacing: 0.02em;
     line-height: 1;
-    opacity: 0.84;
+    opacity: 0.76;
     text-align: center;
+    text-shadow:
+      -0.35px -0.35px 0 rgba(255, 242, 195, 0.42),
+      0.45px 0.45px 0 rgba(21, 8, 4, 0.62);
+    white-space: nowrap;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
   }
@@ -589,7 +638,7 @@ const spineVariants = [
 
     .book-title {
       max-height: 92px;
-      font-size: 0.43rem;
+      font-size: var(--book-title-size, 4.8px);
     }
 
     .book-author {
@@ -662,7 +711,7 @@ const spineVariants = [
 
     .book-title {
       max-height: 96px;
-      font-size: 0.43rem;
+      font-size: var(--book-title-size, 4.8px);
     }
 
     .book-author {
