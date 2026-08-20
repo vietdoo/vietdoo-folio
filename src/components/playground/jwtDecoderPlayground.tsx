@@ -195,6 +195,7 @@ export default function JwtDecoderPlayground() {
               <button
                 onClick={() => handleCopy(decoded().headerStr, setCopiedHeader)}
                 disabled={!decoded().headerStr}
+                aria-live="polite"
                 class="text-darkslate-300 hover:text-white transition disabled:opacity-40"
               >
                 {copiedHeader() ? "Copied" : "Copy"}
@@ -212,6 +213,7 @@ export default function JwtDecoderPlayground() {
               <button
                 onClick={() => handleCopy(decoded().payloadStr, setCopiedPayload)}
                 disabled={!decoded().payloadStr}
+                aria-live="polite"
                 class="text-darkslate-300 hover:text-white transition disabled:opacity-40"
               >
                 {copiedPayload() ? "Copied" : "Copy"}
