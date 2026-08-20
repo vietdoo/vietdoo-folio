@@ -34,3 +34,12 @@ These sources should support claims about calibration, abstention, disagreement,
 [Know Your Limits: A Survey of Abstention in Large Language Models](https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00754/131566/Know-Your-Limits-A-Survey-of-Abstention-in-Large), TACL 2025, frames abstention as refusal to answer and organizes methods/evaluation through query, model, and human-values perspectives. The article identifies abstention as a way to reduce hallucinations and improve safety, while noting domain/context limitations. For the blog, abstention should be a deliberate system state with a measurable coverage/correctness trade-off, not an evasive fallback.
 
 MIT page was CAPTCHA-blocked for interactive rendering, but the extracted open-access abstract and bibliographic metadata were available; do not rely on any content beyond that abstract unless independently verified.
+
+## Production verification
+
+On 2026-08-20, the public pages were checked with no-cache extraction:
+
+- https://vietdoo.vndo.vn/blog/when-agents-disagree-arbitration-protocols — public title rendered as “When Agents Disagree: Arbitration Protocols for Conflicting AI Decisions” and publication date rendered as March 19, 2026.
+- https://vietdoo.vndo.vn/blog/ai-agent-finops-token-cost-allocation — public title rendered as “AI Agent FinOps: Allocating Token Cost by Tenant, Workflow, and Outcome” and publication date rendered as June 4, 2026.
+
+The GitHub Actions workflow for final commit `8e1a5d0a44045b110097ffc9afc5522908f909da` completed successfully as run `32320760397`: Unit Tests, Lint & Type Check, and Build Project all completed successfully. The local production build also generated both routes: `/blog/when-agents-disagree-arbitration-protocols/index.html` and `/blog/ai-agent-finops-token-cost-allocation/index.html`.
