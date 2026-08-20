@@ -15,7 +15,7 @@ Hầu hết đề xuất AI on-premise đều bắt đầu bằng tên model. C�
 
 Câu hỏi đầu tiên phải là hệ thống cần làm gì, phải phục vụ bao nhiêu request đồng thời, prompt dài đến đâu, người dùng chấp nhận độ trễ nào và cần bằng chứng gì trước khi một câu trả lời được xem là kết quả nghiệp vụ hợp lệ. Chỉ sau khi các ràng buộc đó rõ ràng, team mới nên quyết định một model nhỏ, model trung hay model lớn đã quantize có phù hợp với server hay không.
 
-![Một AI stack on-prem production đặt model nhỏ và trung, routing, memory budget, security control và workload doanh nghiệp trong giới hạn VRAM cố định](/blog/onprem-ai-100gb-vram/hero.png)
+![Một AI stack on-prem production đặt model nhỏ và trung, routing, memory budget, security control và workload doanh nghiệp trong giới hạn VRAM cố định](/blog/onprem-ai-100gb/hero.png)
 
 > **Luận điểm chính:** khoảng 100 GB VRAM tổng không phải lời hứa rằng doanh nghiệp có thể chạy model 100 tỷ tham số. Đó là một capacity envelope phải được chia cho weight, runtime buffer, KV cache, concurrency và operational headroom. Production thành công nhờ sizing theo workload, không phải nhồi đầy mọi byte bằng trọng số model.
 

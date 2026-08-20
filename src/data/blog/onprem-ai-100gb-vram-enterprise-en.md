@@ -15,7 +15,7 @@ That is the wrong first question.
 
 The first question is what the system must do, how many requests it must serve at the same time, how long the prompts are, how much latency the user can tolerate, and what evidence is required before an answer becomes an accepted business outcome. Only after those constraints are clear should the team decide whether a small model, a medium model, or a larger quantized model belongs on the server.
 
-![A production on-prem AI stack fits small and medium language models, routing, memory budgets, security controls, and enterprise workloads inside a bounded VRAM envelope](/blog/onprem-ai-100gb-vram/hero.png)
+![A production on-prem AI stack fits small and medium language models, routing, memory budgets, security controls, and enterprise workloads inside a bounded VRAM envelope](/blog/onprem-ai-100gb/hero.png)
 
 > **The thesis:** approximately 100 GB of total VRAM is not a promise to run a 100-billion-parameter model. It is a capacity envelope that must be divided between weights, runtime buffers, KV cache, concurrency, and operational headroom. Production success comes from workload-first sizing, not from filling every byte with model weights.
 
