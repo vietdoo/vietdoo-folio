@@ -505,6 +505,7 @@ export default function FingerprintAuditPlayground() {
                   <button
                     type="button"
                     onClick={copyReport}
+                    aria-live="polite"
                     class="rounded-md border border-darkslate-400 bg-darkslate-700/50 px-3 py-1.5 text-xs font-medium text-darkslate-200 transition hover:border-primary-300 hover:text-white active:scale-[0.98]"
                   >
                     {copied() ? "Copied" : "Copy report"}

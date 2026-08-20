@@ -252,6 +252,7 @@ export default function ImageDescriptionPlayground() {
               <button
                 type="button"
                 onClick={copyDescription}
+                aria-live="polite"
                 class="rounded-md border border-darkslate-400 px-2.5 py-1 text-[11px] font-medium text-darkslate-200 transition hover:border-primary-400 hover:text-white"
               >
                 {copied() ? "Copied" : "Copy"}

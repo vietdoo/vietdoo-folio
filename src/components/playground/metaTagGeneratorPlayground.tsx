@@ -197,6 +197,7 @@ ${img ? `<meta property="twitter:image" content="${img}" />\n` : ""}${tw ? `<met
             <button
               type="button"
               onClick={handleCopy}
+              aria-live="polite"
               class="px-3 py-1 text-xs font-medium rounded-lg bg-primary-600 hover:bg-primary-500 text-white transition"
             >
               {copied() ? "Copied HTML" : "Copy Tags"}

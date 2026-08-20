@@ -126,6 +126,7 @@ export default function WordCounterPlayground() {
             </Show>
             <button
               onClick={handleCopy}
+              aria-live="polite"
               type="button"
               class="px-3.5 py-1.5 rounded-lg bg-primary-600 hover:bg-primary-500 text-white font-medium transition"
             >
