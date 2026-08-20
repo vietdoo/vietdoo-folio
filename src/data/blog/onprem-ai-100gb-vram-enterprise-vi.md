@@ -6,7 +6,7 @@ category: "engineering"
 lang: "vi"
 translationKey: "onprem-ai-100gb-vram-enterprise"
 draft: false
-image: "/blog/onprem-ai-100gb-vram/hero.png"
+image: "/blog/onprem-ai-100gb/hero.png"
 ---
 
 Hầu hết đề xuất AI on-premise đều bắt đầu bằng tên model. Có người hỏi doanh nghiệp có thể chạy model 32B, 70B hay một mô hình mixture-of-experts hay không, rồi cuộc thảo luận lập tức biến thành danh sách GPU cần mua.

@@ -6,7 +6,7 @@ category: "engineering"
 lang: "en"
 translationKey: "onprem-ai-100gb-vram-enterprise"
 draft: false
-image: "/blog/onprem-ai-100gb-vram/hero.png"
+image: "/blog/onprem-ai-100gb/hero.png"
 ---
 
 Most on-premise AI proposals begin with a model name. Someone asks whether the company can run a 32B, 70B, or mixture-of-experts model, and the conversation immediately turns into a shopping list of GPUs.
