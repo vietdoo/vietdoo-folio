@@ -1074,13 +1074,20 @@ export default function VietnamMap() {
 
     renderMap();
 
+    let resizeTimeout: ReturnType<typeof setTimeout>;
     const resizeObserver = new ResizeObserver(() => {
-      renderMap();
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Performance optimization: Debounce the heavy renderMap function
+        // to avoid layout thrashing and main thread blocking during active resizing.
+        renderMap();
+      }, 150);
     });
 
     resizeObserver.observe(containerRef);
 
     onCleanup(() => {
+      clearTimeout(resizeTimeout);
       resizeObserver.disconnect();
       d3.select("body").selectAll(".vn-map-tooltip").remove();
     });
