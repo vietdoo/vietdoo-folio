@@ -43,3 +43,9 @@ The earlier document `docs/blog-audit-and-topic-opportunities-2026-08.md` says t
 The hero is a 16:9 editorial illustration with cream paper texture, restrained charcoal/terracotta/lilac/olive palette, clear left-side title hierarchy, and a retry-safe flow ending in one effect. It is suitable both as the article hero and as the blog thumbnail. The deduplication diagram uses the same paper texture, rounded hand-drawn forms, muted accent colors, and technical labels; it is visually coherent with the hero and materially explains the article rather than serving as decoration.
 
 The repository contains four total image assets for the post, satisfying the requested thumbnail/hero plus three in-article visuals. No new image generation is needed without creating a duplicate visual set or replacing an already coherent production asset.
+
+## Final local validation
+
+The local production-style page returned HTTP 200 and rendered the article title, metadata card, hero, and opening copy on both desktop (1440×1000) and mobile (390×844). The desktop before/after comparison changed 0 pixels; the mobile comparison changed 0 pixels in the final clean-server run. Manual inspection confirmed the title and hero remain readable and proportioned on both viewports.
+
+The UI review metadata still records non-blocking development-environment diagnostics: an Astro dev-toolbar request was aborted and one Vite optimized-dependency request returned 504 during dev-server startup. There were no page errors, the route status was 200, and the production build/CI checks passed; these diagnostics are not production route failures.
