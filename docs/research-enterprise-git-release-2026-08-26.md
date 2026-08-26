@@ -51,3 +51,6 @@ The revised `branch-flow.png` and `email-feature-flow.png` are now vertical, rea
 
 ## UI review
 The article route was captured at 1440x1000 and 390x844. Desktop shows the long English title, metadata card, and branch-flow diagram without visible overflow. Mobile wraps the title cleanly, stacks metadata, and renders the vertical diagram without horizontal overflow. The vertical diagrams remain readable in the article column and are more suitable than the initial wide layouts.
+
+## Production verification
+After the push, `https://vietdoo.vndo.vn/blog/enterprise-git-feature-to-production` rendered the new post on the public site. The persisted locale initially showed Vietnamese; switching to EN rendered `From Feature Branch to Production: How My Company Ships a Public-Service Feature Safely` with the August 26, 2026 publication date, branch-flow diagram, source references, and related reading. The canonical route and `?lang=vi` locale behavior are both working.
