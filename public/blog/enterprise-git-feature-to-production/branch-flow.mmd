@@ -1,0 +1,12 @@
+flowchart TB
+    F[feature/igate-step3-citizen-email] --> PRD[PR to dev]
+    PRD --> C1[CI: lint, test, security, build]
+    C1 --> D[dev integration]
+    D --> U[staging and UAT]
+    U --> PRP[Promotion PR to canonical main/master]
+    PRP --> C2[Required checks and review]
+    C2 --> T[Immutable release tag and artifact digest]
+    T --> P[Production deployment]
+    P --> V[Smoke tests and metrics]
+    V -->|healthy| DONE[Release complete]
+    V -->|unhealthy| RB[Rollback or disable flag]

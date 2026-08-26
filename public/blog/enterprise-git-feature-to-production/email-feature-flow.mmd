@@ -1,0 +1,13 @@
+flowchart TB
+    UI[Officer clicks Send email] --> API[Backend command]
+    API --> AUTH[Authorize officer, application scope, and step 3]
+    AUTH -->|denied| STOP[No side effect]
+    AUTH -->|allowed| OUTBOX[Write email_requested event]
+    OUTBOX --> WORKER[Email worker]
+    WORKER --> IDEMP[Idempotency check]
+    IDEMP --> PROVIDER[Mail provider]
+    PROVIDER --> STATUS[Delivery status]
+    API --> AUDIT[Audit actor, application, step, action]
+    STATUS --> AUDIT
+    WORKER --> RETRY[Bounded retry]
+    RETRY --> IDEMP

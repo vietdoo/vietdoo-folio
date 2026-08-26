@@ -1,0 +1,9 @@
+flowchart TB
+    PR[Pull request] --> CI[CI checks and security scan]
+    CI --> ART[Immutable artifact: image, SBOM, digest]
+    ART --> UAT[Staging and UAT with safe dependencies]
+    UAT --> APPROVAL[Release approval and change record]
+    APPROVAL --> ROLLOUT[Canary or rolling production]
+    ROLLOUT --> VERIFY[Readiness, smoke tests, and business metrics]
+    VERIFY -->|within budget| PROMOTE[Promote feature to 100%]
+    VERIFY -->|breach| ABORT[Abort, rollback image, or disable flag]
