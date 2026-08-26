@@ -25,3 +25,7 @@ Viewed existing `prompt-injection-tool-boundaries/hero.png` and `context-enginee
 ## Local route verification
 
 The local route `http://127.0.0.1:4321/blog/context-firewall-pre-inference-data-governance` rendered the English title, author metadata, publication date April 12, 2026, and all article content. After scrolling to the end, DOM inspection confirmed the four `/blog/context-firewall/` assets load successfully at 2560×1440: `hero.png`, `admission-pipeline.png`, `context-envelope.png`, and `deny-audit-loop.png`. The localized page includes the same four asset references for Vietnamese content.
+
+## Production verification
+
+After push, the production route `https://vietdoo.vndo.vn/blog/context-firewall-pre-inference-data-governance` returned rendered page content with canonical URL, title “The Context Firewall: Governing What Enters the Model,” OG image `https://vietdoo.vndo.vn/blog/context-firewall/hero.png`, publication date April 12, 2026, and both EN and VI article sections in the extracted response. GitHub Actions run `33023290897` completed successfully: lint/type check, unit tests, and build all passed. One later browser console check opened an about:blank state and returned no DOM; this did not invalidate the successful production page extraction immediately before it, but the final report should rely on the direct rendered response and CI result rather than that transient console state.
