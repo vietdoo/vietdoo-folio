@@ -34,3 +34,9 @@ Reviewed `public/blog/provider-rotation/hero.png` and `public/blog/provider-rota
 - Desktop after screenshot: 1440×1000, title, author/date/read-time card, hero and opening body render correctly.
 - Vietnamese mobile after screenshot: 390×844, long title wraps without clipping, language toggle is visible, metadata card and hero remain readable, opening copy flows correctly.
 - The route did not exist before authoring, so the repo's required `before` snapshot was captured after the new route was first available; the `before` and `after` images are therefore a same-route rendering validation rather than a true historical diff. This limitation should be stated in final delivery instead of claiming a meaningful pre/post visual delta.
+
+## Production verification after push
+- GitHub Actions CI/CD run `33037844121` for commit `8637f70` completed with `success` at 2026-08-27T04:00:08Z.
+- Unit Tests and Lint & Type Check jobs passed; Build Project completed as part of the successful pipeline. The workflow emitted existing non-blocking hints about deprecated Node.js 20 action runtime and unused imports/variables.
+- Production EN URL: https://vietdoo.vndo.vn/blog/tool-result-freshness-agent-observations — rendered title, April 20, 2026 date, hero and article opening.
+- Production VI URL: https://vietdoo.vndo.vn/blog/tool-result-freshness-agent-observations?lang=vi — rendered Vietnamese title, April 20, 2026 date, shared hero and article opening.
