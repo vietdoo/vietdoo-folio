@@ -72,7 +72,7 @@ const { class: className } = Astro.props;
         placeholder="Say something..."></textarea>
     </label>
 
-    <p id="form-error" class="text-red-400 text-xs hidden"></p>
+    <p id="form-error" class="text-red-400 text-xs hidden" role="status" aria-live="polite"></p>
 
     <button
       type="submit"
