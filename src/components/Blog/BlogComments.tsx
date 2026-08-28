@@ -296,6 +296,8 @@ export default function BlogComments(props: BlogCommentsProps) {
         <div
           class="mb-4 text-xs text-red-400 bg-red-950/40 border border-red-800/40 rounded-lg p-3"
           style={fontStyle}
+          role="status"
+          aria-live="polite"
         >
           {error()}
         </div>
