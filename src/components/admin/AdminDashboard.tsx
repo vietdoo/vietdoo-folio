@@ -360,7 +360,9 @@ export default function AdminDashboard() {
                     </button>
                   </div>
                   <Show when={loginError()}>
-                    <div class="form-error">{loginError()}</div>
+                    <div class="form-error" role="status" aria-live="polite">
+                      {loginError()}
+                    </div>
                   </Show>
                   <button
                     class="primary-button login-button"
