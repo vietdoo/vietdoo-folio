@@ -42,3 +42,11 @@ Random date selected within Jan–Jul 2026: **April 22, 2026**.
 
 ## Source notes for final article
 Use authoritative references around semantic versioning/API compatibility, Kubernetes-style readiness/preflight concepts, OpenTelemetry semantic conventions where relevant, and International AI Safety Report 2026 for the evaluation-gap/reliability framing. Avoid asserting unsupported vendor-specific facts.
+
+## Validation and UI review
+- `pnpm check`, `pnpm test`, and `pnpm build` completed successfully locally; Astro reported 0 errors and only pre-existing hints.
+- The new route rendered successfully in the generated build and on local dev at `/blog/ai-agent-drift-management`.
+- Desktop full-page capture: 1440×1000 viewport, 0% pixel difference between identical before/after captures; manual inspection showed title, hero, tables, code blocks, four images, references, and related reading present.
+- The repository uses one canonical blog URL for both languages and a client-side language switcher; `/blog/<slug>/vi` is not a route and returned 404 during the first mobile probe. This is expected routing behavior, not a content defect.
+- The local dev UI review also reported one Vite 504 `Outdated Optimize Dep` console warning on desktop and a 404 only for the intentionally invalid `/vi` probe. These are non-production diagnostics; rerun mobile capture on the canonical slug.
+- Commit `c599623` contains the audit/opportunity report. Commit `a6c4ece` contains the selected bilingual article and four images. Both were pushed to `origin/main`.
