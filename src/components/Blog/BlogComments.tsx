@@ -1,4 +1,4 @@
-import { createSignal, onMount, For, Show } from "solid-js";
+import { createSignal, onMount, For, Show, createMemo } from "solid-js";
 
 interface CommentItem {
   id: number;
@@ -197,23 +197,36 @@ export default function BlogComments(props: BlogCommentsProps) {
     }
   };
 
+  // Group and sort comments memoized to avoid redundant O(N log N) evaluations
+  const commentsGrouped = createMemo(() => {
+    const root: CommentItem[] = [];
+    const repliesMap = new Map<number, CommentItem[]>();
+
+    comments().forEach(c => {
+       if (!c.parentId) {
+         root.push(c);
+       } else {
+         if (!repliesMap.has(c.parentId)) {
+           repliesMap.set(c.parentId, []);
+         }
+         repliesMap.get(c.parentId)!.push(c);
+       }
+    });
+
+    root.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+    for (const group of repliesMap.values()) {
+      group.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+    }
+
+    return { root, repliesMap };
+  });
+
   // Root comments (no parentId) ordered by createdAt DESC
-  const rootComments = () =>
-    comments()
-      .filter((c) => !c.parentId)
-      .sort(
-        (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-      );
+  const rootComments = () => commentsGrouped().root;
 
   // Replies for a given parentId ordered by createdAt ASC (chronological order)
-  const getReplies = (parentId: number) =>
-    comments()
-      .filter((c) => c.parentId === parentId)
-      .sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
-      );
+  const getReplies = (parentId: number) => commentsGrouped().repliesMap.get(parentId) || [];
 
   const getCommentById = (id: number) => comments().find((c) => c.id === id);
 
